@@ -476,16 +476,35 @@ log. 119 test geçiyor (8 yeni, `tests/test_observability.py`).
    çalıştırılıyor).
 2. **Container'lı `app`, host'ta loopback-only (127.0.0.1) çalışan Ollama.app'e
    `host.docker.internal` üzerinden ulaşamadı** — macOS Docker Desktop'ın bilinen bir
-   ağ nüansı. Qdrant/Langfuse bağlantısı ve LLM gerektirmeyen `/chat` yolları (tool
-   sorguları, injection blok) container üzerinden CANLI doğrulandı; yalnızca RAG cevap
-   üretimi adımı bu host'ta container'dan test edilemedi (host'ta `uvicorn` ile
-   doğrudan çalıştırıldığında sorunsuz). `OLLAMA_HOST=0.0.0.0` denendi ama macOS'un
-   GUI-app env yayma davranışı yüzünden kalıcı olmadı — bilinen sınırlama olarak
-   `docker-compose.yml`'e not düşüldü, gizlenmedi.
+   ağ nüansı. `OLLAMA_HOST=0.0.0.0` denendi ama macOS'un GUI-app env yayma davranışı
+   yüzünden kalıcı olmadı. Selman'ın "iş yerinde başka bir birime Docker'la iletince
+   sorun olur mu" sorusu üzerine bunun sadece "bilinen sınırlama" olarak bırakılamayacağı
+   netleşti — aynı host-bağımlılığı, projeyi teslim alan HERKESTE (kendi Ollama kurulumu
+   farklıysa) tekrar çıkabilirdi; bu PORTATİF bir çözüm değildi.
 
-**Çıktı:** `docker compose up` ile ayağa kalkan servis (Qdrant/Ollama/MLflow/Langfuse/
-Prometheus/Grafana/app hepsi) + gerçekten yeşil geçen CI pipeline'ı (link yukarıda) +
-129 test (108'i CI'da, 21'i yerelde canlı servislerle).
+   **Kalıcı çözüm (aynı gün, ikinci tur):** `ollama`, `app` ile AYNI docker-compose
+   ağının bir parçası yapıldı — model container'ın kendi içine çekildi
+   (`docker compose exec ollama ollama pull llama3.1:8b`), `app`'in `OPENAI_BASE_URL`'i
+   `http://ollama:11434/v1`'e çevrildi (host'a hiç çıkmıyor). Bu, projeyi alan HERKESİN
+   (Ollama kurulu olsun olmasın) tek komutla (`docker compose up`) çalışan bir sistem
+   elde etmesini sağlıyor — gerçek bir RAG sorusu container üzerinden uçtan uca
+   doğrulandı.
+
+   **Bunu doğrularken AYRI, gerçek bir kısıt ölçüldü:** llama3.1:8b yüklendiğinde
+   ollama tek başına ~5.2GB RAM kullanıyor; bu makinede Docker Desktop'ın varsayılan
+   VM belleği (7.75GB) — Qdrant+Postgres+Langfuse+Prometheus+Grafana+MLflow+app'in
+   geri kalanıyla birlikte modelin YÜKLENME anında (durağan halinden fazla bellek
+   ister) `"llama-server process has terminated: signal: killed"` (OOM) hatası verdi.
+   mlflow/prometheus/grafana geçici durdurulunca (RAG için gerekli olmayan servisler)
+   aynı istek sorunsuz tamamlandı — bu, Docker belleğinin arttırılması (10-12GB+)
+   gerektiğini KANITLAYAN, tahmin değil ölçülmüş bir bulgu. Herhangi bir LLM'i yerelde
+   container'da servis eden her kurulum için standart bir kaynak gereksinimi.
+
+**Çıktı:** `docker compose up` ile ayağa kalkan, TAMAMEN self-contained servis
+(Qdrant/Ollama/MLflow/Langfuse/Prometheus/Grafana/app hepsi — host'ta hiçbir şeyin
+önceden kurulu olmasına bağımlı değil) + gerçekten yeşil geçen CI pipeline'ı (link
+yukarıda) + 129 test (108'i CI'da, 21'i yerelde canlı servislerle) + ölçülmüş,
+belgelenmiş bir bellek gereksinimi.
 
 ---
 

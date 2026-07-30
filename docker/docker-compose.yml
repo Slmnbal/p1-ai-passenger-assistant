@@ -30,11 +30,25 @@ services:
 
   ollama:
     image: ollama/ollama:latest
-    ports:
-      - "11434:11434"
+    # Host portu (11434) BİLEREK yayınlanmıyor: bu makinede native Ollama.app zaten o
+    # portu kullanıyor (bkz. Adım 10 notu — container'lı `app`, host'ta loopback-only
+    # çalışan Ollama.app'e host.docker.internal üzerinden ulaşamamıştı). Bu servis
+    # SADECE Docker'ın kendi iç ağında (`ollama:11434` adresiyle, diğer container'lardan)
+    # erişilebilir olacak şekilde tasarlandı — host'un 11434'üyle hiç çakışmıyor.
     volumes:
       - ollama_data:/root/.ollama
-    # İlk çalıştırmada model çekmek gerekir: docker exec -it <container> ollama pull llama3.1
+    # İlk çalıştırmada model çekmek gerekir: docker compose exec ollama ollama pull llama3.1:8b
+    #
+    # BELLEK GEREKSİNİMİ (bu makinede ölçüldü): llama3.1:8b yüklendiğinde ollama tek
+    # başına ~5.2GB RAM kullanıyor. Docker Desktop'ın VARSAYILAN VM belleği (bu makinede
+    # 7.75GB) — Qdrant+Postgres(langfuse-db)+Langfuse+Prometheus+Grafana+MLflow+app'in
+    # GERİ KALANIYLA birlikte modelin YÜKLENME anında (durağan halinden daha fazla bellek
+    # ister) OOM (bellek yetersizliği) hatasına yol açtı: "llama-server process has
+    # terminated: signal: killed". Çözüm/gereksinim: Docker Desktop'a EN AZ 10-12GB RAM
+    # ayırın (Docker Desktop → Settings → Resources → Memory), veya kısıtlı makinelerde
+    # sadece çekirdek RAG için gereksiz olan mlflow/prometheus/grafana'yı geçici olarak
+    # durdurun (`docker compose stop mlflow prometheus grafana`). Bu, herhangi bir LLM'i
+    # yerelde container'da servis eden her kurulum için standart bir gereksinimdir.
 
   # --- Adım 9: Langfuse (self-hosted, LLM/agent trace) ---
   langfuse-db:
@@ -113,23 +127,16 @@ services:
   # Host'ta 8000 zaten ilgisiz başka bir projeye ait olduğu için (bkz. README/prometheus.yml
   # notu) host tarafı 8001 — container içi hâlâ 8000, servisler arası iletişimi etkilemez.
   #
-  # OPENAI_BASE_URL NEDEN host.docker.internal (compose'daki `ollama` servisi DEĞİL):
-  # Bu projede Ollama, yukarıdaki `ollama` servisi üzerinden değil, HOST makinede yerel
-  # kurulumla çalıştırılıyor (llama3.1:8b zaten `ollama pull` ile indirilmiş durumda,
-  # bkz. README). `ollama` servisine bağımlı olsaydık `docker compose up` modeli sıfırdan
-  # ~4.9GB indirirdi — gereksiz ve yavaş. `ollama` servis tanımı, container'lı Ollama
-  # tercih edenler için compose dosyasında duruyor ama `app` ona bağımlı DEĞİL.
-  #
-  # BİLİNEN SINIRLAMA (bu makinede ölçüldü): macOS Ollama.app varsayılan olarak sadece
-  # 127.0.0.1'e bind oluyor; Docker Desktop'ın `host.docker.internal` yönlendirmesi bazı
-  # kurulumlarda loopback-only servislere ulaşamıyor. `/chat`'in tool/guardrail/RAG-retrieval
-  # kısımları (Qdrant, embedding, fine-tune model) container üzerinden CANLI doğrulandı;
-  # yalnızca Ollama'ya giden LLM cevap üretimi adımı bu host'ta container'dan erişilemedi
-  # (host'ta `uvicorn` ile doğrudan çalıştırıldığında sorunsuz). Kalıcı çözüm: Ollama.app'i
-  # `OLLAMA_HOST=0.0.0.0:11434` ile başlatmak (bu oturumda `launchctl setenv` + yeniden
-  # başlatma denendi ama macOS'un GUI-app env yayma davranışı yüzünden kalıcı olmadı —
-  # tam bir çözüm muhtemelen çıkış yapıp tekrar giriş yapmayı gerektiriyor, bu proje
-  # kapsamında buna girişilmedi).
+  # DÜZELTME (Adım 10, ikinci tur): İlk sürümde `app`, host'ta native çalışan Ollama.app'e
+  # `host.docker.internal` ile bağlanıyordu — bu, bu makinede Ollama.app'in varsayılan
+  # olarak sadece 127.0.0.1'e (loopback) bind olması yüzünden ÇALIŞMADI (Docker Desktop'ın
+  # host.docker.internal köprüsü loopback-only servislere ulaşamıyor). Daha da önemlisi:
+  # bu, PORTATİF bir kurulum değildi — projeyi başka bir makineye/ekibe verildiğinde,
+  # o makinede de Ollama native kurulu ve modeli çekilmiş OLMASI gerekiyordu, aksi halde
+  # AYNI sorun tekrar çıkardı. Çözüm: `ollama` artık `app` ile AYNI docker-compose ağının
+  # bir PARÇASI — `app`, host'a hiç çıkmadan `ollama` servisine adıyla (`ollama:11434`)
+  # ulaşıyor. Bu, projeyi teslim alan HERKESİN, kendi makinesinde Ollama kurulu olsun
+  # olmasın, tek komutla (`docker compose up`) çalışır bir sistem elde etmesini sağlıyor.
   app:
     build:
       context: ..
@@ -137,7 +144,7 @@ services:
     ports:
       - "8001:8000"
     environment:
-      - OPENAI_BASE_URL=http://host.docker.internal:11434/v1
+      - OPENAI_BASE_URL=http://ollama:11434/v1
       - OPENAI_API_KEY=ollama-local-no-key-needed
       - OLLAMA_MODEL=llama3.1:8b
       - QDRANT_URL=http://qdrant:6333
@@ -145,10 +152,9 @@ services:
       - LANGFUSE_PUBLIC_KEY=pk-lf-p1-local-dev-key
       - LANGFUSE_SECRET_KEY=sk-lf-p1-local-dev-secret
       - LOG_LEVEL=INFO
-    extra_hosts:
-      - "host.docker.internal:host-gateway"
     depends_on:
       - qdrant
+      - ollama
       - langfuse-server
 
 volumes:

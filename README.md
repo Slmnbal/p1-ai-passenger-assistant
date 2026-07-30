@@ -112,11 +112,24 @@ kendine bağlanmaya çalışıyordu) `QDRANT_URL` ortam değişkenine çevrildi;
 ağırlıkları (422MB) GitHub'ın 100MB dosya sınırını aştığı için `.gitignore`'a alındı,
 o modeli kullanan testler `@pytest.mark.live` ile CI dışı bırakıldı. Proje git'e alınıp
 public bir depoya (yukarıdaki linke) push edildi ve **GitHub Actions CI gerçekten
-çalışıp yeşil geçti** (ruff lint + 108 test). Bilinen bir sınırlama dürüstçe belgelendi:
-container'lı `app`, bu host'ta loopback-only çalışan Ollama.app'e `host.docker.internal`
-üzerinden ulaşamadı (macOS Docker Desktop nüansı) — Qdrant/Langfuse bağlantısı ve
-LLM'siz `/chat` yolları container üzerinden canlı doğrulandı, yalnızca RAG cevap
-üretimi adımı bu ortamda container'dan test edilemedi. 129 test (108'i CI'da).
+çalışıp yeşil geçti** (ruff lint + 108 test). 129 test (108'i CI'da).
+
+**Sonradan tamamlanan düzeltme:** İlk sürümde container'lı `app`, host'ta native
+çalışan Ollama.app'e `host.docker.internal` üzerinden ulaşamıyordu (macOS Docker
+Desktop nüansı) — bu, projeyi başka bir ekibe/makineye verildiğinde de tekrar
+çıkabilecek, PORTATİF olmayan bir bağımlılıktı. Çözüm: Ollama artık `app` ile AYNI
+docker-compose ağının bir parçası (`ollama` servisi, modeli kendi içine çekiyor) —
+`app` host'a hiç çıkmadan `ollama:11434` adresine ulaşıyor. Bu, projeyi teslim alan
+HERKESİN (Ollama kurulu olsun olmasın) tek komutla (`docker compose up`) çalışan bir
+sistem elde etmesini sağlıyor. Bunu doğrularken **ayrı, gerçek bir kısıt ölçüldü**:
+llama3.1:8b yüklendiğinde ~5.2GB RAM kullanıyor; Docker Desktop'ın varsayılan bellek
+ayarı (bu makinede 7.75GB) tüm servisler (Qdrant/Postgres/Langfuse/Prometheus/Grafana/
+MLflow/app) + modelin YÜKLENME anındaki ek bellek ihtiyacıyla birlikte yetmeyip bir
+OOM (bellek yetersizliği) hatası verdi. Docker Desktop'a daha fazla bellek ayırmak
+(10-12GB+) ya da kısıtlı makinelerde mlflow/prometheus/grafana'yı geçici durdurmak
+bunu çözüyor — bu, herhangi bir LLM'i yerelde container'da çalıştıran her kurulum
+için standart, beklenen bir kaynak gereksinimi (bkz. `docker/docker-compose.yml`
+`ollama` servisi notu).
 
 Detaylı adım planı için bkz. proje kök klasöründeki `p1_proje_plani.md`.
 
@@ -181,6 +194,12 @@ tests/               pytest test paketi
 ```
 
 ## Çalıştırma (yerel makinede)
+
+**Sistem gereksinimi:** Docker Desktop'a en az **10-12GB RAM** ayırın (Settings →
+Resources → Memory) — llama3.1:8b container'da yüklendiğinde tek başına ~5.2GB
+kullanıyor, geri kalan servislerle (Qdrant/Langfuse/Prometheus/Grafana/MLflow)
+birlikte varsayılan ayarlarda (genelde ~8GB) OOM hatası verebilir (bkz. `docker/
+docker-compose.yml`'deki `ollama` servisi notu — bu makinede ölçülüp doğrulandı).
 
 ```bash
 git clone https://github.com/Slmnbal/p1-ai-passenger-assistant.git
