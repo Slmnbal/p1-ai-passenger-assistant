@@ -1,0 +1,722 @@
+[
+  {
+    "id": "q001",
+    "question": "Birden fazla havayolu ile seyahat ettiğimde bagaj kurallarını kim belirler?",
+    "category": "kontrol",
+    "expected_source_file": "data/policies/baggage_interline_transfer_policy.md",
+    "top1_source": "data/policies/baggage_policy.md",
+    "top1_score": 0.7429651,
+    "recall_1": false,
+    "recall_3": true
+  },
+  {
+    "id": "q002",
+    "question": "Economy Class'ta bagaj başına maksimum ağırlık kaç kg?",
+    "category": "kontrol",
+    "expected_source_file": "data/policies/baggage_policy.md",
+    "top1_source": "data/policies/us_baggage_rules_policy.md",
+    "top1_score": 0.8485405,
+    "recall_1": false,
+    "recall_3": false
+  },
+  {
+    "id": "q003",
+    "question": "Yakınım vefat ettiği için biletimi iptal etmek istiyorum, ücret nasıl iade edilir?",
+    "category": "kontrol",
+    "expected_source_file": "data/policies/bereavement_ticket_policy.md",
+    "top1_source": "data/policies/bereavement_ticket_policy.md",
+    "top1_score": 0.74584115,
+    "recall_1": true,
+    "recall_3": true
+  },
+  {
+    "id": "q004",
+    "question": "ABD uçuşlarında uçuş kapısında en geç ne zaman olmalıyım?",
+    "category": "kontrol",
+    "expected_source_file": "data/policies/boarding_gate_security_policy.md",
+    "top1_source": "data/policies/boarding_gate_security_policy.md",
+    "top1_score": 0.7899046,
+    "recall_1": true,
+    "recall_3": true
+  },
+  {
+    "id": "q005",
+    "question": "Business Class'ta kaç parça kabin bagajı alabilirim?",
+    "category": "kontrol",
+    "expected_source_file": "data/policies/cabin_excess_baggage_policy.md",
+    "top1_source": "data/policies/nonstandard_cabin_baggage_fees_policy.md",
+    "top1_score": 0.7573232,
+    "recall_1": false,
+    "recall_3": true
+  },
+  {
+    "id": "q006",
+    "question": "THY üzerinden araç kiralarsam hangi firmalardan kiralarım?",
+    "category": "kontrol",
+    "expected_source_file": "data/policies/car_rental_hotel_partners_policy.md",
+    "top1_source": "data/policies/car_rental_hotel_partners_policy.md",
+    "top1_score": 0.5345779,
+    "recall_1": true,
+    "recall_3": true
+  },
+  {
+    "id": "q007",
+    "question": "Grup biletlerde tek işlemde en fazla kaç yolcuya online check-in yapılabilir?",
+    "category": "kontrol",
+    "expected_source_file": "data/policies/checkin_procedures_detail_policy.md",
+    "top1_source": "data/policies/checkin_procedures_detail_policy.md",
+    "top1_score": 0.7444978,
+    "recall_1": true,
+    "recall_3": true
+  },
+  {
+    "id": "q008",
+    "question": "Online check-in ne zaman açılır ve ne zaman kapanır?",
+    "category": "kontrol",
+    "expected_source_file": "data/policies/checkin_reservation_policy.md",
+    "top1_source": "data/policies/checkin_procedures_detail_policy.md",
+    "top1_score": 0.753948,
+    "recall_1": false,
+    "recall_3": false
+  },
+  {
+    "id": "q009",
+    "question": "Corporate Club'a başvuru ücretli mi?",
+    "category": "kontrol",
+    "expected_source_file": "data/policies/corporate_club_application_policy.md",
+    "top1_source": "data/policies/corporate_club_application_policy.md",
+    "top1_score": 0.775105,
+    "recall_1": true,
+    "recall_3": true
+  },
+  {
+    "id": "q010",
+    "question": "Miles&Smiles Elite Corporate kart kişiye özel mi?",
+    "category": "kontrol",
+    "expected_source_file": "data/policies/corporate_club_elite_card_portal_policy.md",
+    "top1_source": "data/policies/corporate_club_elite_card_portal_policy.md",
+    "top1_score": 0.66099733,
+    "recall_1": true,
+    "recall_3": true
+  },
+  {
+    "id": "q011",
+    "question": "Turkish Airlines Corporate Club üyeliği ücretli mi ve hangi avantajları verir?",
+    "category": "kontrol",
+    "expected_source_file": "data/policies/corporate_club_policy.md",
+    "top1_source": "data/policies/corporate_club_policy.md",
+    "top1_score": 0.85375005,
+    "recall_1": true,
+    "recall_3": true
+  },
+  {
+    "id": "q012",
+    "question": "Uçuşum 4 saat gecikirse ne hakkım var?",
+    "category": "kontrol",
+    "expected_source_file": "data/policies/delay_cancellation_policy.md",
+    "top1_source": "data/policies/delay_cancellation_policy.md",
+    "top1_score": 0.65107405,
+    "recall_1": true,
+    "recall_3": true
+  },
+  {
+    "id": "q013",
+    "question": "As You Wish hizmeti kimler için, ne zaman seçim yapılır?",
+    "category": "kontrol",
+    "expected_source_file": "data/policies/dining_onboard_policy.md",
+    "top1_source": "data/policies/dining_onboard_policy.md",
+    "top1_score": 0.3528666,
+    "recall_1": true,
+    "recall_3": true
+  },
+  {
+    "id": "q014",
+    "question": "Rehber köpekle seyahat etmek için ne kadar önce rezervasyon yapmalıyım?",
+    "category": "kontrol",
+    "expected_source_file": "data/policies/disabled_medical_passenger_policy.md",
+    "top1_source": "data/policies/disabled_medical_passenger_policy.md",
+    "top1_score": 0.6808028,
+    "recall_1": true,
+    "recall_3": true
+  },
+  {
+    "id": "q015",
+    "question": "Hangi pasaport sahipleri Dubai'ye vizesiz girebilir?",
+    "category": "kontrol",
+    "expected_source_file": "data/policies/e_visa_uae_policy.md",
+    "top1_source": "data/policies/e_visa_uae_policy.md",
+    "top1_score": 0.60301954,
+    "recall_1": true,
+    "recall_3": true
+  },
+  {
+    "id": "q016",
+    "question": "Gençlik indirimi oranı nedir?",
+    "category": "kontrol",
+    "expected_source_file": "data/policies/fare_conditions_policy.md",
+    "top1_source": "data/policies/fare_conditions_policy.md",
+    "top1_score": 0.67162204,
+    "recall_1": true,
+    "recall_3": true
+  },
+  {
+    "id": "q017",
+    "question": "OHAL (olağanüstü hal) ne demektir?",
+    "category": "kontrol",
+    "expected_source_file": "data/policies/flight_disruption_operations_policy.md",
+    "top1_source": "data/policies/flight_disruption_operations_policy.md",
+    "top1_score": 0.28830987,
+    "recall_1": true,
+    "recall_3": true
+  },
+  {
+    "id": "q018",
+    "question": "EcoFly paketinde ücretsiz koltuk seçimi var mı?",
+    "category": "kontrol",
+    "expected_source_file": "data/policies/flight_packages_policy.md",
+    "top1_source": "data/policies/flight_packages_policy.md",
+    "top1_score": 0.7204047,
+    "recall_1": true,
+    "recall_3": true
+  },
+  {
+    "id": "q019",
+    "question": "Turkish Airlines Hediye Kartı nakde çevrilebilir mi?",
+    "category": "kontrol",
+    "expected_source_file": "data/policies/gift_card_policy.md",
+    "top1_source": "data/policies/gift_card_policy.md",
+    "top1_score": 0.8355596,
+    "recall_1": true,
+    "recall_3": true
+  },
+  {
+    "id": "q020",
+    "question": "Kaç yaşındaki çocuk refakatsiz seyahat edebilir?",
+    "category": "kontrol",
+    "expected_source_file": "data/policies/infant_child_passenger_policy.md",
+    "top1_source": "data/policies/infant_child_passenger_policy.md",
+    "top1_score": 0.7160139,
+    "recall_1": true,
+    "recall_3": true
+  },
+  {
+    "id": "q021",
+    "question": "Uçakta internet paketini ne zaman satın alabilirim?",
+    "category": "kontrol",
+    "expected_source_file": "data/policies/inflight_wifi_entertainment_policy.md",
+    "top1_source": "data/policies/inflight_wifi_entertainment_policy.md",
+    "top1_score": 0.68746364,
+    "recall_1": true,
+    "recall_3": true
+  },
+  {
+    "id": "q022",
+    "question": "Dış hat Economy paketlerinden hangisi iç hatta yok?",
+    "category": "kontrol",
+    "expected_source_file": "data/policies/international_flight_packages_policy.md",
+    "top1_source": "data/policies/flight_packages_policy.md",
+    "top1_score": 0.5283129,
+    "recall_1": false,
+    "recall_3": true
+  },
+  {
+    "id": "q023",
+    "question": "Bagajım kaybolursa hangi referans numarasını saklamalıyım?",
+    "category": "kontrol",
+    "expected_source_file": "data/policies/lost_damaged_baggage_policy.md",
+    "top1_source": "data/policies/lost_damaged_baggage_policy.md",
+    "top1_score": 0.612544,
+    "recall_1": true,
+    "recall_3": true
+  },
+  {
+    "id": "q024",
+    "question": "Yurt dışında THY salonu olmayan yerlerde nereden yararlanabilirim?",
+    "category": "kontrol",
+    "expected_source_file": "data/policies/lounge_access_policy.md",
+    "top1_source": "data/policies/lounge_access_policy.md",
+    "top1_score": 0.6251453,
+    "recall_1": true,
+    "recall_3": true
+  },
+  {
+    "id": "q025",
+    "question": "Şehit yakınları indirim oranı nedir?",
+    "category": "kontrol",
+    "expected_source_file": "data/policies/martyrs_veterans_policy.md",
+    "top1_source": "data/policies/bereavement_ticket_policy.md",
+    "top1_score": 0.584855,
+    "recall_1": false,
+    "recall_3": true
+  },
+  {
+    "id": "q026",
+    "question": "1000 Mil satın almak kaç dolar?",
+    "category": "kontrol",
+    "expected_source_file": "data/policies/miles_purchase_transfer_policy.md",
+    "top1_source": "data/policies/miles_purchase_transfer_policy.md",
+    "top1_score": 0.66890454,
+    "recall_1": true,
+    "recall_3": true
+  },
+  {
+    "id": "q027",
+    "question": "Ödül bilet kaç yıl geçerlidir?",
+    "category": "kontrol",
+    "expected_source_file": "data/policies/miles_redemption_policy.md",
+    "top1_source": "data/policies/miles_redemption_policy.md",
+    "top1_score": 0.729995,
+    "recall_1": true,
+    "recall_3": true
+  },
+  {
+    "id": "q028",
+    "question": "Kredi kartı harcamasından kazanılan Mil ne zaman hesaba işlenir?",
+    "category": "kontrol",
+    "expected_source_file": "data/policies/miles_smiles_credit_card_policy.md",
+    "top1_source": "data/policies/miles_purchase_transfer_policy.md",
+    "top1_score": 0.6293945,
+    "recall_1": false,
+    "recall_3": true
+  },
+  {
+    "id": "q029",
+    "question": "Star Alliance Gold kart sahiplerinin ayrıcalıkları neler?",
+    "category": "kontrol",
+    "expected_source_file": "data/policies/miles_smiles_membership_partners_policy.md",
+    "top1_source": "data/policies/miles_smiles_membership_partners_policy.md",
+    "top1_score": 0.7603586,
+    "recall_1": true,
+    "recall_3": true
+  },
+  {
+    "id": "q030",
+    "question": "Mil ile Statü Mili arasındaki fark nedir?",
+    "category": "kontrol",
+    "expected_source_file": "data/policies/miles_smiles_policy.md",
+    "top1_source": "data/policies/miles_purchase_transfer_policy.md",
+    "top1_score": 0.62625164,
+    "recall_1": false,
+    "recall_3": true
+  },
+  {
+    "id": "q031",
+    "question": "Er ve erbaş olarak askerlik görevini yerine getirenler için indirim oranı kaçtır?",
+    "category": "kontrol",
+    "expected_source_file": "data/policies/military_discount_cremated_remains_policy.md",
+    "top1_source": "data/policies/military_discount_cremated_remains_policy.md",
+    "top1_score": 0.6878235,
+    "recall_1": true,
+    "recall_3": true
+  },
+  {
+    "id": "q032",
+    "question": "Mobil uygulamadan otel rezervasyonu yapabilir miyim?",
+    "category": "kontrol",
+    "expected_source_file": "data/policies/mobile_app_policy.md",
+    "top1_source": "data/policies/lounge_access_policy.md",
+    "top1_score": 0.5633622,
+    "recall_1": false,
+    "recall_3": false
+  },
+  {
+    "id": "q033",
+    "question": "Bilette isim hatası varsa online kanaldan kaç harf düzeltebilirim?",
+    "category": "kontrol",
+    "expected_source_file": "data/policies/name_correction_ticket_issues_policy.md",
+    "top1_source": "data/policies/name_correction_ticket_issues_policy.md",
+    "top1_score": 0.7483619,
+    "recall_1": true,
+    "recall_3": true
+  },
+  {
+    "id": "q034",
+    "question": "Tek parça bagajın maksimum ağırlığı kaç kg olabilir?",
+    "category": "kontrol",
+    "expected_source_file": "data/policies/nonstandard_cabin_baggage_fees_policy.md",
+    "top1_source": "data/policies/nonstandard_cabin_baggage_fees_policy.md",
+    "top1_score": 0.89926076,
+    "recall_1": true,
+    "recall_3": true
+  },
+  {
+    "id": "q035",
+    "question": "Ücretli Business Upgrade sonrası bagaj hakkım değişir mi?",
+    "category": "kontrol",
+    "expected_source_file": "data/policies/paid_business_upgrade_policy.md",
+    "top1_source": "data/policies/paid_business_upgrade_policy.md",
+    "top1_score": 0.74865824,
+    "recall_1": true,
+    "recall_3": true
+  },
+  {
+    "id": "q036",
+    "question": "Online kanallarda kaç farklı para birimiyle ödeme yapılabilir?",
+    "category": "kontrol",
+    "expected_source_file": "data/policies/payment_policy.md",
+    "top1_source": "data/policies/payment_policy.md",
+    "top1_score": 0.6898655,
+    "recall_1": true,
+    "recall_3": true
+  },
+  {
+    "id": "q037",
+    "question": "Kabinde taşınan evcil hayvanın kafesiyle birlikte azami ağırlığı kaç kg?",
+    "category": "kontrol",
+    "expected_source_file": "data/policies/pet_travel_policy.md",
+    "top1_source": "data/policies/pet_travel_policy.md",
+    "top1_score": 0.76326346,
+    "recall_1": true,
+    "recall_3": true
+  },
+  {
+    "id": "q038",
+    "question": "Tekil gebelikte kaçıncı haftadan sonra uçakla seyahat edilemez?",
+    "category": "kontrol",
+    "expected_source_file": "data/policies/pregnant_passenger_policy.md",
+    "top1_source": "data/policies/pregnant_passenger_policy.md",
+    "top1_score": 0.78767437,
+    "recall_1": true,
+    "recall_3": true
+  },
+  {
+    "id": "q039",
+    "question": "Fiyat sabitleme kaç günlük seçenekler sunuyor?",
+    "category": "kontrol",
+    "expected_source_file": "data/policies/price_hold_policy.md",
+    "top1_source": "data/policies/price_hold_policy.md",
+    "top1_score": 0.6904114,
+    "recall_1": true,
+    "recall_3": true
+  },
+  {
+    "id": "q040",
+    "question": "İnternet sitesinden en fazla kaç kişilik grup bileti alabilirim?",
+    "category": "kontrol",
+    "expected_source_file": "data/policies/reservation_rules_policy.md",
+    "top1_source": "data/policies/reservation_rules_policy.md",
+    "top1_score": 0.7025987,
+    "recall_1": true,
+    "recall_3": true
+  },
+  {
+    "id": "q041",
+    "question": "Kabin bagajında en fazla kaç litre alkollü içecek taşıyabilirim?",
+    "category": "kontrol",
+    "expected_source_file": "data/policies/restricted_items_policy.md",
+    "top1_source": "data/policies/restricted_items_policy.md",
+    "top1_score": 0.6554685,
+    "recall_1": true,
+    "recall_3": true
+  },
+  {
+    "id": "q042",
+    "question": "Acil çıkış koltuğu seçmek için asgari yaş kaçtır?",
+    "category": "kontrol",
+    "expected_source_file": "data/policies/seat_selection_policy.md",
+    "top1_source": "data/policies/seat_selection_policy.md",
+    "top1_score": 0.7158067,
+    "recall_1": true,
+    "recall_3": true
+  },
+  {
+    "id": "q043",
+    "question": "Golf ve kayak ekipmanları için özel bagaj tarifesi var mı?",
+    "category": "kontrol",
+    "expected_source_file": "data/policies/special_equipment_baggage_policy.md",
+    "top1_source": "data/policies/special_equipment_baggage_policy.md",
+    "top1_score": 0.6589962,
+    "recall_1": true,
+    "recall_3": true
+  },
+  {
+    "id": "q044",
+    "question": "Özel yemek talebi en geç ne zaman yapılmalı?",
+    "category": "kontrol",
+    "expected_source_file": "data/policies/special_meal_extra_legroom_policy.md",
+    "top1_source": "data/policies/special_meal_extra_legroom_policy.md",
+    "top1_score": 0.61548585,
+    "recall_1": true,
+    "recall_3": true
+  },
+  {
+    "id": "q045",
+    "question": "Öğrenci indirimi iç hatlarda kaç oranında?",
+    "category": "kontrol",
+    "expected_source_file": "data/policies/student_passenger_policy.md",
+    "top1_source": "data/policies/student_passenger_policy.md",
+    "top1_score": 0.6437891,
+    "recall_1": true,
+    "recall_3": true
+  },
+  {
+    "id": "q046",
+    "question": "Aktarma (layover) ile duraklama (stopover) arasındaki fark nedir?",
+    "category": "kontrol",
+    "expected_source_file": "data/policies/ticketing_definitions_policy.md",
+    "top1_source": "data/policies/transfer_transit_policy.md",
+    "top1_score": 0.42340243,
+    "recall_1": false,
+    "recall_3": false
+  },
+  {
+    "id": "q047",
+    "question": "TK Cüzdan hangi para birimleriyle açılabilir?",
+    "category": "kontrol",
+    "expected_source_file": "data/policies/tk_wallet_policy.md",
+    "top1_source": "data/policies/tk_wallet_policy.md",
+    "top1_score": 0.7277041,
+    "recall_1": true,
+    "recall_3": true
+  },
+  {
+    "id": "q048",
+    "question": "Transit yolcu ne demektir?",
+    "category": "kontrol",
+    "expected_source_file": "data/policies/transfer_transit_policy.md",
+    "top1_source": "data/policies/transfer_transit_policy.md",
+    "top1_score": 0.6792697,
+    "recall_1": true,
+    "recall_3": true
+  },
+  {
+    "id": "q049",
+    "question": "XCover seyahat sigortasının sağlayıcısı kimdir?",
+    "category": "kontrol",
+    "expected_source_file": "data/policies/travel_insurance_policy.md",
+    "top1_source": "data/policies/travel_insurance_policy.md",
+    "top1_score": 0.7808545,
+    "recall_1": true,
+    "recall_3": true
+  },
+  {
+    "id": "q050",
+    "question": "Turkish Airlines Holidays'de koşulsuz iptal garantisi kaç gün öncesine kadar geçerli?",
+    "category": "kontrol",
+    "expected_source_file": "data/policies/turkish_airlines_holidays_policy.md",
+    "top1_source": "data/policies/turkish_airlines_holidays_policy.md",
+    "top1_score": 0.854936,
+    "recall_1": true,
+    "recall_3": true
+  },
+  {
+    "id": "q051",
+    "question": "ABD seferlerinde Economy Class kayıtlı bagaj ağırlık limiti kaç kg?",
+    "category": "kontrol",
+    "expected_source_file": "data/policies/us_baggage_rules_policy.md",
+    "top1_source": "data/policies/us_baggage_rules_policy.md",
+    "top1_score": 0.8333249,
+    "recall_1": true,
+    "recall_3": true
+  },
+  {
+    "id": "q052",
+    "question": "Mil kullanarak yaptığım kabin yükseltmede bagaj hakkım Business'a geçer mi?",
+    "category": "kafa_karistirici",
+    "expected_source_file": "data/policies/miles_redemption_policy.md",
+    "top1_source": "data/policies/nonstandard_cabin_baggage_fees_policy.md",
+    "top1_score": 0.64230245,
+    "recall_1": false,
+    "recall_3": false
+  },
+  {
+    "id": "q053",
+    "question": "Ücretle yaptığım kabin yükseltmede bagaj hakkım Business'a geçer mi?",
+    "category": "kafa_karistirici",
+    "expected_source_file": "data/policies/paid_business_upgrade_policy.md",
+    "top1_source": "data/policies/paid_business_upgrade_policy.md",
+    "top1_score": 0.6598661,
+    "recall_1": true,
+    "recall_3": true
+  },
+  {
+    "id": "q054",
+    "question": "Business Class'ta ABD seferinde kaç kabin bagajı hakkım var ve TSA kısıtı nedir?",
+    "category": "kafa_karistirici",
+    "expected_source_file": "data/policies/us_baggage_rules_policy.md",
+    "top1_source": "data/policies/us_baggage_rules_policy.md",
+    "top1_score": 0.7785648,
+    "recall_1": true,
+    "recall_3": true
+  },
+  {
+    "id": "q055",
+    "question": "%40 ve üzeri engelli yolcu indirimi iç hatta ve dış hatta kaç oranında?",
+    "category": "kafa_karistirici",
+    "expected_source_file": "data/policies/disabled_medical_passenger_policy.md",
+    "top1_source": "data/policies/fare_conditions_policy.md",
+    "top1_score": 0.8559147,
+    "recall_1": false,
+    "recall_3": true
+  },
+  {
+    "id": "q056",
+    "question": "Şehit yakınları indirimi hangi oranda uygulanır?",
+    "category": "kafa_karistirici",
+    "expected_source_file": "data/policies/martyrs_veterans_policy.md",
+    "top1_source": "data/policies/bereavement_ticket_policy.md",
+    "top1_score": 0.6590389,
+    "recall_1": false,
+    "recall_3": true
+  },
+  {
+    "id": "q057",
+    "question": "Öğrenci indirimi dış hat transit uçuşlarda kaç oranında?",
+    "category": "kafa_karistirici",
+    "expected_source_file": "data/policies/student_passenger_policy.md",
+    "top1_source": "data/policies/student_passenger_policy.md",
+    "top1_score": 0.7235928,
+    "recall_1": true,
+    "recall_3": true
+  },
+  {
+    "id": "q058",
+    "question": "Asker aileleri (KKTC Türk Barış Kuvvetleri) indirimi online kanallardan alınabilir mi?",
+    "category": "kafa_karistirici",
+    "expected_source_file": "data/policies/military_discount_cremated_remains_policy.md",
+    "top1_source": "data/policies/military_discount_cremated_remains_policy.md",
+    "top1_score": 0.7802914,
+    "recall_1": true,
+    "recall_3": true
+  },
+  {
+    "id": "q059",
+    "question": "İç hat uçuş paketlerinde hangi paketler var, dış hattaki FlexFly iç hatta da var mı?",
+    "category": "kafa_karistirici",
+    "expected_source_file": "data/policies/flight_packages_policy.md",
+    "top1_source": "data/policies/disabled_medical_passenger_policy.md",
+    "top1_score": 0.631266,
+    "recall_1": false,
+    "recall_3": false
+  },
+  {
+    "id": "q060",
+    "question": "Uluslararası kargo gönderimi için nasıl fiyat teklifi alabilirim?",
+    "category": "kapsam_disi",
+    "expected_source_file": null,
+    "top1_source": "data/policies/payment_policy.md",
+    "top1_score": 0.57285607,
+    "recall_1": null,
+    "recall_3": null
+  },
+  {
+    "id": "q061",
+    "question": "Turkish Airlines'da kabin memuru olmak için nasıl başvuru yapabilirim?",
+    "category": "kapsam_disi",
+    "expected_source_file": null,
+    "top1_source": "data/policies/corporate_club_elite_card_portal_policy.md",
+    "top1_score": 0.6527975,
+    "recall_1": null,
+    "recall_3": null
+  },
+  {
+    "id": "q062",
+    "question": "Uçağın teknik bakım periyodu ne sıklıkla yapılır?",
+    "category": "kapsam_disi",
+    "expected_source_file": null,
+    "top1_source": "data/policies/boarding_gate_security_policy.md",
+    "top1_score": 0.5466418,
+    "recall_1": null,
+    "recall_3": null
+  },
+  {
+    "id": "q063",
+    "question": "Turkish Airlines yatırımcı ilişkileri raporlarına nereden ulaşabilirim?",
+    "category": "kapsam_disi",
+    "expected_source_file": null,
+    "top1_source": "data/policies/corporate_club_policy.md",
+    "top1_score": 0.71420985,
+    "recall_1": null,
+    "recall_3": null
+  },
+  {
+    "id": "q064",
+    "question": "THY'nin sürdürülebilirlik ve karbon emisyonu hedefleri nelerdir?",
+    "category": "kapsam_disi",
+    "expected_source_file": null,
+    "top1_source": "data/policies/reservation_rules_policy.md",
+    "top1_score": 0.29770708,
+    "recall_1": null,
+    "recall_3": null
+  },
+  {
+    "id": "q065",
+    "question": "Filodaki uçak tiplerinin teknik özellikleri (menzil, koltuk sayısı) nedir?",
+    "category": "kapsam_disi",
+    "expected_source_file": null,
+    "top1_source": "data/policies/special_equipment_baggage_policy.md",
+    "top1_score": 0.5568466,
+    "recall_1": null,
+    "recall_3": null
+  },
+  {
+    "id": "q066",
+    "question": "Pilot olmak için hangi eğitim ve lisans gereklidir?",
+    "category": "kapsam_disi",
+    "expected_source_file": null,
+    "top1_source": "data/policies/baggage_interline_transfer_policy.md",
+    "top1_score": 0.45830378,
+    "recall_1": null,
+    "recall_3": null
+  },
+  {
+    "id": "q067",
+    "question": "Turkish Airlines hisse senedi bugün ne kadar işlem görüyor?",
+    "category": "kapsam_disi",
+    "expected_source_file": null,
+    "top1_source": "data/policies/gift_card_policy.md",
+    "top1_score": 0.7995261,
+    "recall_1": null,
+    "recall_3": null
+  },
+  {
+    "id": "q068",
+    "question": "Uçağım rötar yaparsa tazminat alabilir miyim?",
+    "category": "es_anlamli",
+    "expected_source_file": "data/policies/delay_cancellation_policy.md",
+    "top1_source": "data/policies/dining_onboard_policy.md",
+    "top1_score": 0.52747667,
+    "recall_1": false,
+    "recall_3": false
+  },
+  {
+    "id": "q069",
+    "question": "Valizim standarttan büyükse ne kadar ödeme yaparım?",
+    "category": "es_anlamli",
+    "expected_source_file": "data/policies/baggage_policy.md",
+    "top1_source": "data/policies/us_baggage_rules_policy.md",
+    "top1_score": 0.4707817,
+    "recall_1": false,
+    "recall_3": true
+  },
+  {
+    "id": "q070",
+    "question": "Köpeğimle uçağa binebilir miyim?",
+    "category": "es_anlamli",
+    "expected_source_file": "data/policies/pet_travel_policy.md",
+    "top1_source": "data/policies/disabled_medical_passenger_policy.md",
+    "top1_score": 0.5158725,
+    "recall_1": false,
+    "recall_3": true
+  },
+  {
+    "id": "q071",
+    "question": "Uçuşum ertelenirse param geri döner mi?",
+    "category": "es_anlamli",
+    "expected_source_file": "data/policies/delay_cancellation_policy.md",
+    "top1_source": "data/policies/delay_cancellation_policy.md",
+    "top1_score": 0.5754994,
+    "recall_1": true,
+    "recall_3": true
+  },
+  {
+    "id": "q072",
+    "question": "Doğumundan 5 gün sonra olan bebeğimle uçabilir miyim?",
+    "category": "es_anlamli",
+    "expected_source_file": "data/policies/infant_child_passenger_policy.md",
+    "top1_source": "data/policies/pregnant_passenger_policy.md",
+    "top1_score": 0.58212715,
+    "recall_1": false,
+    "recall_3": true
+  }
+]

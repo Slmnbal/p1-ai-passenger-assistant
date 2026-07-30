@@ -1,0 +1,410 @@
+[
+  {
+    "id": "m0020",
+    "text": "Uçakta wifi ücretli mi?",
+    "intent": "politika_bilgi_sorgusu",
+    "language": "tr",
+    "char_len": 23,
+    "word_len": 4
+  },
+  {
+    "id": "m0015",
+    "text": "Do infants need a separate ticket?",
+    "intent": "politika_bilgi_sorgusu",
+    "language": "en",
+    "char_len": 34,
+    "word_len": 6
+  },
+  {
+    "id": "m0011",
+    "text": "Kredi kartımla taksitli ödeme yapabilir miyim?",
+    "intent": "politika_bilgi_sorgusu",
+    "language": "tr",
+    "char_len": 46,
+    "word_len": 6
+  },
+  {
+    "id": "m0027",
+    "text": "Golf ekipmanımı nasıl taşırım?",
+    "intent": "politika_bilgi_sorgusu",
+    "language": "tr",
+    "char_len": 30,
+    "word_len": 4
+  },
+  {
+    "id": "m0023",
+    "text": "Seyahat sigortası kim sağlıyor?",
+    "intent": "politika_bilgi_sorgusu",
+    "language": "tr",
+    "char_len": 31,
+    "word_len": 4
+  },
+  {
+    "id": "m0007",
+    "text": "Online check-in ne zaman açılıyor?",
+    "intent": "politika_bilgi_sorgusu",
+    "language": "tr",
+    "char_len": 34,
+    "word_len": 5
+  },
+  {
+    "id": "m0006",
+    "text": "Hamileyken uçağa binebilir miyim?",
+    "intent": "politika_bilgi_sorgusu",
+    "language": "tr",
+    "char_len": 33,
+    "word_len": 4
+  },
+  {
+    "id": "m0013",
+    "text": "Business class'ta kaç parça bagaj alabilirim?",
+    "intent": "politika_bilgi_sorgusu",
+    "language": "mixed",
+    "char_len": 45,
+    "word_len": 6
+  },
+  {
+    "id": "m0012",
+    "text": "Kayıp bagajım için ne yapmalıyım?",
+    "intent": "politika_bilgi_sorgusu",
+    "language": "tr",
+    "char_len": 33,
+    "word_len": 5
+  },
+  {
+    "id": "m0045",
+    "text": "Bagajım hangi bantta çıkacak?",
+    "intent": "ucus_sorgulama",
+    "language": "tr",
+    "char_len": 29,
+    "word_len": 4
+  },
+  {
+    "id": "m0054",
+    "text": "Kaç yolcu kapasiteli bir uçakla gidiyorum?",
+    "intent": "ucus_sorgulama",
+    "language": "tr",
+    "char_len": 42,
+    "word_len": 6
+  },
+  {
+    "id": "m0046",
+    "text": "Flight status for TK123 please",
+    "intent": "ucus_sorgulama",
+    "language": "en",
+    "char_len": 30,
+    "word_len": 5
+  },
+  {
+    "id": "m0042",
+    "text": "Rezervasyonumu nasıl görüntülerim?",
+    "intent": "ucus_sorgulama",
+    "language": "tr",
+    "char_len": 34,
+    "word_len": 3
+  },
+  {
+    "id": "m0047",
+    "text": "Kaç dakika gecikme var şu an?",
+    "intent": "ucus_sorgulama",
+    "language": "tr",
+    "char_len": 29,
+    "word_len": 6
+  },
+  {
+    "id": "m0051",
+    "text": "Bugünkü tüm İstanbul çıkışlı uçuşları görebilir miyim?",
+    "intent": "ucus_sorgulama",
+    "language": "tr",
+    "char_len": 54,
+    "word_len": 7
+  },
+  {
+    "id": "m0048",
+    "text": "Uçuşum hâlâ zamanında mı?",
+    "intent": "ucus_sorgulama",
+    "language": "tr",
+    "char_len": 25,
+    "word_len": 4
+  },
+  {
+    "id": "m0038",
+    "text": "What time does flight TK1234 depart?",
+    "intent": "ucus_sorgulama",
+    "language": "en",
+    "char_len": 36,
+    "word_len": 6
+  },
+  {
+    "id": "m0057",
+    "text": "Uçuş numaramı unuttum, nasıl bulurum?",
+    "intent": "ucus_sorgulama",
+    "language": "tr",
+    "char_len": 37,
+    "word_len": 5
+  },
+  {
+    "id": "m0074",
+    "text": "Koltuk numaramı değiştir",
+    "intent": "rezervasyon_islem_talebi",
+    "language": "tr",
+    "char_len": 24,
+    "word_len": 3
+  },
+  {
+    "id": "m0075",
+    "text": "Uçuşumu iptal edip parayı geri istiyorum",
+    "intent": "rezervasyon_islem_talebi",
+    "language": "tr",
+    "char_len": 40,
+    "word_len": 6
+  },
+  {
+    "id": "m0085",
+    "text": "Uçuşuma refakatçi eklemek istiyorum",
+    "intent": "rezervasyon_islem_talebi",
+    "language": "tr",
+    "char_len": 35,
+    "word_len": 4
+  },
+  {
+    "id": "m0082",
+    "text": "Rezervasyonumdaki hatalı bilgiyi düzeltmek istiyorum",
+    "intent": "rezervasyon_islem_talebi",
+    "language": "tr",
+    "char_len": 52,
+    "word_len": 5
+  },
+  {
+    "id": "m0061",
+    "text": "Biletimi iptal etmek istiyorum",
+    "intent": "rezervasyon_islem_talebi",
+    "language": "tr",
+    "char_len": 30,
+    "word_len": 4
+  },
+  {
+    "id": "m0076",
+    "text": "Rezervasyonuma yolcu eklemek istiyorum",
+    "intent": "rezervasyon_islem_talebi",
+    "language": "tr",
+    "char_len": 38,
+    "word_len": 4
+  },
+  {
+    "id": "m0069",
+    "text": "I want to cancel my reservation",
+    "intent": "rezervasyon_islem_talebi",
+    "language": "en",
+    "char_len": 31,
+    "word_len": 6
+  },
+  {
+    "id": "m0077",
+    "text": "Biletimi TK Cüzdan ile ödemek istiyorum",
+    "intent": "rezervasyon_islem_talebi",
+    "language": "mixed",
+    "char_len": 39,
+    "word_len": 6
+  },
+  {
+    "id": "m0088",
+    "text": "Ekstra diz mesafeli koltuk satın almak istiyorum",
+    "intent": "rezervasyon_islem_talebi",
+    "language": "tr",
+    "char_len": 48,
+    "word_len": 7
+  },
+  {
+    "id": "m0114",
+    "text": "Biletimle check-in yapamıyorum, sorun ne olabilir?",
+    "intent": "checkin_talebi",
+    "language": "mixed",
+    "char_len": 50,
+    "word_len": 6
+  },
+  {
+    "id": "m0106",
+    "text": "Uçuşuma daha check-in yapmadım, şimdi yapabilir miyim?",
+    "intent": "checkin_talebi",
+    "language": "mixed",
+    "char_len": 54,
+    "word_len": 7
+  },
+  {
+    "id": "m0110",
+    "text": "Check-in yaptıktan sonra koltuk değiştirebilir miyim?",
+    "intent": "checkin_talebi",
+    "language": "mixed",
+    "char_len": 53,
+    "word_len": 6
+  },
+  {
+    "id": "m0112",
+    "text": "Please check me in for tomorrow's flight",
+    "intent": "checkin_talebi",
+    "language": "en",
+    "char_len": 40,
+    "word_len": 7
+  },
+  {
+    "id": "m0093",
+    "text": "Online check-in yapabilir miyim?",
+    "intent": "checkin_talebi",
+    "language": "mixed",
+    "char_len": 32,
+    "word_len": 4
+  },
+  {
+    "id": "m0102",
+    "text": "Çocuğumun check-in işlemini yapmak istiyorum",
+    "intent": "checkin_talebi",
+    "language": "mixed",
+    "char_len": 44,
+    "word_len": 5
+  },
+  {
+    "id": "m0100",
+    "text": "Bagajımı check-in sırasında teslim etmek istiyorum",
+    "intent": "checkin_talebi",
+    "language": "mixed",
+    "char_len": 50,
+    "word_len": 6
+  },
+  {
+    "id": "m0094",
+    "text": "Kiosktan check-in nasıl yapılır?",
+    "intent": "checkin_talebi",
+    "language": "mixed",
+    "char_len": 32,
+    "word_len": 4
+  },
+  {
+    "id": "m0126",
+    "text": "Bilet almak istiyorum ama emin değilim",
+    "intent": "belirsiz_acikliga_kavusturma",
+    "language": "tr",
+    "char_len": 38,
+    "word_len": 6
+  },
+  {
+    "id": "m0135",
+    "text": "Uygun mudur?",
+    "intent": "belirsiz_acikliga_kavusturma",
+    "language": "tr",
+    "char_len": 12,
+    "word_len": 2
+  },
+  {
+    "id": "m0131",
+    "text": "How much luggage can I bring?",
+    "intent": "belirsiz_acikliga_kavusturma",
+    "language": "en",
+    "char_len": 29,
+    "word_len": 6
+  },
+  {
+    "id": "m0117",
+    "text": "Check-in ne zaman açılıyor?",
+    "intent": "belirsiz_acikliga_kavusturma",
+    "language": "mixed",
+    "char_len": 27,
+    "word_len": 4
+  },
+  {
+    "id": "m0127",
+    "text": "Uçuş paketi hangisi bana uygun?",
+    "intent": "belirsiz_acikliga_kavusturma",
+    "language": "tr",
+    "char_len": 31,
+    "word_len": 5
+  },
+  {
+    "id": "m0140",
+    "text": "Kurallar nedir?",
+    "intent": "belirsiz_acikliga_kavusturma",
+    "language": "tr",
+    "char_len": 15,
+    "word_len": 2
+  },
+  {
+    "id": "m0116",
+    "text": "Bagaj hakkım ne kadar?",
+    "intent": "belirsiz_acikliga_kavusturma",
+    "language": "tr",
+    "char_len": 22,
+    "word_len": 4
+  },
+  {
+    "id": "m0134",
+    "text": "Ücretsiz mi bu?",
+    "intent": "belirsiz_acikliga_kavusturma",
+    "language": "tr",
+    "char_len": 15,
+    "word_len": 3
+  },
+  {
+    "id": "m0147",
+    "text": "Filodaki uçak tiplerini öğrenebilir miyim?",
+    "intent": "kapsam_disi",
+    "language": "tr",
+    "char_len": 42,
+    "word_len": 5
+  },
+  {
+    "id": "m0150",
+    "text": "Şirketinizde staj imkanı var mı?",
+    "intent": "kapsam_disi",
+    "language": "tr",
+    "char_len": 32,
+    "word_len": 5
+  },
+  {
+    "id": "m0156",
+    "text": "THY'nin genel merkezi nerede?",
+    "intent": "kapsam_disi",
+    "language": "tr",
+    "char_len": 29,
+    "word_len": 4
+  },
+  {
+    "id": "m0164",
+    "text": "Kurumsal sponsorluk başvurusu yapmak istiyorum",
+    "intent": "kapsam_disi",
+    "language": "tr",
+    "char_len": 46,
+    "word_len": 5
+  },
+  {
+    "id": "m0148",
+    "text": "THY'nin sürdürülebilirlik raporunu istiyorum",
+    "intent": "kapsam_disi",
+    "language": "tr",
+    "char_len": 44,
+    "word_len": 4
+  },
+  {
+    "id": "m0144",
+    "text": "Pilot olmak istiyorum, ne yapmalıyım?",
+    "intent": "kapsam_disi",
+    "language": "tr",
+    "char_len": 37,
+    "word_len": 5
+  },
+  {
+    "id": "m0165",
+    "text": "Uçuş simülatörü deneyimi sunuyor musunuz?",
+    "intent": "kapsam_disi",
+    "language": "tr",
+    "char_len": 41,
+    "word_len": 5
+  },
+  {
+    "id": "m0163",
+    "text": "What's the capital of France?",
+    "intent": "kapsam_disi",
+    "language": "en",
+    "char_len": 29,
+    "word_len": 5
+  }
+]

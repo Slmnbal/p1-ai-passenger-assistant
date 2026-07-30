@@ -1,0 +1,31 @@
+# .gitignore ile KARIŞTIRMAYIN: bu, build context'ten (imaja gireni) hariç tutar.
+# models/intent_full_10ep/ BİLİNÇLİ OLARAK burada YOK — planning_agent.py çalışma
+# zamanında ona ihtiyaç duyuyor, imaja girmesi gerekiyor (git'e girmemesiyle çelişmez,
+# bkz. kök .gitignore'daki not).
+
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.git/
+logs/
+*.jsonl
+
+# Deneysel/karşılaştırma amaçlı model checkpoint'leri — çalışma zamanında kullanılmıyor
+# (sadece evaluation/compare_intent_approaches.py'nin okuduğu küçük eval_results.json'lar
+# gerekiyor, onlar da zaten .gitignore'da ayrı tutuluyor).
+models/intent_frozen/
+models/intent_full/
+models/intent_full_20ep/
+models/*/checkpoints/
+
+# Sadece build/test zamanında gereken, runtime'da gerekmeyen klasörler
+evaluation/
+tests/
+docker/
+docs/
+# DİKKAT: "*.md" değil "/*.md" — sadece KÖK dizindeki .md dosyalarını (README.md gibi)
+# hariç tutar. "*.md" yazılsaydı data/policies/*.md de silinirdi ve policy_lookup.py
+# çalışma zamanında RAG korpusunu bulamazdı (bu hata build sırasında yakalanıp düzeltildi).
+/*.md
+data/intent/*.md

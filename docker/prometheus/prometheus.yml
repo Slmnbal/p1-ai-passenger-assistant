@@ -1,0 +1,19 @@
+# P1 uygulamasının /metrics endpoint'ini periyodik olarak toplar (scrape).
+#
+# Adım 10'dan itibaren `app` servisi de bu compose stack'inin bir parçası olduğu için
+# hedef `app:8000` — aynı Docker network'ü içindeki container adı+port (host.docker.internal
+# ARTIK GEREKMİYOR, o Adım 9'da app henüz container'lanmadan önce host'ta çalışırken
+# kullanılan geçici bir çözümdü).
+#
+# Not: `app` container'sız, doğrudan host'ta `uvicorn --port 8001` ile çalıştırılıyorsa
+# (örn. hızlı yerel geliştirme sırasında) bu hedefi geçici olarak `host.docker.internal:8001`
+# yapıp Prometheus'u yeniden başlatmak gerekir.
+
+global:
+  scrape_interval: 5s
+
+scrape_configs:
+  - job_name: "p1-app"
+    metrics_path: /metrics
+    static_configs:
+      - targets: ["app:8000"]

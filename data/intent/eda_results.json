@@ -1,0 +1,124 @@
+{
+  "total": 165,
+  "distribution": {
+    "politika_bilgi_sorgusu": 30,
+    "ucus_sorgulama": 30,
+    "rezervasyon_islem_talebi": 30,
+    "checkin_talebi": 25,
+    "belirsiz_acikliga_kavusturma": 25,
+    "kapsam_disi": 25
+  },
+  "language_distribution": {
+    "tr": 120,
+    "mixed": 28,
+    "en": 17
+  },
+  "class_language": {
+    "belirsiz_acikliga_kavusturma": {
+      "tr": 23,
+      "mixed": 1,
+      "en": 1
+    },
+    "checkin_talebi": {
+      "mixed": 19,
+      "tr": 3,
+      "en": 3
+    },
+    "kapsam_disi": {
+      "tr": 22,
+      "mixed": 1,
+      "en": 2
+    },
+    "politika_bilgi_sorgusu": {
+      "tr": 23,
+      "mixed": 3,
+      "en": 4
+    },
+    "rezervasyon_islem_talebi": {
+      "tr": 24,
+      "mixed": 2,
+      "en": 4
+    },
+    "ucus_sorgulama": {
+      "tr": 25,
+      "en": 3,
+      "mixed": 2
+    }
+  },
+  "length_stats": {
+    "belirsiz_acikliga_kavusturma": {
+      "avg_words": 3.84,
+      "min_words": 2,
+      "max_words": 7
+    },
+    "checkin_talebi": {
+      "avg_words": 5.56,
+      "min_words": 3,
+      "max_words": 9
+    },
+    "kapsam_disi": {
+      "avg_words": 4.8,
+      "min_words": 3,
+      "max_words": 7
+    },
+    "politika_bilgi_sorgusu": {
+      "avg_words": 5.166666666666667,
+      "min_words": 3,
+      "max_words": 9
+    },
+    "rezervasyon_islem_talebi": {
+      "avg_words": 5.066666666666666,
+      "min_words": 3,
+      "max_words": 9
+    },
+    "ucus_sorgulama": {
+      "avg_words": 5.133333333333334,
+      "min_words": 3,
+      "max_words": 7
+    }
+  },
+  "vocab_overlap_jaccard": {
+    "belirsiz_acikliga_kavusturma": {
+      "checkin_talebi": 0.096,
+      "kapsam_disi": 0.064,
+      "politika_bilgi_sorgusu": 0.128,
+      "rezervasyon_islem_talebi": 0.137,
+      "ucus_sorgulama": 0.069
+    },
+    "checkin_talebi": {
+      "belirsiz_acikliga_kavusturma": 0.096,
+      "kapsam_disi": 0.054,
+      "politika_bilgi_sorgusu": 0.083,
+      "rezervasyon_islem_talebi": 0.122,
+      "ucus_sorgulama": 0.066
+    },
+    "kapsam_disi": {
+      "belirsiz_acikliga_kavusturma": 0.064,
+      "checkin_talebi": 0.054,
+      "politika_bilgi_sorgusu": 0.051,
+      "rezervasyon_islem_talebi": 0.037,
+      "ucus_sorgulama": 0.051
+    },
+    "politika_bilgi_sorgusu": {
+      "belirsiz_acikliga_kavusturma": 0.128,
+      "checkin_talebi": 0.083,
+      "kapsam_disi": 0.051,
+      "rezervasyon_islem_talebi": 0.119,
+      "ucus_sorgulama": 0.066
+    },
+    "rezervasyon_islem_talebi": {
+      "belirsiz_acikliga_kavusturma": 0.137,
+      "checkin_talebi": 0.122,
+      "kapsam_disi": 0.037,
+      "politika_bilgi_sorgusu": 0.119,
+      "ucus_sorgulama": 0.06
+    },
+    "ucus_sorgulama": {
+      "belirsiz_acikliga_kavusturma": 0.069,
+      "checkin_talebi": 0.066,
+      "kapsam_disi": 0.051,
+      "politika_bilgi_sorgusu": 0.066,
+      "rezervasyon_islem_talebi": 0.06
+    }
+  }
+}

@@ -1,0 +1,35 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  lint-and-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: "pip"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install ruff
+
+      - name: Lint (ruff)
+        run: ruff check app/ tests/
+
+      # `-m "not live"`: Qdrant/Ollama/Langfuse gerektiren testler (bkz. pytest.ini
+      # "live" marker açıklaması) CI runner'da yok — bu testler yerelde, servisler
+      # açıkken çalıştırılıyor. models/intent_full_10ep/model.safetensors da git'te
+      # değil (GitHub'ın 100MB dosya sınırını aşıyor, bkz. .gitignore) — o modeli
+      # yükleyen testler de aynı "live" işaretiyle CI'dan hariç tutuluyor.
+      - name: Test (canlı servis/model ağırlığı gerektirmeyen alt küme)
+        run: pytest tests/ -m "not live" -v

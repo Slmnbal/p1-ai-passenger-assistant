@@ -1,0 +1,16 @@
+[tool.ruff]
+# 160: proje genelinde Türkçe docstring/yorumlar ve test fixture'larındaki uzun sözlük
+# literalleri (bkz. tests/test_guardrails.py) 88-110 aralığının epey üzerine çıkıyor;
+# bunları zorla sarmalamak yerine kodun doğal genişliğini yansıtan bir sınır seçildi.
+line-length = 160
+target-version = "py312"
+
+[tool.ruff.lint]
+# Standart, "klasik flake8" seviyesinde bir küme seçildi: pyflakes (F) + pycodestyle
+# hataları (E) + import sıralaması (I). Ruff'ın öntanımlı geniş kümesindeki S (bandit)
+# ve BLE (blind-except) kuralları BİLİNÇLİ OLARAK dışarıda bırakıldı — bu projede
+# `except Exception: pass` kalıbı (örn. app/observability/tracing.py) kasıtlı bir
+# dayanıklılık kararı (Langfuse/Prometheus ayakta değilse agent akışı asla bunun
+# yüzünden kırılmamalı) ve zaten docstring'lerde gerekçelendirilmiş; genel bir lint
+# kuralının bunu "hata" saymasını istemiyoruz.
+select = ["E", "F", "I"]

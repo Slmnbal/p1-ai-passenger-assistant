@@ -1,0 +1,25 @@
+{
+  "_kaynak_notu": "Rota, havalimanı kodu ve tipik uçuş süreleri Turkish Airlines'ın gerçek, kamuya açık uçuş ağına dayanmaktadır (bkz. turkishairlines.com/tr-tr/ucus-noktalarimiz). Uçuş numarası, saat, kalkış/varış ve doluluk gibi alanlar bu portföy projesi için üretilmiş sentetik verilerdir; THY'nin gerçek zamanlı sistemleriyle bağlantısı yoktur.",
+  "airports": [
+    {"code": "IST", "name": "İstanbul Havalimanı", "city": "İstanbul", "country": "TR"},
+    {"code": "SAW", "name": "Sabiha Gökçen Havalimanı", "city": "İstanbul", "country": "TR"},
+    {"code": "ESB", "name": "Esenboğa Havalimanı", "city": "Ankara", "country": "TR"},
+    {"code": "ADB", "name": "Adnan Menderes Havalimanı", "city": "İzmir", "country": "TR"},
+    {"code": "AYT", "name": "Antalya Havalimanı", "city": "Antalya", "country": "TR"},
+    {"code": "JFK", "name": "John F. Kennedy Havalimanı", "city": "New York", "country": "US"},
+    {"code": "LHR", "name": "Heathrow Havalimanı", "city": "Londra", "country": "GB"},
+    {"code": "CDG", "name": "Charles de Gaulle Havalimanı", "city": "Paris", "country": "FR"},
+    {"code": "DXB", "name": "Dubai Uluslararası Havalimanı", "city": "Dubai", "country": "AE"}
+  ],
+  "flights": [
+    {"flight_no": "TK1", "origin": "IST", "destination": "JFK", "type": "dis_hat", "typical_duration_min": 660},
+    {"flight_no": "TK5", "origin": "IST", "destination": "LHR", "type": "dis_hat", "typical_duration_min": 240},
+    {"flight_no": "TK1823", "origin": "IST", "destination": "CDG", "type": "dis_hat", "typical_duration_min": 235},
+    {"flight_no": "TK751", "origin": "IST", "destination": "DXB", "type": "dis_hat", "typical_duration_min": 220},
+    {"flight_no": "TK2110", "origin": "IST", "destination": "ESB", "type": "ic_hat", "typical_duration_min": 70},
+    {"flight_no": "TK2320", "origin": "IST", "destination": "ADB", "type": "ic_hat", "typical_duration_min": 75},
+    {"flight_no": "TK2436", "origin": "IST", "destination": "AYT", "type": "ic_hat", "typical_duration_min": 80},
+    {"flight_no": "TK2111", "origin": "ESB", "destination": "IST", "type": "ic_hat", "typical_duration_min": 70}
+  ],
+  "_sentetik_veri_notu": "PNR, yolcu adı, koltuk, ödeme ve doluluk verileri aşağıdaki mock_reservations.json içinde tamamen sentetiktir; gerçek yolcu verisiyle hiçbir ilişkisi yoktur."
+}

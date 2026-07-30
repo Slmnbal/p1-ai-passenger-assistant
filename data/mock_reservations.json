@@ -1,0 +1,38 @@
+{
+  "_uyari": "Bu dosyadaki TÜM kayıtlar (PNR, yolcu adı, koltuk, ödeme) tamamen sentetiktir; test/demo amaçlıdır. Gerçek bir yolcu veya rezervasyonla ilişkisi yoktur (bkz. proje planı Kısıt 2 ve Veri Stratejisi).",
+  "reservations": [
+    {
+      "pnr": "SYN1A2B",
+      "passenger_name": "Ayşe Yılmaz",
+      "flight_no": "TK2110",
+      "date": "2026-08-03",
+      "cabin_class": "economy",
+      "fare_type": "ExtraFly",
+      "seat": "14C",
+      "checked_in": false,
+      "baggage_pieces": 1
+    },
+    {
+      "pnr": "SYN3C4D",
+      "passenger_name": "Mehmet Demir",
+      "flight_no": "TK1",
+      "date": "2026-08-10",
+      "cabin_class": "business",
+      "fare_type": "Business",
+      "seat": "3A",
+      "checked_in": false,
+      "baggage_pieces": 2
+    },
+    {
+      "pnr": "SYN5E6F",
+      "passenger_name": "Zeynep Kaya",
+      "flight_no": "TK2320",
+      "date": "2026-07-29",
+      "cabin_class": "economy",
+      "fare_type": "EcoFly",
+      "seat": "22F",
+      "checked_in": true,
+      "baggage_pieces": 0
+    }
+  ]
+}

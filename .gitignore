@@ -1,0 +1,15 @@
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.ruff_cache/
+logs/
+*.jsonl
+.env
+
+# Fine-tune edilmiş model ağırlıkları — GitHub'ın 100MB dosya sınırını aşıyor (her biri
+# ~422MB, bkz. Adım 10). Küçük metadata (config.json, tokenizer*, eval_results.json,
+# MODEL_CARD.md) BİLEREK tutuluyor — reproducibility ve ADR referansları için gerekliler.
+# Ağırlıklar `app/intent/train_classifier.py` ile yeniden üretilebilir (bkz. README).
+models/*/model.safetensors
+models/*/checkpoints/

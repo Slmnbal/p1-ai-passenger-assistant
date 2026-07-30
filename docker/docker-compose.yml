@@ -1,0 +1,160 @@
+# P1 - yerel geliştirme ortamı. Tamamı ücretsiz/self-hosted.
+# Adım 3'te Qdrant, Adım 4'te MLflow, Adım 9'da Langfuse+Prometheus+Grafana, Adım 10'da
+# "app" servisi eklenip test edilecek. Her adımda ilgili servis birlikte doğrulanarak açıldı.
+#
+# Adım 9 notu: langfuse-db'nin host portu 5433 (5432 değil) — bu makinede zaten yerel bir
+# Postgres sürecinin 5432'yi kullandığı ölçüldü (lsof ile doğrulandı), çakışmayı önlemek
+# için host tarafı kaydırıldı (container içi hâlâ 5432, servisler arası iletişimi etkilemez).
+# Langfuse sırları (`NEXTAUTH_SECRET`/`SALT`/`ENCRYPTION_KEY`) `openssl rand -hex` ile
+# üretildi — resmi self-host rehberindeki placeholder değerler değil.
+
+services:
+  qdrant:
+    image: qdrant/qdrant:latest
+    ports:
+      - "6333:6333"   # REST API
+      - "6334:6334"   # gRPC
+    volumes:
+      - qdrant_data:/qdrant/storage
+
+  mlflow:
+    image: ghcr.io/mlflow/mlflow:latest
+    ports:
+      - "5001:5000"   # 5000 host'ta AirPlay Receiver ile catisabiliyor (macOS), bu yuzden 5001
+    volumes:
+      - mlflow_data:/mlflow
+    command: >
+      mlflow server --host 0.0.0.0 --port 5000
+      --backend-store-uri sqlite:////mlflow/mlflow.db
+      --default-artifact-root /mlflow/artifacts
+
+  ollama:
+    image: ollama/ollama:latest
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama_data:/root/.ollama
+    # İlk çalıştırmada model çekmek gerekir: docker exec -it <container> ollama pull llama3.1
+
+  # --- Adım 9: Langfuse (self-hosted, LLM/agent trace) ---
+  langfuse-db:
+    image: postgres:17
+    restart: always
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 3s
+      timeout: 3s
+      retries: 10
+      start_period: 30s
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=postgres
+    ports:
+      - "5433:5432"   # host'ta yerel bir postgres zaten 5432'yi kullanıyor
+    volumes:
+      - langfuse_db_data:/var/lib/postgresql/data
+
+  langfuse-server:
+    image: langfuse/langfuse:2
+    depends_on:
+      langfuse-db:
+        condition: service_healthy
+    ports:
+      - "3000:3000"
+    environment:
+      - DATABASE_URL=postgresql://postgres:postgres@langfuse-db:5432/postgres
+      - NEXTAUTH_SECRET=4ffc21379f2e332e6058ea0090d389f7f85daa1b2a74f9a969b493e8e3e13f27
+      - SALT=0aa6c536b6aeec55a3b32b8c84f7689e
+      - ENCRYPTION_KEY=f7f3160fd2b8ceb223217eb3cb23d4cb1d6983b6d7bacd3c379c6b25a8de1e9a
+      - NEXTAUTH_URL=http://localhost:3000
+      - TELEMETRY_ENABLED=false
+      # İlk açılışta org/proje/kullanıcı ve API anahtarlarını otomatik oluşturur —
+      # UI'da elle tıklamadan Python SDK'sının kullanabileceği sabit anahtarlar üretmek için.
+      - LANGFUSE_INIT_ORG_ID=p1-org
+      - LANGFUSE_INIT_ORG_NAME=P1 Portfoy
+      - LANGFUSE_INIT_PROJECT_ID=p1-project
+      - LANGFUSE_INIT_PROJECT_NAME=P1 AI Passenger Assistant
+      - LANGFUSE_INIT_PROJECT_PUBLIC_KEY=pk-lf-p1-local-dev-key
+      - LANGFUSE_INIT_PROJECT_SECRET_KEY=sk-lf-p1-local-dev-secret
+      - LANGFUSE_INIT_USER_EMAIL=selman@local.dev
+      - LANGFUSE_INIT_USER_NAME=Selman
+      - LANGFUSE_INIT_USER_PASSWORD=p1-local-dev-password
+
+  # --- Adım 9: Prometheus (sistem metrikleri) ---
+  prometheus:
+    image: prom/prometheus:latest
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - prometheus_data:/prometheus
+    extra_hosts:
+      - "host.docker.internal:host-gateway"   # Linux'ta da host.docker.internal çalışsın diye
+
+  # --- Adım 9: Grafana (dashboard) ---
+  grafana:
+    image: grafana/grafana:latest
+    ports:
+      - "3001:3000"   # 3000 Langfuse'da, Grafana'yı 3001'e aldık
+    environment:
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+      - GF_AUTH_ANONYMOUS_ENABLED=true
+      - GF_AUTH_ANONYMOUS_ORG_ROLE=Viewer
+    volumes:
+      - ./grafana/provisioning:/etc/grafana/provisioning:ro
+      - ./grafana/dashboards:/var/lib/grafana/dashboards:ro
+      - grafana_data:/var/lib/grafana
+    depends_on:
+      - prometheus
+
+  # --- Adım 10: P1'in kendisi (container'lanmış) ---
+  # Host'ta 8000 zaten ilgisiz başka bir projeye ait olduğu için (bkz. README/prometheus.yml
+  # notu) host tarafı 8001 — container içi hâlâ 8000, servisler arası iletişimi etkilemez.
+  #
+  # OPENAI_BASE_URL NEDEN host.docker.internal (compose'daki `ollama` servisi DEĞİL):
+  # Bu projede Ollama, yukarıdaki `ollama` servisi üzerinden değil, HOST makinede yerel
+  # kurulumla çalıştırılıyor (llama3.1:8b zaten `ollama pull` ile indirilmiş durumda,
+  # bkz. README). `ollama` servisine bağımlı olsaydık `docker compose up` modeli sıfırdan
+  # ~4.9GB indirirdi — gereksiz ve yavaş. `ollama` servis tanımı, container'lı Ollama
+  # tercih edenler için compose dosyasında duruyor ama `app` ona bağımlı DEĞİL.
+  #
+  # BİLİNEN SINIRLAMA (bu makinede ölçüldü): macOS Ollama.app varsayılan olarak sadece
+  # 127.0.0.1'e bind oluyor; Docker Desktop'ın `host.docker.internal` yönlendirmesi bazı
+  # kurulumlarda loopback-only servislere ulaşamıyor. `/chat`'in tool/guardrail/RAG-retrieval
+  # kısımları (Qdrant, embedding, fine-tune model) container üzerinden CANLI doğrulandı;
+  # yalnızca Ollama'ya giden LLM cevap üretimi adımı bu host'ta container'dan erişilemedi
+  # (host'ta `uvicorn` ile doğrudan çalıştırıldığında sorunsuz). Kalıcı çözüm: Ollama.app'i
+  # `OLLAMA_HOST=0.0.0.0:11434` ile başlatmak (bu oturumda `launchctl setenv` + yeniden
+  # başlatma denendi ama macOS'un GUI-app env yayma davranışı yüzünden kalıcı olmadı —
+  # tam bir çözüm muhtemelen çıkış yapıp tekrar giriş yapmayı gerektiriyor, bu proje
+  # kapsamında buna girişilmedi).
+  app:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    ports:
+      - "8001:8000"
+    environment:
+      - OPENAI_BASE_URL=http://host.docker.internal:11434/v1
+      - OPENAI_API_KEY=ollama-local-no-key-needed
+      - OLLAMA_MODEL=llama3.1:8b
+      - QDRANT_URL=http://qdrant:6333
+      - LANGFUSE_HOST=http://langfuse-server:3000
+      - LANGFUSE_PUBLIC_KEY=pk-lf-p1-local-dev-key
+      - LANGFUSE_SECRET_KEY=sk-lf-p1-local-dev-secret
+      - LOG_LEVEL=INFO
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    depends_on:
+      - qdrant
+      - langfuse-server
+
+volumes:
+  qdrant_data:
+  ollama_data:
+  mlflow_data:
+  langfuse_db_data:
+  prometheus_data:
+  grafana_data:

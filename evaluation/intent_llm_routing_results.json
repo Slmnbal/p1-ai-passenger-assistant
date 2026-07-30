@@ -1,0 +1,261 @@
+{
+  "model": "llama3.1:8b",
+  "results": [
+    {
+      "text": "Uçakta wifi ücretli mi?",
+      "y_true": "politika_bilgi_sorgusu",
+      "y_pred": "ucus_sorgulama"
+    },
+    {
+      "text": "Do infants need a separate ticket?",
+      "y_true": "politika_bilgi_sorgusu",
+      "y_pred": "politika_bilgi_sorgusu"
+    },
+    {
+      "text": "Kredi kartımla taksitli ödeme yapabilir miyim?",
+      "y_true": "politika_bilgi_sorgusu",
+      "y_pred": "politika_bilgi_sorgusu"
+    },
+    {
+      "text": "Golf ekipmanımı nasıl taşırım?",
+      "y_true": "politika_bilgi_sorgusu",
+      "y_pred": "ucus_sorgulama"
+    },
+    {
+      "text": "Seyahat sigortası kim sağlıyor?",
+      "y_true": "politika_bilgi_sorgusu",
+      "y_pred": "politika_bilgi_sorgusu"
+    },
+    {
+      "text": "Online check-in ne zaman açılıyor?",
+      "y_true": "politika_bilgi_sorgusu",
+      "y_pred": "ucus_sorgulama"
+    },
+    {
+      "text": "Hamileyken uçağa binebilir miyim?",
+      "y_true": "politika_bilgi_sorgusu",
+      "y_pred": "politika_bilgi_sorgusu"
+    },
+    {
+      "text": "Business class'ta kaç parça bagaj alabilirim?",
+      "y_true": "politika_bilgi_sorgusu",
+      "y_pred": "politika_bilgi_sorgusu"
+    },
+    {
+      "text": "Kayıp bagajım için ne yapmalıyım?",
+      "y_true": "politika_bilgi_sorgusu",
+      "y_pred": "politika_bilgi_sorgusu"
+    },
+    {
+      "text": "Bagajım hangi bantta çıkacak?",
+      "y_true": "ucus_sorgulama",
+      "y_pred": "ucus_sorgulama"
+    },
+    {
+      "text": "Kaç yolcu kapasiteli bir uçakla gidiyorum?",
+      "y_true": "ucus_sorgulama",
+      "y_pred": "ucus_sorgulama"
+    },
+    {
+      "text": "Flight status for TK123 please",
+      "y_true": "ucus_sorgulama",
+      "y_pred": "ucus_sorgulama"
+    },
+    {
+      "text": "Rezervasyonumu nasıl görüntülerim?",
+      "y_true": "ucus_sorgulama",
+      "y_pred": "ucus_sorgulama"
+    },
+    {
+      "text": "Kaç dakika gecikme var şu an?",
+      "y_true": "ucus_sorgulama",
+      "y_pred": "ucus_sorgulama"
+    },
+    {
+      "text": "Bugünkü tüm İstanbul çıkışlı uçuşları görebilir miyim?",
+      "y_true": "ucus_sorgulama",
+      "y_pred": "ucus_sorgulama"
+    },
+    {
+      "text": "Uçuşum hâlâ zamanında mı?",
+      "y_true": "ucus_sorgulama",
+      "y_pred": "ucus_sorgulama"
+    },
+    {
+      "text": "What time does flight TK1234 depart?",
+      "y_true": "ucus_sorgulama",
+      "y_pred": "ucus_sorgulama"
+    },
+    {
+      "text": "Uçuş numaramı unuttum, nasıl bulurum?",
+      "y_true": "ucus_sorgulama",
+      "y_pred": "ucus_sorgulama"
+    },
+    {
+      "text": "Koltuk numaramı değiştir",
+      "y_true": "rezervasyon_islem_talebi",
+      "y_pred": "rezervasyon_islem_talebi"
+    },
+    {
+      "text": "Uçuşumu iptal edip parayı geri istiyorum",
+      "y_true": "rezervasyon_islem_talebi",
+      "y_pred": "rezervasyon_islem_talebi"
+    },
+    {
+      "text": "Uçuşuma refakatçi eklemek istiyorum",
+      "y_true": "rezervasyon_islem_talebi",
+      "y_pred": "rezervasyon_islem_talebi"
+    },
+    {
+      "text": "Rezervasyonumdaki hatalı bilgiyi düzeltmek istiyorum",
+      "y_true": "rezervasyon_islem_talebi",
+      "y_pred": "rezervasyon_islem_talebi"
+    },
+    {
+      "text": "Biletimi iptal etmek istiyorum",
+      "y_true": "rezervasyon_islem_talebi",
+      "y_pred": "rezervasyon_islem_talebi"
+    },
+    {
+      "text": "Rezervasyonuma yolcu eklemek istiyorum",
+      "y_true": "rezervasyon_islem_talebi",
+      "y_pred": "rezervasyon_islem_talebi"
+    },
+    {
+      "text": "I want to cancel my reservation",
+      "y_true": "rezervasyon_islem_talebi",
+      "y_pred": "rezervasyon_islem_talebi"
+    },
+    {
+      "text": "Biletimi TK Cüzdan ile ödemek istiyorum",
+      "y_true": "rezervasyon_islem_talebi",
+      "y_pred": "politika_bilgi_sorgusu"
+    },
+    {
+      "text": "Ekstra diz mesafeli koltuk satın almak istiyorum",
+      "y_true": "rezervasyon_islem_talebi",
+      "y_pred": "rezervasyon_islem_talebi"
+    },
+    {
+      "text": "Biletimle check-in yapamıyorum, sorun ne olabilir?",
+      "y_true": "checkin_talebi",
+      "y_pred": "checkin_talebi"
+    },
+    {
+      "text": "Uçuşuma daha check-in yapmadım, şimdi yapabilir miyim?",
+      "y_true": "checkin_talebi",
+      "y_pred": "checkin_talebi"
+    },
+    {
+      "text": "Check-in yaptıktan sonra koltuk değiştirebilir miyim?",
+      "y_true": "checkin_talebi",
+      "y_pred": "checkin_talebi"
+    },
+    {
+      "text": "Please check me in for tomorrow's flight",
+      "y_true": "checkin_talebi",
+      "y_pred": "checkin_talebi"
+    },
+    {
+      "text": "Online check-in yapabilir miyim?",
+      "y_true": "checkin_talebi",
+      "y_pred": "checkin_talebi"
+    },
+    {
+      "text": "Çocuğumun check-in işlemini yapmak istiyorum",
+      "y_true": "checkin_talebi",
+      "y_pred": "checkin_talebi"
+    },
+    {
+      "text": "Bagajımı check-in sırasında teslim etmek istiyorum",
+      "y_true": "checkin_talebi",
+      "y_pred": "checkin_talebi"
+    },
+    {
+      "text": "Kiosktan check-in nasıl yapılır?",
+      "y_true": "checkin_talebi",
+      "y_pred": "checkin_talebi"
+    },
+    {
+      "text": "Bilet almak istiyorum ama emin değilim",
+      "y_true": "belirsiz_acikliga_kavusturma",
+      "y_pred": "belirsiz_acikliga_kavusturma"
+    },
+    {
+      "text": "Uygun mudur?",
+      "y_true": "belirsiz_acikliga_kavusturma",
+      "y_pred": "politika_bilgi_sorgusu"
+    },
+    {
+      "text": "How much luggage can I bring?",
+      "y_true": "belirsiz_acikliga_kavusturma",
+      "y_pred": "politika_bilgi_sorgusu"
+    },
+    {
+      "text": "Check-in ne zaman açılıyor?",
+      "y_true": "belirsiz_acikliga_kavusturma",
+      "y_pred": "ucus_sorgulama"
+    },
+    {
+      "text": "Uçuş paketi hangisi bana uygun?",
+      "y_true": "belirsiz_acikliga_kavusturma",
+      "y_pred": "politika_bilgi_sorgusu"
+    },
+    {
+      "text": "Kurallar nedir?",
+      "y_true": "belirsiz_acikliga_kavusturma",
+      "y_pred": "politika_bilgi_sorgusu"
+    },
+    {
+      "text": "Bagaj hakkım ne kadar?",
+      "y_true": "belirsiz_acikliga_kavusturma",
+      "y_pred": "politika_bilgi_sorgusu"
+    },
+    {
+      "text": "Ücretsiz mi bu?",
+      "y_true": "belirsiz_acikliga_kavusturma",
+      "y_pred": "politika_bilgi_sorgusu"
+    },
+    {
+      "text": "Filodaki uçak tiplerini öğrenebilir miyim?",
+      "y_true": "kapsam_disi",
+      "y_pred": "ucus_sorgulama"
+    },
+    {
+      "text": "Şirketinizde staj imkanı var mı?",
+      "y_true": "kapsam_disi",
+      "y_pred": "kapsam_disi"
+    },
+    {
+      "text": "THY'nin genel merkezi nerede?",
+      "y_true": "kapsam_disi",
+      "y_pred": "politika_bilgi_sorgusu"
+    },
+    {
+      "text": "Kurumsal sponsorluk başvurusu yapmak istiyorum",
+      "y_true": "kapsam_disi",
+      "y_pred": "kapsam_disi"
+    },
+    {
+      "text": "THY'nin sürdürülebilirlik raporunu istiyorum",
+      "y_true": "kapsam_disi",
+      "y_pred": "politika_bilgi_sorgusu"
+    },
+    {
+      "text": "Pilot olmak istiyorum, ne yapmalıyım?",
+      "y_true": "kapsam_disi",
+      "y_pred": "belirsiz_acikliga_kavusturma"
+    },
+    {
+      "text": "Uçuş simülatörü deneyimi sunuyor musunuz?",
+      "y_true": "kapsam_disi",
+      "y_pred": "belirsiz_acikliga_kavusturma"
+    },
+    {
+      "text": "What's the capital of France?",
+      "y_true": "kapsam_disi",
+      "y_pred": "politika_bilgi_sorgusu"
+    }
+  ],
+  "elapsed_seconds": 34.04772210121155
+}

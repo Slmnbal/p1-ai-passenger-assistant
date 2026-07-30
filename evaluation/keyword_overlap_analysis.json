@@ -1,0 +1,745 @@
+[
+  {
+    "category": "kontrol",
+    "question": "Birden fazla havayolu ile seyahat ettiğimde bagaj kurallarını kim belirler?",
+    "emb_score": 0.7429651,
+    "shared_token_count": 2,
+    "shared_tokens": [
+      "bagaj",
+      "seyahat"
+    ]
+  },
+  {
+    "category": "kontrol",
+    "question": "Economy Class'ta bagaj başına maksimum ağırlık kaç kg?",
+    "emb_score": 0.8485405,
+    "shared_token_count": 4,
+    "shared_tokens": [
+      "ağırlık",
+      "bagaj",
+      "class",
+      "economy"
+    ]
+  },
+  {
+    "category": "kontrol",
+    "question": "Yakınım vefat ettiği için biletimi iptal etmek istiyorum, ücret nasıl iade edilir?",
+    "emb_score": 0.74584115,
+    "shared_token_count": 3,
+    "shared_tokens": [
+      "edilir",
+      "iade",
+      "vefat"
+    ]
+  },
+  {
+    "category": "kontrol",
+    "question": "ABD uçuşlarında uçuş kapısında en geç ne zaman olmalıyım?",
+    "emb_score": 0.7899046,
+    "shared_token_count": 4,
+    "shared_tokens": [
+      "abd",
+      "geç",
+      "kapısında",
+      "uçuş"
+    ]
+  },
+  {
+    "category": "kontrol",
+    "question": "Business Class'ta kaç parça kabin bagajı alabilirim?",
+    "emb_score": 0.7573232,
+    "shared_token_count": 4,
+    "shared_tokens": [
+      "bagajı",
+      "business",
+      "class",
+      "kabin"
+    ]
+  },
+  {
+    "category": "kontrol",
+    "question": "THY üzerinden araç kiralarsam hangi firmalardan kiralarım?",
+    "emb_score": 0.5345779,
+    "shared_token_count": 3,
+    "shared_tokens": [
+      "araç",
+      "thy",
+      "üzerinden"
+    ]
+  },
+  {
+    "category": "kontrol",
+    "question": "Grup biletlerde tek işlemde en fazla kaç yolcuya online check-in yapılabilir?",
+    "emb_score": 0.7444978,
+    "shared_token_count": 8,
+    "shared_tokens": [
+      "check",
+      "fazla",
+      "grup",
+      "işlemde",
+      "online",
+      "tek",
+      "yapılabilir",
+      "yolcuya"
+    ]
+  },
+  {
+    "category": "kontrol",
+    "question": "Online check-in ne zaman açılır ve ne zaman kapanır?",
+    "emb_score": 0.753948,
+    "shared_token_count": 2,
+    "shared_tokens": [
+      "check",
+      "online"
+    ]
+  },
+  {
+    "category": "kontrol",
+    "question": "Corporate Club'a başvuru ücretli mi?",
+    "emb_score": 0.775105,
+    "shared_token_count": 1,
+    "shared_tokens": [
+      "başvuru"
+    ]
+  },
+  {
+    "category": "kontrol",
+    "question": "Miles&Smiles Elite Corporate kart kişiye özel mi?",
+    "emb_score": 0.66099733,
+    "shared_token_count": 6,
+    "shared_tokens": [
+      "corporate",
+      "elite",
+      "kart",
+      "kişiye",
+      "miles",
+      "smiles"
+    ]
+  },
+  {
+    "category": "kontrol",
+    "question": "Turkish Airlines Corporate Club üyeliği ücretli mi ve hangi avantajları verir?",
+    "emb_score": 0.85375005,
+    "shared_token_count": 1,
+    "shared_tokens": [
+      "corporate"
+    ]
+  },
+  {
+    "category": "kontrol",
+    "question": "Uçuşum 4 saat gecikirse ne hakkım var?",
+    "emb_score": 0.65107405,
+    "shared_token_count": 1,
+    "shared_tokens": [
+      "saat"
+    ]
+  },
+  {
+    "category": "kontrol",
+    "question": "As You Wish hizmeti kimler için, ne zaman seçim yapılır?",
+    "emb_score": 0.3528666,
+    "shared_token_count": 3,
+    "shared_tokens": [
+      "seçim",
+      "wish",
+      "you"
+    ]
+  },
+  {
+    "category": "kontrol",
+    "question": "Rehber köpekle seyahat etmek için ne kadar önce rezervasyon yapmalıyım?",
+    "emb_score": 0.6808028,
+    "shared_token_count": 2,
+    "shared_tokens": [
+      "rehber",
+      "rezervasyon"
+    ]
+  },
+  {
+    "category": "kontrol",
+    "question": "Hangi pasaport sahipleri Dubai'ye vizesiz girebilir?",
+    "emb_score": 0.60301954,
+    "shared_token_count": 1,
+    "shared_tokens": [
+      "dubai"
+    ]
+  },
+  {
+    "category": "kontrol",
+    "question": "Gençlik indirimi oranı nedir?",
+    "emb_score": 0.67162204,
+    "shared_token_count": 2,
+    "shared_tokens": [
+      "gençlik",
+      "indirimi"
+    ]
+  },
+  {
+    "category": "kontrol",
+    "question": "OHAL (olağanüstü hal) ne demektir?",
+    "emb_score": 0.28830987,
+    "shared_token_count": 3,
+    "shared_tokens": [
+      "hal",
+      "ohal",
+      "olağanüstü"
+    ]
+  },
+  {
+    "category": "kontrol",
+    "question": "EcoFly paketinde ücretsiz koltuk seçimi var mı?",
+    "emb_score": 0.7204047,
+    "shared_token_count": 5,
+    "shared_tokens": [
+      "ecofly",
+      "koltuk",
+      "paketinde",
+      "seçimi",
+      "ücretsiz"
+    ]
+  },
+  {
+    "category": "kontrol",
+    "question": "Turkish Airlines Hediye Kartı nakde çevrilebilir mi?",
+    "emb_score": 0.8355596,
+    "shared_token_count": 0,
+    "shared_tokens": []
+  },
+  {
+    "category": "kontrol",
+    "question": "Kaç yaşındaki çocuk refakatsiz seyahat edebilir?",
+    "emb_score": 0.7160139,
+    "shared_token_count": 4,
+    "shared_tokens": [
+      "edebilir",
+      "refakatsiz",
+      "seyahat",
+      "çocuk"
+    ]
+  },
+  {
+    "category": "kontrol",
+    "question": "Uçakta internet paketini ne zaman satın alabilirim?",
+    "emb_score": 0.68746364,
+    "shared_token_count": 1,
+    "shared_tokens": [
+      "satın"
+    ]
+  },
+  {
+    "category": "kontrol",
+    "question": "Dış hat Economy paketlerinden hangisi iç hatta yok?",
+    "emb_score": 0.5283129,
+    "shared_token_count": 1,
+    "shared_tokens": [
+      "hat"
+    ]
+  },
+  {
+    "category": "kontrol",
+    "question": "Bagajım kaybolursa hangi referans numarasını saklamalıyım?",
+    "emb_score": 0.612544,
+    "shared_token_count": 0,
+    "shared_tokens": []
+  },
+  {
+    "category": "kontrol",
+    "question": "Yurt dışında THY salonu olmayan yerlerde nereden yararlanabilirim?",
+    "emb_score": 0.6251453,
+    "shared_token_count": 2,
+    "shared_tokens": [
+      "thy",
+      "yurt"
+    ]
+  },
+  {
+    "category": "kontrol",
+    "question": "Şehit yakınları indirim oranı nedir?",
+    "emb_score": 0.584855,
+    "shared_token_count": 1,
+    "shared_tokens": [
+      "indirim"
+    ]
+  },
+  {
+    "category": "kontrol",
+    "question": "1000 Mil satın almak kaç dolar?",
+    "emb_score": 0.66890454,
+    "shared_token_count": 2,
+    "shared_tokens": [
+      "mil",
+      "satın"
+    ]
+  },
+  {
+    "category": "kontrol",
+    "question": "Ödül bilet kaç yıl geçerlidir?",
+    "emb_score": 0.729995,
+    "shared_token_count": 4,
+    "shared_tokens": [
+      "bilet",
+      "geçerlidir",
+      "yıl",
+      "ödül"
+    ]
+  },
+  {
+    "category": "kontrol",
+    "question": "Kredi kartı harcamasından kazanılan Mil ne zaman hesaba işlenir?",
+    "emb_score": 0.6293945,
+    "shared_token_count": 2,
+    "shared_tokens": [
+      "kredi",
+      "mil"
+    ]
+  },
+  {
+    "category": "kontrol",
+    "question": "Star Alliance Gold kart sahiplerinin ayrıcalıkları neler?",
+    "emb_score": 0.7603586,
+    "shared_token_count": 4,
+    "shared_tokens": [
+      "alliance",
+      "ayrıcalıkları",
+      "gold",
+      "star"
+    ]
+  },
+  {
+    "category": "kontrol",
+    "question": "Mil ile Statü Mili arasındaki fark nedir?",
+    "emb_score": 0.62625164,
+    "shared_token_count": 2,
+    "shared_tokens": [
+      "mili",
+      "statü"
+    ]
+  },
+  {
+    "category": "kontrol",
+    "question": "Er ve erbaş olarak askerlik görevini yerine getirenler için indirim oranı kaçtır?",
+    "emb_score": 0.6878235,
+    "shared_token_count": 4,
+    "shared_tokens": [
+      "askerlik",
+      "erbaş",
+      "görevini",
+      "indirim"
+    ]
+  },
+  {
+    "category": "kontrol",
+    "question": "Mobil uygulamadan otel rezervasyonu yapabilir miyim?",
+    "emb_score": 0.5633622,
+    "shared_token_count": 0,
+    "shared_tokens": []
+  },
+  {
+    "category": "kontrol",
+    "question": "Bilette isim hatası varsa online kanaldan kaç harf düzeltebilirim?",
+    "emb_score": 0.7483619,
+    "shared_token_count": 4,
+    "shared_tokens": [
+      "bilette",
+      "hatası",
+      "isim",
+      "online"
+    ]
+  },
+  {
+    "category": "kontrol",
+    "question": "Tek parça bagajın maksimum ağırlığı kaç kg olabilir?",
+    "emb_score": 0.89926076,
+    "shared_token_count": 4,
+    "shared_tokens": [
+      "ağırlığı",
+      "olabilir",
+      "parça",
+      "tek"
+    ]
+  },
+  {
+    "category": "kontrol",
+    "question": "Ücretli Business Upgrade sonrası bagaj hakkım değişir mi?",
+    "emb_score": 0.74865824,
+    "shared_token_count": 5,
+    "shared_tokens": [
+      "bagaj",
+      "business",
+      "sonrası",
+      "upgrade",
+      "ücretli"
+    ]
+  },
+  {
+    "category": "kontrol",
+    "question": "Online kanallarda kaç farklı para birimiyle ödeme yapılabilir?",
+    "emb_score": 0.6898655,
+    "shared_token_count": 5,
+    "shared_tokens": [
+      "farklı",
+      "kanallarda",
+      "online",
+      "para",
+      "ödeme"
+    ]
+  },
+  {
+    "category": "kontrol",
+    "question": "Kabinde taşınan evcil hayvanın kafesiyle birlikte azami ağırlığı kaç kg?",
+    "emb_score": 0.76326346,
+    "shared_token_count": 5,
+    "shared_tokens": [
+      "birlikte",
+      "evcil",
+      "kabinde",
+      "kafesiyle",
+      "taşınan"
+    ]
+  },
+  {
+    "category": "kontrol",
+    "question": "Tekil gebelikte kaçıncı haftadan sonra uçakla seyahat edilemez?",
+    "emb_score": 0.78767437,
+    "shared_token_count": 3,
+    "shared_tokens": [
+      "seyahat",
+      "tekil",
+      "uçakla"
+    ]
+  },
+  {
+    "category": "kontrol",
+    "question": "Fiyat sabitleme kaç günlük seçenekler sunuyor?",
+    "emb_score": 0.6904114,
+    "shared_token_count": 1,
+    "shared_tokens": [
+      "sabitleme"
+    ]
+  },
+  {
+    "category": "kontrol",
+    "question": "İnternet sitesinden en fazla kaç kişilik grup bileti alabilirim?",
+    "emb_score": 0.7025987,
+    "shared_token_count": 3,
+    "shared_tokens": [
+      "bileti",
+      "grup",
+      "nternet"
+    ]
+  },
+  {
+    "category": "kontrol",
+    "question": "Kabin bagajında en fazla kaç litre alkollü içecek taşıyabilirim?",
+    "emb_score": 0.6554685,
+    "shared_token_count": 5,
+    "shared_tokens": [
+      "alkollü",
+      "fazla",
+      "içecek",
+      "kabin",
+      "litre"
+    ]
+  },
+  {
+    "category": "kontrol",
+    "question": "Acil çıkış koltuğu seçmek için asgari yaş kaçtır?",
+    "emb_score": 0.7158067,
+    "shared_token_count": 4,
+    "shared_tokens": [
+      "acil",
+      "koltuğu",
+      "yaş",
+      "çıkış"
+    ]
+  },
+  {
+    "category": "kontrol",
+    "question": "Golf ve kayak ekipmanları için özel bagaj tarifesi var mı?",
+    "emb_score": 0.6589962,
+    "shared_token_count": 6,
+    "shared_tokens": [
+      "bagaj",
+      "ekipmanları",
+      "golf",
+      "kayak",
+      "tarifesi",
+      "özel"
+    ]
+  },
+  {
+    "category": "kontrol",
+    "question": "Özel yemek talebi en geç ne zaman yapılmalı?",
+    "emb_score": 0.61548585,
+    "shared_token_count": 4,
+    "shared_tokens": [
+      "geç",
+      "talebi",
+      "yemek",
+      "özel"
+    ]
+  },
+  {
+    "category": "kontrol",
+    "question": "Öğrenci indirimi iç hatlarda kaç oranında?",
+    "emb_score": 0.6437891,
+    "shared_token_count": 0,
+    "shared_tokens": []
+  },
+  {
+    "category": "kontrol",
+    "question": "Aktarma (layover) ile duraklama (stopover) arasındaki fark nedir?",
+    "emb_score": 0.42340243,
+    "shared_token_count": 1,
+    "shared_tokens": [
+      "arasındaki"
+    ]
+  },
+  {
+    "category": "kontrol",
+    "question": "TK Cüzdan hangi para birimleriyle açılabilir?",
+    "emb_score": 0.7277041,
+    "shared_token_count": 2,
+    "shared_tokens": [
+      "cüzdan",
+      "para"
+    ]
+  },
+  {
+    "category": "kontrol",
+    "question": "Transit yolcu ne demektir?",
+    "emb_score": 0.6792697,
+    "shared_token_count": 2,
+    "shared_tokens": [
+      "transit",
+      "yolcu"
+    ]
+  },
+  {
+    "category": "kontrol",
+    "question": "XCover seyahat sigortasının sağlayıcısı kimdir?",
+    "emb_score": 0.7808545,
+    "shared_token_count": 2,
+    "shared_tokens": [
+      "seyahat",
+      "xcover"
+    ]
+  },
+  {
+    "category": "kontrol",
+    "question": "Turkish Airlines Holidays'de koşulsuz iptal garantisi kaç gün öncesine kadar geçerli?",
+    "emb_score": 0.854936,
+    "shared_token_count": 5,
+    "shared_tokens": [
+      "garantisi",
+      "gün",
+      "iptal",
+      "koşulsuz",
+      "öncesine"
+    ]
+  },
+  {
+    "category": "kontrol",
+    "question": "ABD seferlerinde Economy Class kayıtlı bagaj ağırlık limiti kaç kg?",
+    "emb_score": 0.8333249,
+    "shared_token_count": 5,
+    "shared_tokens": [
+      "ağırlık",
+      "bagaj",
+      "class",
+      "economy",
+      "kayıtlı"
+    ]
+  },
+  {
+    "category": "kafa_karistirici",
+    "question": "Mil kullanarak yaptığım kabin yükseltmede bagaj hakkım Business'a geçer mi?",
+    "emb_score": 0.64230245,
+    "shared_token_count": 2,
+    "shared_tokens": [
+      "business",
+      "kabin"
+    ]
+  },
+  {
+    "category": "kafa_karistirici",
+    "question": "Ücretle yaptığım kabin yükseltmede bagaj hakkım Business'a geçer mi?",
+    "emb_score": 0.6598661,
+    "shared_token_count": 3,
+    "shared_tokens": [
+      "bagaj",
+      "business",
+      "kabin"
+    ]
+  },
+  {
+    "category": "kafa_karistirici",
+    "question": "Business Class'ta ABD seferinde kaç kabin bagajı hakkım var ve TSA kısıtı nedir?",
+    "emb_score": 0.7785648,
+    "shared_token_count": 6,
+    "shared_tokens": [
+      "abd",
+      "bagajı",
+      "business",
+      "class",
+      "kabin",
+      "tsa"
+    ]
+  },
+  {
+    "category": "kafa_karistirici",
+    "question": "%40 ve üzeri engelli yolcu indirimi iç hatta ve dış hatta kaç oranında?",
+    "emb_score": 0.8559147,
+    "shared_token_count": 5,
+    "shared_tokens": [
+      "dış",
+      "engelli",
+      "indirimi",
+      "yolcu",
+      "üzeri"
+    ]
+  },
+  {
+    "category": "kafa_karistirici",
+    "question": "Şehit yakınları indirimi hangi oranda uygulanır?",
+    "emb_score": 0.6590389,
+    "shared_token_count": 1,
+    "shared_tokens": [
+      "indirimi"
+    ]
+  },
+  {
+    "category": "kafa_karistirici",
+    "question": "Öğrenci indirimi dış hat transit uçuşlarda kaç oranında?",
+    "emb_score": 0.7235928,
+    "shared_token_count": 2,
+    "shared_tokens": [
+      "transit",
+      "uçuşlarda"
+    ]
+  },
+  {
+    "category": "kafa_karistirici",
+    "question": "Asker aileleri (KKTC Türk Barış Kuvvetleri) indirimi online kanallardan alınabilir mi?",
+    "emb_score": 0.7802914,
+    "shared_token_count": 9,
+    "shared_tokens": [
+      "aileleri",
+      "asker",
+      "barış",
+      "indirimi",
+      "kanallardan",
+      "kktc",
+      "kuvvetleri",
+      "online",
+      "türk"
+    ]
+  },
+  {
+    "category": "kafa_karistirici",
+    "question": "İç hat uçuş paketlerinde hangi paketler var, dış hattaki FlexFly iç hatta da var mı?",
+    "emb_score": 0.631266,
+    "shared_token_count": 1,
+    "shared_tokens": [
+      "uçuş"
+    ]
+  },
+  {
+    "category": "kapsam_disi",
+    "question": "Uluslararası kargo gönderimi için nasıl fiyat teklifi alabilirim?",
+    "emb_score": 0.57285607,
+    "shared_token_count": 0,
+    "shared_tokens": []
+  },
+  {
+    "category": "kapsam_disi",
+    "question": "Turkish Airlines'da kabin memuru olmak için nasıl başvuru yapabilirim?",
+    "emb_score": 0.6527975,
+    "shared_token_count": 0,
+    "shared_tokens": []
+  },
+  {
+    "category": "kapsam_disi",
+    "question": "Uçağın teknik bakım periyodu ne sıklıkla yapılır?",
+    "emb_score": 0.5466418,
+    "shared_token_count": 0,
+    "shared_tokens": []
+  },
+  {
+    "category": "kapsam_disi",
+    "question": "Turkish Airlines yatırımcı ilişkileri raporlarına nereden ulaşabilirim?",
+    "emb_score": 0.71420985,
+    "shared_token_count": 2,
+    "shared_tokens": [
+      "airlines",
+      "turkish"
+    ]
+  },
+  {
+    "category": "kapsam_disi",
+    "question": "THY'nin sürdürülebilirlik ve karbon emisyonu hedefleri nelerdir?",
+    "emb_score": 0.29770708,
+    "shared_token_count": 0,
+    "shared_tokens": []
+  },
+  {
+    "category": "kapsam_disi",
+    "question": "Filodaki uçak tiplerinin teknik özellikleri (menzil, koltuk sayısı) nedir?",
+    "emb_score": 0.5568466,
+    "shared_token_count": 1,
+    "shared_tokens": [
+      "uçak"
+    ]
+  },
+  {
+    "category": "kapsam_disi",
+    "question": "Pilot olmak için hangi eğitim ve lisans gereklidir?",
+    "emb_score": 0.45830378,
+    "shared_token_count": 0,
+    "shared_tokens": []
+  },
+  {
+    "category": "kapsam_disi",
+    "question": "Turkish Airlines hisse senedi bugün ne kadar işlem görüyor?",
+    "emb_score": 0.7995261,
+    "shared_token_count": 0,
+    "shared_tokens": []
+  },
+  {
+    "category": "es_anlamli",
+    "question": "Uçağım rötar yaparsa tazminat alabilir miyim?",
+    "emb_score": 0.52747667,
+    "shared_token_count": 0,
+    "shared_tokens": []
+  },
+  {
+    "category": "es_anlamli",
+    "question": "Valizim standarttan büyükse ne kadar ödeme yaparım?",
+    "emb_score": 0.4707817,
+    "shared_token_count": 0,
+    "shared_tokens": []
+  },
+  {
+    "category": "es_anlamli",
+    "question": "Köpeğimle uçağa binebilir miyim?",
+    "emb_score": 0.5158725,
+    "shared_token_count": 0,
+    "shared_tokens": []
+  },
+  {
+    "category": "es_anlamli",
+    "question": "Uçuşum ertelenirse param geri döner mi?",
+    "emb_score": 0.5754994,
+    "shared_token_count": 1,
+    "shared_tokens": [
+      "geri"
+    ]
+  },
+  {
+    "category": "es_anlamli",
+    "question": "Doğumundan 5 gün sonra olan bebeğimle uçabilir miyim?",
+    "emb_score": 0.58212715,
+    "shared_token_count": 0,
+    "shared_tokens": []
+  }
+]
