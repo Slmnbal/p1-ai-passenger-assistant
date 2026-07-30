@@ -131,6 +131,20 @@ bunu çözüyor — bu, herhangi bir LLM'i yerelde container'da çalıştıran h
 için standart, beklenen bir kaynak gereksinimi (bkz. `docker/docker-compose.yml`
 `ollama` servisi notu).
 
+**Adım 11 tamamlandı** (30 Temmuz 2026): 48 senaryolu uçtan uca değerlendirme
+(`evaluation/e2e_scenarios.json`), gerçek `graph.run()` ile çalıştırıldı — genel başarı
+**%72.9**. Asıl bulgu bir sayı değil: hataların **%77'si RAG'de değil intent
+sınıflandırıcıda** — RAG kendisi çalıştığında her seferinde doğru cevap üretti, ama
+mesaj sık sık hiç doğru node'a yönlendirilmiyordu (örn. "Uçağım rötar yaparsa tazminat
+alabilir miyim?" → yanlışlıkla "belirsiz" sanılıyor). Segment analizi bir dil önyargısı
+sinyali de ortaya çıkardı: Türkçe %75.0 vs İngilizce %50.0 (küçük örneklem, n=4, ama
+yönü net). Ayrıca gerçek bir bug bulunup düzeltildi: PNR regex'i sıradan 7 harfli
+Türkçe kelimeleri ("KAPANIR") PNR sanıyordu. Tüm bulgular ve kararlar:
+`docs/adr/0004-uctan-uca-degerlendirme-intent-siniflandirici-darbogaz.md`. 149 test
+(20 yeni, `tests/test_e2e_scenarios.py`) — İlke 4'ün istediği 4 bilinen-hata-kalıbı
+kategorisini (belirsiz soru, çelişen kaynak, sayısal detay, kapsam dışı) kapsıyor,
+bazıları bilerek known-gap/flaky olarak etiketli (gizlenmeden).
+
 Detaylı adım planı için bkz. proje kök klasöründeki `p1_proje_plani.md`.
 
 ## Mimari

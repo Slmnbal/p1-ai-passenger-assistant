@@ -1,0 +1,118 @@
+{
+  "overall": {
+    "n": 48,
+    "passed": 35,
+    "pass_rate": 0.729
+  },
+  "by_category": {
+    "ambiguous": {
+      "n": 5,
+      "passed": 5,
+      "pass_rate": 1.0
+    },
+    "checkin": {
+      "n": 3,
+      "passed": 3,
+      "pass_rate": 1.0
+    },
+    "conflicting_source": {
+      "n": 6,
+      "passed": 2,
+      "pass_rate": 0.333
+    },
+    "flight_status": {
+      "n": 6,
+      "passed": 6,
+      "pass_rate": 1.0
+    },
+    "out_of_scope": {
+      "n": 5,
+      "passed": 5,
+      "pass_rate": 1.0
+    },
+    "policy": {
+      "n": 12,
+      "passed": 4,
+      "pass_rate": 0.333
+    },
+    "reservation_add_baggage": {
+      "n": 2,
+      "passed": 2,
+      "pass_rate": 1.0
+    },
+    "reservation_cancel": {
+      "n": 3,
+      "passed": 3,
+      "pass_rate": 1.0
+    },
+    "reservation_change_date": {
+      "n": 2,
+      "passed": 2,
+      "pass_rate": 1.0
+    },
+    "route_search": {
+      "n": 4,
+      "passed": 3,
+      "pass_rate": 0.75
+    }
+  },
+  "by_language": {
+    "en": {
+      "n": 4,
+      "passed": 2,
+      "pass_rate": 0.5
+    },
+    "tr": {
+      "n": 44,
+      "passed": 33,
+      "pass_rate": 0.75
+    }
+  },
+  "by_message_length": {
+    "kisa (<=4 kelime)": {
+      "n": 12,
+      "passed": 11,
+      "pass_rate": 0.917
+    },
+    "orta (5-10 kelime)": {
+      "n": 33,
+      "passed": 23,
+      "pass_rate": 0.697
+    },
+    "uzun (>10 kelime)": {
+      "n": 3,
+      "passed": 1,
+      "pass_rate": 0.333
+    }
+  },
+  "business_kpis": {
+    "ilk_temasta_cozum_orani": 0.417,
+    "yanlis_yonlendirme_orani": 0.208,
+    "insan_devri_orani": 0.396,
+    "islem_tamamlama_orani": 0.7,
+    "n_toplam": 48,
+    "n_islem_senaryosu": 10
+  },
+  "known_error_patterns": {
+    "ambiguous": {
+      "n": 5,
+      "passed": 5,
+      "pass_rate": 1.0
+    },
+    "conflicting_source": {
+      "n": 6,
+      "passed": 2,
+      "pass_rate": 0.333
+    },
+    "out_of_scope": {
+      "n": 5,
+      "passed": 5,
+      "pass_rate": 1.0
+    }
+  },
+  "error_category_counts": {
+    "sayisal_veya_icerik_hatasi": 2,
+    "yanlis_intent": 10,
+    "yanlis_outcome": 1
+  }
+}

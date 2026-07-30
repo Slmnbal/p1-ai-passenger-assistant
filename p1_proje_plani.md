@@ -4,7 +4,7 @@ Bu plan, kodu ne zaman yazacağımızı değil, hangi sırayla yazacağımızı 
 bir öncekinin üstüne oturuyor; bir adımı bitirmeden sonrakine geçmiyoruz. "Çıktı" satırı o
 adımın "bitti" sayılması için elde olması gereken somut şeyi gösterir.
 
-Durum: **Adım 0-10 tamamlandı** (28-30 Temmuz 2026). Adım 1: 51 gerçek THY/SHY-YOLCU kaynak
+Durum: **Adım 0-11 tamamlandı** (28-30 Temmuz 2026). Adım 1: 51 gerçek THY/SHY-YOLCU kaynak
 belgesi, 302 chunk. Adım 2: chunking + TF-IDF/embedding retriever karşılaştırması,
 model seçimi ADR'si (`docs/adr/0001-...md`). Adım 3: Qdrant'a taşıma, 72 soruluk etiketli
 eval seti, context-prefix deneyi ve kararı, kapsam-dışı güven sınırlaması ADR'si
@@ -27,8 +27,11 @@ doğrulandı, her node span + her LLM çağrısı token'lı generation), Prometh
 (`system`/`human_approver` ayrımıyla), 119 test geçiyor (8 yeni). Adım 10: `/chat` +
 `/approvals/*` endpoint'leri, gerçekten build edilip çalıştırılan Docker imajı, GitHub'a
 push edilip **gerçekten yeşil geçen** CI pipeline'ı
-(https://github.com/Slmnbal/p1-ai-passenger-assistant), 129 test (108'i CI'da). Sıradaki
-adım: **Adım 11** (Uçtan uca senaryo testleri ve Veri Bilimi değerlendirmesi).
+(https://github.com/Slmnbal/p1-ai-passenger-assistant), 129 test (108'i CI'da). Adım 11:
+48 senaryolu uçtan uca değerlendirme — genel başarı %72.9, ama asıl bulgu: hataların
+%77'si RAG'de değil intent sınıflandırıcıda (bkz. ADR-0004), dil önyargısı sinyali
+(TR %75 vs EN %50) ölçüldü, gerçek bir PNR-regex bug'ı bulunup düzeltildi, 149 test
+(20 yeni). Sıradaki adım: **Adım 12** (Kubernetes/OpenShift deployment).
 
 ---
 
@@ -508,20 +511,53 @@ belgelenmiş bir bellek gereksinimi.
 
 ---
 
-## Adım 11 — Uçtan uca senaryo testleri ve Veri Bilimi değerlendirmesi
-- Bagaj hakkı, gecikme, alternatif uçuş arama, rezervasyon değişikliği senaryoları
-- **Agent evaluation:** tool seçimi doğruluğu, argüman doğruluğu, görev tamamlama oranı
-  (yalnızca "çalıştı/çalışmadı" değil, hata kategorileri)
-- **Segment bazlı hata analizi:** Türkçe/İngilizce, kısa/uzun mesaj, nadir intent, düşük
-  güven skoru segmentlerinde performans farkı (bias/fairness kontrolü)
-- **İş KPI'ları:** ilk temasta çözüm oranı, yanlış yönlendirme oranı, insan devri oranı,
-  işlem tamamlama oranı
-- **Bilinen hata kalıpları regresyon seti (İlke 4):** belirsiz soru, çelişen kaynak,
-  sayısal detay hatası, kapsam dışı soru — bu kategoriler ayrı ayrı test edilip geçme
-  oranı raporlanır
+## Adım 11 — Uçtan uca senaryo testleri ve Veri Bilimi değerlendirmesi ✅ Tamamlandı (30 Temmuz 2026)
 
-**Çıktı:** Senaryo bazlı test raporu + segment analizi + deney günlüğü + hata kalıpları
-regresyon raporu.
+`evaluation/e2e_scenarios.json`: 48 senaryo, 10 kategori (policy, flight_status,
+route_search, checkin, reservation_cancel/change_date/add_baggage, ambiguous,
+conflicting_source, out_of_scope), dil (tr/en) etiketli. `run_e2e_evaluation.py` her
+senaryoyu GERÇEK `graph.run()` ile (Qdrant+Ollama+fine-tune model+guardrail zinciriyle)
+çalıştırdı; `analyze_e2e_results.py` segment/KPI analizini üretti. Tam analiz ve tüm
+kararlar: `docs/adr/0004-uctan-uca-degerlendirme-intent-siniflandirici-darbogaz.md`.
+
+**Genel sonuç: 35/48 (%72.9).** Ama bu adımın asıl değeri tek bir sayı değil, şu bulgu:
+
+**Asıl darboğaz RAG değil, intent sınıflandırıcı.** 13 hatanın 10'u (%77) `yanlis_intent`
+— mesaj hiç doğru node'a (RAG/tool) yönlendirilmiyor, o node hiç çalışma şansı bulmuyor.
+RAG kendisi çalıştığında (12 policy senaryosundan 4'ünde) HER SEFERİNDE doğru, kaynaklı
+cevap üretti — Adım 3'ün zaten iyi ölçtüğü retrieval kalitesi burada da doğrulandı. Somut
+örnekler: "Uçağım rötar yaparsa tazminat alabilir miyim?" → `belirsiz_acikliga_kavusturma`
+(olması gereken `politika_bilgi_sorgusu`); "Do infants need a separate ticket?" (İngilizce)
+→ `kapsam_disi`.
+
+**Segment analizi (bias/fairness):** Türkçe %75.0 (n=44) vs İngilizce %50.0 (n=4) —
+küçük örneklemli ama yönü net bir dil önyargısı sinyali. Mesaj uzunluğu: kısa (≤4
+kelime) %91.7, uzun (>10 kelime) %33.3 — koşullu cümle yapıları ("X yaparsa/ise")
+modeli zorluyor.
+
+**İş KPI'ları:** ilk temasta çözüm %41.7, yanlış yönlendirme %20.8 (Adım 4'ün ölçtüğü
+%74.5 test doğruluğuyla ~tutarlı, bağımsız örneklemle çapraz doğrulama), insan devri
+%39.6, işlem tamamlama %70.0.
+
+**Bulunan ve düzeltilen gerçek bir bug (RAG/intent'ten bağımsız):** `tool_agent.py`'nin
+PNR regex'i sıradan 7 harfli Türkçe kelimeleri ("KAPANIR", "YOLCUYA") PNR sanıyordu —
+"SYN" önekiyle daraltıldı. İzole birim testlerinde hiç yakalanamamıştı; çeşitli, gerçek
+cümlelerle uçtan uca test etmenin somut kanıtı.
+
+**Ek bulgu (regresyon testleri yazılırken):** RAG+claim-decomposition zincirinin
+non-determinizmi ilk ölçülenden daha geniş çıktı — "kolay" bir soru (e005) üçüncü bir
+koşuda beklenmedik şekilde fallback'e düştü, "zor" bir soru (e041) beklenmedik şekilde
+geçti. Regresyon testleri (`tests/test_e2e_scenarios.py`) bunu görmezden gelmedi — sert
+"her zaman grounded" iddiaları yerine "ya doğru cevap ya dürüst bulamadım, asla
+halüsinasyon yok" invaryantını koruyacak şekilde yazıldı.
+
+**Bilinçli olarak yapılMAYAN:** İntent modelini yeniden eğitmek — bu Adım 4'ün kapsamı,
+burada sadece dürüstçe ölçülüp regresyon testine bağlandı; model iyileşirse testler
+bunu somut olarak gösterecek.
+
+**Çıktı:** 48 senaryolu test raporu (`evaluation/e2e_results.json` + `e2e_analysis.json`)
++ segment analizi + ADR-0004 + `tests/test_e2e_scenarios.py` (İlke 4'ün 4 kategorisini
+kapsayan regresyon seti, bazı known-gap/flaky olarak açıkça etiketli). 149 test (20 yeni).
 
 ---
 

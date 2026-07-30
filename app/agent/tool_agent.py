@@ -39,7 +39,12 @@ from app.human_in_the_loop import approval_queue
 from app.observability import audit_log
 from app.tools import checkin, flight_search, reservation, store
 
-_PNR_RE = re.compile(r"\b[A-Z]{3}[A-Z0-9]{4}\b")
+# Adım 11'de bulunan gerçek bug: eski kalıp `\b[A-Z]{3}[A-Z0-9]{4}\b` (yalnızca "3 harf +
+# 4 alfanümerik") sıradan 7 harfli Türkçe kelimeleri de eşliyordu — "KAPANIR", "YOLCUYA"
+# gibi kelimeler (mesaj .upper() ile büyütüldüğü için) yanlışlıkla PNR sanılıyordu (bkz.
+# evaluation/e2e_scenarios.json e004/e006, docs/adr/0004). Bu mock sistemdeki TÜM PNR'ler
+# "SYN" ile başladığı için (bkz. data/mock_reservations.json), kalıp bu önekle sınırlandı.
+_PNR_RE = re.compile(r"\bSYN[A-Z0-9]{4}\b")
 _FLIGHT_TK_RE = re.compile(r"\bTK\s?-?(\d{1,4})\b", re.IGNORECASE)
 _FLIGHT_THY_RE = re.compile(r"\bTHY\s?-?(\d{1,4})\b", re.IGNORECASE)
 _DATE_RE = re.compile(r"\b(\d{4}-\d{2}-\d{2})\b")
