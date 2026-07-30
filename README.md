@@ -1,5 +1,7 @@
 # P1 — AI Passenger Experience Assistant
 
+[![CI](https://github.com/Slmnbal/p1-ai-passenger-assistant/actions/workflows/ci.yml/badge.svg)](https://github.com/Slmnbal/p1-ai-passenger-assistant/actions/workflows/ci.yml)
+
 Bagaj hakkı, gecikme/iptal, check-in ve rezervasyon sorularını gerçek kaynaklara (SHY-YOLCU
 yönetmeliği + Turkish Airlines'ın yayınladığı politika sayfaları) dayanarak yanıtlayan,
 kritik işlemleri insan onayına gönderen bir agentic RAG sistemi.
@@ -101,6 +103,21 @@ LLM generation'ları) görüldü, Prometheus gerçek zamanlı veri topladı, Gra
 provisioned dashboard bu veriyi gösterdi (ekran görüntüsüyle doğrulandı), audit log hem
 sistem hem insan onayı kayıtlarını doğru ayırt etti. 119 test geçiyor (8 yeni).
 
+**Adım 10 tamamlandı** (30 Temmuz 2026): `/chat` endpoint'i (`app/main.py`) tüm agent
+katmanını tek bir HTTP çağrısında birleştiriyor; `/approvals/*` endpoint'leri Adım 8'in
+onay kuyruğunu HTTP'den kullanılabilir yapıyor. Dockerfile gerçekten build edilip
+`docker compose up` ile çalıştırıldı — bu sırada iki gerçek sorun bulunup düzeltildi:
+(1) `QdrantRetriever`'ın `localhost:6333`'e hard-code'lu olması (container'da kendi
+kendine bağlanmaya çalışıyordu) `QDRANT_URL` ortam değişkenine çevrildi; (2) model
+ağırlıkları (422MB) GitHub'ın 100MB dosya sınırını aştığı için `.gitignore`'a alındı,
+o modeli kullanan testler `@pytest.mark.live` ile CI dışı bırakıldı. Proje git'e alınıp
+public bir depoya (yukarıdaki linke) push edildi ve **GitHub Actions CI gerçekten
+çalışıp yeşil geçti** (ruff lint + 108 test). Bilinen bir sınırlama dürüstçe belgelendi:
+container'lı `app`, bu host'ta loopback-only çalışan Ollama.app'e `host.docker.internal`
+üzerinden ulaşamadı (macOS Docker Desktop nüansı) — Qdrant/Langfuse bağlantısı ve
+LLM'siz `/chat` yolları container üzerinden canlı doğrulandı, yalnızca RAG cevap
+üretimi adımı bu ortamda container'dan test edilemedi. 129 test (108'i CI'da).
+
 Detaylı adım planı için bkz. proje kök klasöründeki `p1_proje_plani.md`.
 
 ## Mimari
@@ -158,13 +175,16 @@ data/
   policies/          RAG kaynak belgeleri (gerçek SHY-YOLCU + Turkish Airlines metinleri)
   mock_flights.json  gerçek rota ağına dayanan mock uçuş verisi
 evaluation/          RAG ve intent değerlendirme scriptleri, test setleri
-docker/              Dockerfile, docker-compose.yml
+docker/              Dockerfile, docker-compose.yml, prometheus.yml, grafana provisioning
+.github/workflows/   CI (lint + test) — bkz. yukarıdaki durum rozeti
 tests/               pytest test paketi
 ```
 
 ## Çalıştırma (yerel makinede)
 
 ```bash
+git clone https://github.com/Slmnbal/p1-ai-passenger-assistant.git
+cd p1-ai-passenger-assistant
 python -m venv .venv && source .venv/bin/activate
 pip install -r requirements.txt
 cp .env.example .env   # yerel Ollama/Qdrant/Langfuse adreslerini kontrol edin

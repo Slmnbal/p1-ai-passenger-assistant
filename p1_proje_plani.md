@@ -4,7 +4,7 @@ Bu plan, kodu ne zaman yazacağımızı değil, hangi sırayla yazacağımızı 
 bir öncekinin üstüne oturuyor; bir adımı bitirmeden sonrakine geçmiyoruz. "Çıktı" satırı o
 adımın "bitti" sayılması için elde olması gereken somut şeyi gösterir.
 
-Durum: **Adım 0-9 tamamlandı** (28-30 Temmuz 2026). Adım 1: 51 gerçek THY/SHY-YOLCU kaynak
+Durum: **Adım 0-10 tamamlandı** (28-30 Temmuz 2026). Adım 1: 51 gerçek THY/SHY-YOLCU kaynak
 belgesi, 302 chunk. Adım 2: chunking + TF-IDF/embedding retriever karşılaştırması,
 model seçimi ADR'si (`docs/adr/0001-...md`). Adım 3: Qdrant'a taşıma, 72 soruluk etiketli
 eval seti, context-prefix deneyi ve kararı, kapsam-dışı güven sınırlaması ADR'si
@@ -24,8 +24,11 @@ engelliyordu, bkz. ADR-0003 Deney 5b), 111 test geçiyor (16 yeni). Adım 9: gö
 — JSON log + correlation id, Langfuse trace (gerçek Docker'da ayağa kaldırılıp canlı
 doğrulandı, her node span + her LLM çağrısı token'lı generation), Prometheus+Grafana
 (gerçek dashboard, ekran görüntüsüyle doğrulandı), dosya tabanlı audit log
-(`system`/`human_approver` ayrımıyla), 119 test geçiyor (8 yeni). Sıradaki adım:
-**Adım 10** (FastAPI servisi + Docker paketleme + CI).
+(`system`/`human_approver` ayrımıyla), 119 test geçiyor (8 yeni). Adım 10: `/chat` +
+`/approvals/*` endpoint'leri, gerçekten build edilip çalıştırılan Docker imajı, GitHub'a
+push edilip **gerçekten yeşil geçen** CI pipeline'ı
+(https://github.com/Slmnbal/p1-ai-passenger-assistant), 129 test (108'i CI'da). Sıradaki
+adım: **Adım 11** (Uçtan uca senaryo testleri ve Veri Bilimi değerlendirmesi).
 
 ---
 
@@ -446,12 +449,43 @@ log. 119 test geçiyor (8 yeni, `tests/test_observability.py`).
 
 ---
 
-## Adım 10 — FastAPI servisi + Docker paketleme + CI
-- Tüm bileşenleri `/chat` endpoint'inde birleştirme
-- Dockerfile + docker-compose (app + Qdrant + Ollama + Langfuse) — tamamı yerel, ücretsiz
-- GitHub Actions ile basit CI (lint + test) — ücretsiz katman
+## Adım 10 — FastAPI servisi + Docker paketleme + CI ✅ Tamamlandı (30 Temmuz 2026)
 
-**Çıktı:** `docker compose up` ile ayağa kalkan servis + yeşil geçen CI pipeline'ı.
+- **`/chat` endpoint'i** (`app/main.py`) — `app/agent/graph.py`'nin `run()`'ini doğrudan
+  çağırıp Adım 6-9'un tüm katmanlarını (planlama/RAG/tool/guardrail/gözlemlenebilirlik)
+  tek bir HTTP isteğinde birleştiriyor. Ayrıca Adım 8'in onay kuyruğunu HTTP üzerinden
+  kullanılabilir yapan `/approvals/pending`, `/approvals/{id}/approve`,
+  `/approvals/{id}/reject` endpoint'leri eklendi (doğru durum kodlarıyla: bulunamadı→404,
+  zaten sonuçlandırılmış→409).
+- **Dockerfile + docker-compose `app` servisi** — gerçekten build edilip çalıştırıldı.
+  `models/intent_full_10ep/` imaja BİLİNÇLİ dahil edildi (git'e girmiyor ama çalışma
+  zamanında gerekli, bkz. `.dockerignore` notu). `QdrantRetriever`'daki `localhost:6333`
+  hard-code'u `QDRANT_URL` ortam değişkenine çevrildi (container'da "localhost" kendi
+  container'ını işaret ediyordu, bu Adım 10'da bulunup düzeltildi).
+- **GitHub Actions CI** (`.github/workflows/ci.yml`) — ruff lint + `pytest -m "not live"`.
+  Proje git'e alınıp (`gh repo create` ile) public bir GitHub deposuna push edildi:
+  https://github.com/Slmnbal/p1-ai-passenger-assistant — **CI gerçekten çalıştı ve yeşil
+  geçti** (checkout → setup-python → install → lint → 108 test, hepsi başarılı).
+
+**Ölçülen/bulunan iki gerçek sorun (kod incelemesiyle değil, gerçekten çalıştırarak):**
+1. **Model ağırlıkları git'e sığmıyor:** `models/intent_full_10ep/model.safetensors`
+   422MB — GitHub'ın 100MB dosya sınırını aşıyor. Çözüm: `.gitignore`'da hariç tutulup
+   (küçük config/tokenizer/eval_results dosyaları kalıyor), CI'da bu modeli yükleyen
+   testler `@pytest.mark.live` ile işaretlenip hariç tutuldu — CI 129 testin 108'ini
+   çalıştırıyor (fine-tune model + Qdrant/Ollama/Langfuse gerektiren 21 test yerelde
+   çalıştırılıyor).
+2. **Container'lı `app`, host'ta loopback-only (127.0.0.1) çalışan Ollama.app'e
+   `host.docker.internal` üzerinden ulaşamadı** — macOS Docker Desktop'ın bilinen bir
+   ağ nüansı. Qdrant/Langfuse bağlantısı ve LLM gerektirmeyen `/chat` yolları (tool
+   sorguları, injection blok) container üzerinden CANLI doğrulandı; yalnızca RAG cevap
+   üretimi adımı bu host'ta container'dan test edilemedi (host'ta `uvicorn` ile
+   doğrudan çalıştırıldığında sorunsuz). `OLLAMA_HOST=0.0.0.0` denendi ama macOS'un
+   GUI-app env yayma davranışı yüzünden kalıcı olmadı — bilinen sınırlama olarak
+   `docker-compose.yml`'e not düşüldü, gizlenmedi.
+
+**Çıktı:** `docker compose up` ile ayağa kalkan servis (Qdrant/Ollama/MLflow/Langfuse/
+Prometheus/Grafana/app hepsi) + gerçekten yeşil geçen CI pipeline'ı (link yukarıda) +
+129 test (108'i CI'da, 21'i yerelde canlı servislerle).
 
 ---
 
