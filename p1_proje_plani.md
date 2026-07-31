@@ -4,7 +4,8 @@ Bu plan, kodu ne zaman yazacağımızı değil, hangi sırayla yazacağımızı 
 bir öncekinin üstüne oturuyor; bir adımı bitirmeden sonrakine geçmiyoruz. "Çıktı" satırı o
 adımın "bitti" sayılması için elde olması gereken somut şeyi gösterir.
 
-Durum: **Adım 0-11 tamamlandı** (28-30 Temmuz 2026). Adım 1: 51 gerçek THY/SHY-YOLCU kaynak
+Durum: **Adım 0-11 tamamlandı, Adım 12 başlangıç aşamasında** (28-30 Temmuz 2026).
+Adım 1: 51 gerçek THY/SHY-YOLCU kaynak
 belgesi, 302 chunk. Adım 2: chunking + TF-IDF/embedding retriever karşılaştırması,
 model seçimi ADR'si (`docs/adr/0001-...md`). Adım 3: Qdrant'a taşıma, 72 soruluk etiketli
 eval seti, context-prefix deneyi ve kararı, kapsam-dışı güven sınırlaması ADR'si
@@ -31,7 +32,12 @@ push edilip **gerçekten yeşil geçen** CI pipeline'ı
 48 senaryolu uçtan uca değerlendirme — genel başarı %72.9, ama asıl bulgu: hataların
 %77'si RAG'de değil intent sınıflandırıcıda (bkz. ADR-0004), dil önyargısı sinyali
 (TR %75 vs EN %50) ölçüldü, gerçek bir PNR-regex bug'ı bulunup düzeltildi, 149 test
-(20 yeni). Sıradaki adım: **Adım 12** (Kubernetes/OpenShift deployment).
+(20 yeni). Adım 12 (Web arayüzü) BAŞLANGIÇ aşamasında — `app/static/index.html`
+yazıldı, `/ui`'a mount edildi, Selman tarayıcıda görüp beğendi, ama testi sırasında
+intent-sınıflandırıcı darboğazı (Adım 11) canlıda gözlemlendi ve ADR-0004'e öncelik
+sıralı bir "Yapılacaklar" listesi eklendi. Otomatik test/Docker rebuild/tam tıklama
+testi HENÜZ yapılmadı — Selman VS Code terminalinden devam edecek. Sıradaki adım:
+Adım 12'yi bitirmek, sonra **Adım 13** (Kubernetes/OpenShift deployment).
 
 ---
 
@@ -561,7 +567,46 @@ kapsayan regresyon seti, bazı known-gap/flaky olarak açıkça etiketli). 149 t
 
 ---
 
-## Adım 12 — Kubernetes/OpenShift deployment (ücretsiz, yerel)
+## Adım 12 — Web arayüzü (dahili kullanım için) 🚧 Başlangıç (30 Temmuz 2026)
+
+Plana sonradan eklendi — Selman'ın "şirket içi çözüm geliştiriyoruz" gerekçesiyle
+istediği, orijinal ilan-eşleştirmeli plan kapsamında YOKTU.
+
+`app/static/index.html` — tek dosyada gömülü CSS/JS ile basit bir konsol: sol tarafta
+`/chat` endpoint'ine bağlı bir sohbet paneli (intent/blok/kaynak rozetleri gösteriyor),
+sağ tarafta `/approvals/pending` + `/approvals/{id}/approve|reject`'e bağlı bir onay
+kuyruğu paneli (Adım 8'in insan-onay akışını görsel olarak kullanılabilir yapıyor).
+Ayrı bir frontend build süreci (React vb.) BİLİNÇLİ olarak kurulmadı — bu ölçekte
+gereksiz karmaşıklık olurdu. `app/main.py`'de `/ui` altına mount edildi.
+
+**Kaldığımız yer:** Dosya yazıldı, FastAPI'ye bağlandı, Selman tarayıcıda görüp
+"arayüz güzel" dedi — ama bunu denerken ÖNEMLİ bir gerçek sorun ortaya çıktı: sohbet
+üzerinden soru sorulduğunda model sık sık "anlayamadım" diyor. Bu YENİ bir bug değil —
+tam olarak Adım 11'in ölçtüğü intent-sınıflandırıcı darboğazının (bkz. ADR-0004)
+canlıda görünür hale gelmesi. Selman bir RAG-iyileştirme kontrol listesi paylaştı
+(retrieval ölçümü, chunking, hybrid search, reranker, prompt, eşik değeri, belge
+kalitesi, hata sınıflandırması); bunlar tek tek değerlendirilip ADR-0004'ün sonuna
+öncelik sıralı bir **"Yapılacaklar"** bölümü olarak eklendi:
+
+1. Intent sınıflandırıcıyı iyileştir (asıl darboğaz — koşullu cümle + İngilizce veri)
+2. Çok turlu konuşma hafızası ekle (`/chat` şu an tamamen stateless)
+3. Retrieval iyileştirmeleri (chunk boyutu 600→400-800 token, hybrid search, reranker)
+   — ikincil öncelik, bugünkü semptomu çözmez ama RAG çalıştığında kaliteyi artırır
+
+Sabit benzerlik-skoru eşiği bilinçli olarak listede YOK — ADR-0002/0003'te ölçülüp
+(dağılımlar tamamen iç içe) reddedildi.
+
+**Henüz yapılmadı (bir sonraki oturumda):** Otomatik test yok (`tests/test_static_ui.py`
+gibi), Docker imajına henüz rebuild edilmedi (yerel `uvicorn` ile test edildi), tam bir
+tarayıcı üzerinden uçtan uca tıklama testi tamamlanmadı. Selman VS Code terminalinden
+devam edecek.
+
+**Çıktı (hedef):** `/ui`'da çalışan, `/chat` ve `/approvals/*`'a bağlı, gerçek isteklerle
+doğrulanmış bir web konsolu.
+
+---
+
+## Adım 13 — Kubernetes/OpenShift deployment (ücretsiz, yerel)
 - Yerel Kubernetes (kind/minikube) veya OpenShift Local (Red Hat CRC) ile deployment
 - Gerçek bulut hesabı açılmayacak; maliyet sıfır (yalnızca ücretsiz Red Hat Developer kaydı)
 
@@ -569,7 +614,7 @@ kapsayan regresyon seti, bazı known-gap/flaky olarak açıkça etiketli). 149 t
 
 ---
 
-## Adım 13 — Dokümantasyon ve portföy paketi
+## Adım 14 — Dokümantasyon ve portföy paketi
 - İngilizce README, API docs, kısa mimari karar kaydı (ADR), yönetici özeti
 - İlan maddeleri ↔ proje bileşenleri eşleştirme tablosu
 - **RAG kaynak korpusunu 8-10 belgeye genişletme** (bkz. Adım 1 ileri notu)

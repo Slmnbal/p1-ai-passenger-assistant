@@ -127,6 +127,30 @@ cümlelerle yazılmıştı — gerçek/çeşitli cümlelerle uçtan uca test etm
   asla halüsinasyon yok" invaryantını koruyacak şekilde YENİDEN yazıldı (sert "her zaman
   grounded olmalı" iddiaları yerine).
 
+## Yapılacaklar (Selman'ın arayüz denemesi + geri bildirimi sonrası, 30 Temmuz 2026)
+
+Öncelik sırasıyla:
+
+1. **Intent sınıflandırıcıyı iyileştir (asıl darboğaz).** `data/intent/` eğitim setini
+   genişlet — özellikle koşullu cümle yapıları ("X yaparsa/ise ne olur?") ve İngilizce
+   girdi örnekleri ekle (bkz. bu ADR'nin ölçtüğü %75 TR / %50 EN farkı). 165 örnek
+   yetersiz kaldı.
+2. **Çok turlu konuşma hafızası ekle.** `/chat` şu an tamamen stateless —
+   `app/agent/graph.py::run()` sadece tek bir mesaj alıyor, önceki turu hiç bilmiyor.
+   Takip soruları ("peki bunun ücreti ne?") şu an çalışmaz. `ConversationState`'teki
+   `session_preferences`/`history` alanları zaten var ama `/chat` bir session id'yle
+   state'i kalıcı tutmuyor.
+3. **Retrieval iyileştirmeleri (RAG çalıştığında kaliteyi daha da artırmak için,
+   ikincil öncelik — asıl semptomu çözmez ama "conflicting_source" %33 gibi durumları
+   iyileştirebilir):**
+   - Chunk boyutunu büyüt: şu an 600 karakter/100 overlap (~120-150 token) —
+     400-800 token aralığı denenmedi.
+   - Hybrid search (BM25/keyword + embedding, Reciprocal Rank Fusion).
+   - Reranker (30-50 aday getirip en iyi 5-10'u seç).
+
+Denenip REDDEDİLDİĞİ İÇİN öncelik listesinde OLMAYAN: sabit benzerlik-skoru eşiği
+(ADR-0002/0003'te tamamen iç içe geçen dağılımlarla ölçülüp terk edildi).
+
 ## İlgili dosyalar
 
 - `evaluation/e2e_scenarios.json`, `run_e2e_evaluation.py`, `analyze_e2e_results.py`

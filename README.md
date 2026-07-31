@@ -145,6 +145,14 @@ Türkçe kelimeleri ("KAPANIR") PNR sanıyordu. Tüm bulgular ve kararlar:
 kategorisini (belirsiz soru, çelişen kaynak, sayısal detay, kapsam dışı) kapsıyor,
 bazıları bilerek known-gap/flaky olarak etiketli (gizlenmeden).
 
+**Adım 12 başlangıç aşamasında** (30 Temmuz 2026): Dahili kullanım için basit bir web
+konsolu (`app/static/index.html`, `/ui`'a mount edildi) — sohbet paneli + Adım 8'in
+onay kuyruğunu gösteren panel. Denerken Adım 11'in ölçtüğü intent-sınıflandırıcı
+darboğazı canlıda gözlemlendi; öncelik sıralı bir iyileştirme listesi
+`docs/adr/0004-...md`'ye eklendi (özet: önce intent verisi genişletilecek, sonra
+çok turlu konuşma hafızası, sonra chunk boyutu/hybrid search/reranker gibi retrieval
+iyileştirmeleri). Otomatik test ve Docker'a rebuild henüz yapılmadı.
+
 Detaylı adım planı için bkz. proje kök klasöründeki `p1_proje_plani.md`.
 
 ## Mimari

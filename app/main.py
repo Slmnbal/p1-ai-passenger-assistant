@@ -14,11 +14,18 @@ node'larda). `/approvals/*` endpoint'leri Adim 8'in onay kuyruğunu HTTP uzerind
 kullanilabilir hale getiriyor — plan bunu acikca istemedi ama insan-onay akisinin
 sadece Python fonksiyonu olarak degil, gercek bir servis olarak da calisir olmasi
 icin eklendi.
+
+**Adim 12:** `app/static/index.html` — dahili kullanim icin basit bir web konsolu
+(`/ui`). Ayri bir frontend build sureci (React vb.) BILINCLI olarak kurulmadi: proje
+tek bir HTML dosyasinda gomulu CSS/JS ile calisiyor, cunku ihtiyac sadece `/chat` ve
+`/approvals/*` endpoint'lerini gorsel olarak kullanabilmek — ekstra bir build araci
+bu olcekte gereksiz karmasiklik olurdu.
 """
 
 from __future__ import annotations
 
 from fastapi import FastAPI, HTTPException, Response
+from fastapi.staticfiles import StaticFiles
 from prometheus_client import CONTENT_TYPE_LATEST
 from pydantic import BaseModel, Field
 
@@ -46,6 +53,8 @@ app = FastAPI(
     description="Bağımsız portföy projesi; Turkish Airlines ile resmi bağlantısı yoktur.",
     version="1.0.0",
 )
+
+app.mount("/ui", StaticFiles(directory="app/static", html=True), name="ui")
 
 
 class ChatRequest(BaseModel):
