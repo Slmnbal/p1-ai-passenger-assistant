@@ -47,6 +47,35 @@ POLITIKA_BILGI_SORGUSU = [
     ("Uçuş paketleri arasındaki fark ne?", "tr"),
     ("Elite kart avantajları neler?", "mixed"),
     ("Dubai vizesi almam gerekiyor mu?", "tr"),
+    # Kosullu cumle yapilari ("X yaparsa/ise") — Adim 11'in buldugu darboğaz icin
+    ("Uçağım rötar yaparsa tazminat alabilir miyim?", "tr"),
+    ("Bagajım kaybolursa ne yapmam gerekir?", "tr"),
+    ("Uçuşum iptal olursa param ne olur?", "tr"),
+    ("Vize başvurum reddedilirse biletimi iade edebilir miyim?", "tr"),
+    ("Hastalanırsam biletimi değiştirebilir miyim, kuralı nedir?", "tr"),
+    ("Uçağa yetişemezsem ne olur, bileti kaybeder miyim?", "tr"),
+    ("Bagaj fazla çıkarsa ne kadar ücret öderim?", "tr"),
+    ("Uçuşum ertelenirse otelde konaklama hakkım var mı?", "tr"),
+    ("Grev nedeniyle uçuşum iptal olursa haklarım nedir?", "tr"),
+    ("Kötü hava koşulları yüzünden uçuşum gecikirse tazminat var mı?", "tr"),
+    ("Uçuşuma yetişemezsem bir sonraki uçuşa binebilir miyim?", "tr"),
+    ("Pasaportum kaybolursa gümrükte ne olur?", "tr"),
+    ("Evcil hayvanım uçakta hastalanırsa ne yapılır?", "tr"),
+    ("Koltuk değişikliği yaparsam ek ücret çıkar mı?", "tr"),
+    ("Uçağım teknik arıza yaparsa yolcu hakları ne diyor?", "tr"),
+    # Ingilizce ornekler — dil dengesizligini azaltmak icin
+    ("What happens if my flight is delayed more than 3 hours?", "en"),
+    ("Can I bring a service animal on board?", "en"),
+    ("What is the refund policy if I cancel within 24 hours?", "en"),
+    ("How much does an extra checked bag cost?", "en"),
+    ("Is travel insurance included in the ticket price?", "en"),
+    ("What are the rules for traveling with an infant?", "en"),
+    ("Can I get compensation if my baggage is lost?", "en"),
+    ("What documents do I need for check-in?", "en"),
+    ("Is Wi-Fi available on international flights?", "en"),
+    ("How does the Miles&Smiles loyalty program work?", "en"),
+    ("What happens to my ticket if my visa application is rejected?", "en"),
+    ("Am I entitled to a hotel stay if my flight is cancelled overnight?", "en"),
 ]
 
 UCUS_SORGULAMA = [
@@ -80,6 +109,21 @@ UCUS_SORGULAMA = [
     ("Havalimanına ne zaman gelmeliyim?", "tr"),
     ("Uçağım kalkmadan önce son durumu öğrenebilir miyim?", "tr"),
     ("Bilet numaramla uçuşumu sorgulayabilir miyim?", "tr"),
+    # Kosullu cumle yapilari
+    ("Uçağım rötar yaparsa yeni saat ne zaman belli olur?", "tr"),
+    ("Fırtına çıkarsa uçuşum iptal mi olur, durumunu öğrenebilir miyim?", "tr"),
+    ("Aktarma uçuşuma yetişemezsem hangi uçakta olduğumu görebilir miyim?", "tr"),
+    # Ingilizce ornekler
+    ("Has flight TK123 been delayed?", "en"),
+    ("Which gate does my flight depart from?", "en"),
+    ("When does boarding start for flight TK456?", "en"),
+    ("Is there a seat available on tonight's flight to Izmir?", "en"),
+    ("Can you check the status of my connecting flight?", "en"),
+    ("What time does my flight land?", "en"),
+    ("Has the departure time for TK789 changed?", "en"),
+    ("How long is the layover on my itinerary?", "en"),
+    ("Can you look up my flight using my booking reference?", "en"),
+    ("Is my flight on time today?", "en"),
 ]
 
 REZERVASYON_ISLEM_TALEBI = [
@@ -113,6 +157,21 @@ REZERVASYON_ISLEM_TALEBI = [
     ("Ekstra diz mesafeli koltuk satın almak istiyorum", "tr"),
     ("Biletimi hediye kartla ödemek istiyorum", "tr"),
     ("Uçuşumu iptal edersem kesinti olur mu, iptal etmek istiyorum", "tr"),
+    # Kosullu cumle yapilari
+    ("Biletimi değiştirirsem fark ücreti öder miyim, değiştirmek istiyorum", "tr"),
+    ("Rezervasyonumu iptal edersem param geri gelir mi, iptal etmek istiyorum", "tr"),
+    ("Tarihi değiştirirsem ek ücret çıkar mı, yine de değiştirmek istiyorum", "tr"),
+    # Ingilizce ornekler
+    ("I would like to change my seat assignment", "en"),
+    ("Please cancel my ticket and process a refund", "en"),
+    ("I need to upgrade to business class", "en"),
+    ("Can you add an extra checked bag to my booking?", "en"),
+    ("I want to correct the spelling of my name on the ticket", "en"),
+    ("I'd like to add a wheelchair request to my reservation", "en"),
+    ("Please change my flight to next Friday", "en"),
+    ("I want to convert my booking into a group reservation", "en"),
+    ("I'd like to add a special meal request to my booking", "en"),
+    ("Can I downgrade from business to economy and get a partial refund?", "en"),
 ]
 
 CHECKIN_TALEBI = [
@@ -141,6 +200,15 @@ CHECKIN_TALEBI = [
     ("Check-in kontuarı nerede?", "mixed"),
     ("Biletimle check-in yapamıyorum, sorun ne olabilir?", "mixed"),
     ("Check-in son ne zamana kadar açık, hemen yapmak istiyorum", "mixed"),
+    # Ingilizce ornekler
+    ("I'd like to check in for my flight tomorrow", "en"),
+    ("Can I get my boarding pass now?", "en"),
+    ("What documents are required for check-in?", "en"),
+    ("Is kiosk check-in available at this airport?", "en"),
+    ("Can I select my seat during check-in?", "en"),
+    ("I haven't checked in yet, can I do it now?", "en"),
+    ("I'd like to check in my whole group at once", "en"),
+    ("Do I need to print my boarding pass or is mobile fine?", "en"),
 ]
 
 BELIRSIZ_ACIKLIGA_KAVUSTURMA = [
@@ -169,6 +237,23 @@ BELIRSIZ_ACIKLIGA_KAVUSTURMA = [
     ("Fiyat ne kadar?", "tr"),
     ("Değişiklik yapabilir miyim?", "tr"),
     ("Kurallar nedir?", "tr"),
+    # Belirsiz ama kosullu yapili (gercekten hangi konuya bagli oldugu belli degil)
+    ("Bir şey olursa ne yapmalıyım?", "tr"),
+    ("Böyle bir durumda hakkım var mı?", "tr"),
+    ("Bu olursa ücret öder miyim?", "tr"),
+    ("Ne kadar sürer?", "tr"),
+    ("Kurallara uygun mu bu?", "tr"),
+    ("Bunu nasıl yapabilirim?", "tr"),
+    ("Uçuşum etkilenir mi?", "tr"),
+    ("Bu işlem ücretli mi?", "tr"),
+    ("Hakkımı nasıl kullanırım?", "tr"),
+    # Ingilizce ornekler
+    ("What should I do?", "en"),
+    ("Is this allowed?", "en"),
+    ("How much would that cost?", "en"),
+    ("Can you help me?", "en"),
+    ("Is there a fee for that?", "en"),
+    ("What are my options?", "en"),
 ]
 
 KAPSAM_DISI = [
@@ -197,6 +282,20 @@ KAPSAM_DISI = [
     ("What's the capital of France?", "en"),
     ("Kurumsal sponsorluk başvurusu yapmak istiyorum", "tr"),
     ("Uçuş simülatörü deneyimi sunuyor musunuz?", "tr"),
+    ("Uçak motoru tamiri ne kadar sürer?", "tr"),
+    ("THY'nin yıllık cirosu nedir?", "tr"),
+    ("Sizin için çalışmak istiyorum, CV nereye gönderirim?", "tr"),
+    ("Hangi bankayla anlaşmalısınız?", "tr"),
+    ("Uçak bileti fiyatları neden bu kadar dalgalı, ekonomik analiz ister misiniz?", "tr"),
+    # Ingilizce ornekler
+    ("Do you offer flying lessons?", "en"),
+    ("What's the weather like today?", "en"),
+    ("Can you recommend a good restaurant nearby?", "en"),
+    ("How do I apply for a job as a pilot?", "en"),
+    ("What's your company's annual revenue?", "en"),
+    ("Can you tell me a joke?", "en"),
+    ("Do you sponsor sports teams?", "en"),
+    ("How does a jet engine work?", "en"),
 ]
 
 CATEGORIES = {

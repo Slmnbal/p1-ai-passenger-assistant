@@ -32,8 +32,8 @@
     },
     "policy": {
       "n": 12,
-      "passed": 3,
-      "pass_rate": 0.25
+      "passed": 4,
+      "pass_rate": 0.333
     },
     "reservation_add_baggage": {
       "n": 2,
@@ -52,32 +52,32 @@
     },
     "route_search": {
       "n": 4,
-      "passed": 4,
-      "pass_rate": 1.0
+      "passed": 3,
+      "pass_rate": 0.75
     }
   },
   "by_language": {
     "en": {
       "n": 4,
-      "passed": 3,
-      "pass_rate": 0.75
+      "passed": 2,
+      "pass_rate": 0.5
     },
     "tr": {
       "n": 44,
-      "passed": 32,
-      "pass_rate": 0.727
+      "passed": 33,
+      "pass_rate": 0.75
     }
   },
   "by_message_length": {
     "kisa (<=4 kelime)": {
       "n": 12,
-      "passed": 10,
-      "pass_rate": 0.833
+      "passed": 11,
+      "pass_rate": 0.917
     },
     "orta (5-10 kelime)": {
       "n": 33,
-      "passed": 24,
-      "pass_rate": 0.727
+      "passed": 23,
+      "pass_rate": 0.697
     },
     "uzun (>10 kelime)": {
       "n": 3,
@@ -86,9 +86,9 @@
     }
   },
   "business_kpis": {
-    "ilk_temasta_cozum_orani": 0.375,
-    "yanlis_yonlendirme_orani": 0.021,
-    "insan_devri_orani": 0.354,
+    "ilk_temasta_cozum_orani": 0.417,
+    "yanlis_yonlendirme_orani": 0.208,
+    "insan_devri_orani": 0.396,
     "islem_tamamlama_orani": 0.7,
     "n_toplam": 48,
     "n_islem_senaryosu": 10
@@ -111,7 +111,8 @@
     }
   },
   "error_category_counts": {
-    "yanlis_outcome": 12,
-    "yanlis_intent": 1
+    "sayisal_veya_icerik_hatasi": 2,
+    "yanlis_intent": 10,
+    "yanlis_outcome": 1
   }
 }

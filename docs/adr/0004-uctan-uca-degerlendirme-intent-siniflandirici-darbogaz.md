@@ -151,6 +151,78 @@ cümlelerle yazılmıştı — gerçek/çeşitli cümlelerle uçtan uca test etm
 Denenip REDDEDİLDİĞİ İÇİN öncelik listesinde OLMAYAN: sabit benzerlik-skoru eşiği
 (ADR-0002/0003'te tamamen iç içe geçen dağılımlarla ölçülüp terk edildi).
 
+## Güncelleme: Yapılacaklar #1 uygulandı — intent sınıflandırıcı yeniden eğitildi (31 Temmuz 2026)
+
+`data/intent/messages.json` 165→254 örneğe genişletildi: her 6 sınıfa koşullu cümle
+yapıları ("X yaparsa/ise ne olur?") ve dengeli İngilizce örnekler eklendi (İngilizce
+%10.3→%28.0). Model aynı hiperparametrelerle (full fine-tune, 10 epoch) yeniden eğitildi.
+Tam detay ve yeni confusion matrix: `data/intent/MODEL_CARD.md` ve `DATASET_CARD.md`.
+
+**Sonuç (izole test seti, n=76):** Macro F1 0.722→0.764, ROC-AUC 0.907→0.923. Hedeflenen
+iki zayıf sınıf belirgin iyileşti: `politika_bilgi_sorgusu` recall %44→%70.6,
+`belirsiz_acikliga_kavusturma` recall %38→%66.7. **Trade-off dürüstçe raporlandı:** kritik
+sınıf (`rezervasyon_islem_talebi`) doğruluğu %100→%92.3'e (13'te 1) hafifçe geriledi;
+kalibrasyon sorunu düzelmedi, 0.7-0.9 güven aralığında daha da kötüleşti (%53.3→%41.7
+gerçek doğruluk).
+
+## Uçtan uca yeniden ölçüm sonucu (31 Temmuz 2026) — gerçekten çalıştırıldı, varsayılmadı
+
+`evaluation/run_e2e_evaluation.py` yeni modelle tekrar çalıştırıldı (eski ham sonuçlar
+`evaluation/e2e_results_before_intent_retrain.json`'da korunuyor, karşılaştırma için).
+
+**Genel sonuç DEĞİŞMEDİ: yine 35/48 (%72.9).** Ama bu sabit sayının ARKASINDAKİ bileşim
+tamamen değişti — bu ADR'nin asıl bulduğu "darboğaz intent'te" tespiti doğrudan
+doğrulandı ve şimdi bir SONRAKİ darboğaz görünür hale geldi:
+
+| Hata kategorisi | Eski (165 örnek) | Yeni (254 örnek) |
+|---|---|---|
+| `yanlis_intent` | 10 | **1** |
+| `yanlis_outcome` | 1 | **12** |
+| `sayisal_veya_icerik_hatasi` | 2 | 0 |
+
+**Intent kaynaklı hatalar 10'dan 1'e düştü** — hedeflenen darboğaz gerçekten daraltıldı.
+Ama toplam hata sayısı aynı kaldı (13) çünkü RAG artık çalışma şansı bulduğu senaryolarda
+kendi (önceden ADR-0002/0003'te zaten bilinen) sınırlamalarıyla karşılaşıyor:
+
+- **e011, e038, e039 — intent artık DOĞRU (`politika_bilgi_sorgusu`), ama senaryo hâlâ
+  "başarısız" sayılıyor:**
+  - e038/e039 GERÇEKTEN çelişen kaynağa sahip senaryolar (miles_redemption_policy.md vs
+    paid_business_upgrade_policy.md) — `policy_verification_agent` bunu doğru tespit
+    edip bir NETLEŞTİRİCİ SORU döndürüyor. Bu `expected_outcome=grounded_answer`
+    beklentisini karşılamıyor ama İlke 4'ün "çelişen kaynakta netleştir" kuralına tam
+    uygun — muhtemelen bu iki senaryo için asıl doğru davranış bu, eval setinin
+    `expected_outcome` alanı gözden geçirilmeli.
+  - e011 ("Do infants need a separate ticket?") GERÇEKTEN çelişen bir kaynağa sahip
+    DEĞİL (kategori: `policy`, tek doğru cevap var) — ama aynı sezgisel (en iyi iki
+    kaynağın skoru yakın + farklı bölüm) burada YANLIŞ POZİTİF veriyor ve gereksiz bir
+    netleştirici soru döndürüyor. Bu, **daha dar/daha spesifik yeni bir bilinen hata**:
+    artık "İngilizce soru hiç RAG'e ulaşmıyor" değil, "RAG'e ulaşıyor ama çelişen-kaynak
+    sezgiselinin yanlış pozitifi cevabı engelliyor."
+- **e004, e022 — intent DÜZELDİ ve senaryo artık tamamen GEÇİYOR** (net, tartışmasız
+  kazanım): "Online check-in ne zaman açılır ve ne zaman kapanır?" ve
+  "Are there flights from IST to LHR?".
+- **e005, e010 — eskiden GEÇİYORDU, şimdi BAŞARISIZ:** ikisi de intent hem eskiden hem
+  şimdi doğru (`politika_bilgi_sorgusu`); regresyonun nedeni intent modeli DEĞİL, bu
+  ADR'nin zaten belgelediği RAG+claim-decomposition zincirinin ölçülmüş
+  non-determinizmi (e005 zaten "flaky" olarak işaretliydi, bkz. yukarı; e010 aynı
+  ailenin yeni bir örneği).
+
+**Sonuç:** Yapılacaklar #1 (intent sınıflandırıcı) kendi hedefini tuttu — intent artık
+neredeyse hiç hata kaynağı değil. Ama bu, sistemin TOPLAM başarı oranını otomatik
+yükseltmedi çünkü intent düzelince RAG katmanının kendi (önceden zaten ADR-0002/0003'te
+ölçülmüş) sınırlamaları — çelişen-kaynak sezgiselinin yanlış pozitifleri, claim-
+decomposition non-determinizmi — artık gizlenmeden ortaya çıkıyor. Bu **beklenen ve
+sağlıklı bir bulgu**: bir darboğaz kapanınca bir sonraki görünür hale geliyor. **Yapılacaklar
+listesindeki #3 (retrieval iyileştirmeleri: hybrid search, reranker, çelişen-kaynak
+sezgiselinin isabetini artırma) artık ikincil değil, ölçülmüş veriyle desteklenen bir
+sonraki öncelik.**
+
+Regresyon testleri (`tests/test_e2e_scenarios.py`) bu yeni tabloyu yansıtacak şekilde
+güncellendi: eski `test_known_gap_conflicting_source_intent_misroute` ve
+`test_known_gap_english_policy_question_misrouted` testleri, artık intent'in düzeldiğini
+(`assert intent == politika_bilgi_sorgusu`) VE yeni/daha dar netleştirme davranışını
+(`assert needs_clarification is True`) sabitleyen testlere dönüştürüldü.
+
 ## İlgili dosyalar
 
 - `evaluation/e2e_scenarios.json`, `run_e2e_evaluation.py`, `analyze_e2e_results.py`

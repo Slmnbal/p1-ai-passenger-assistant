@@ -84,19 +84,26 @@ def test_conflicting_source_reliably_answered(scenario_id):
     assert _FALLBACK_TEXT not in final_state["final_response"].lower()
 
 
-@pytest.mark.parametrize(
-    "scenario_id,reason",
-    [
-        ("e038", "intent sınıflandırıcı 'yaptığım...geçer mi' kalıbını rezervasyon işlemi sanıyor"),
-        ("e039", "aynı kalıp, ters kural (ücretli yükseltme) için de tekrarlanıyor"),
-    ],
-)
-def test_known_gap_conflicting_source_intent_misroute(scenario_id, reason):
-    """BİLEREK bir başarısızlığı belgeliyor (bkz. docs/adr/0004-...md) — bu ikisi
-    DETERMİNİSTİK (fine-tune model, dropout yok): iki ayrı koşuda da aynı yanlış intent'e
-    düştü. Bu test artık geçmeye başlarsa, intent sınıflandırıcı iyileşmiş demektir."""
+@pytest.mark.parametrize("scenario_id", ["e038", "e039"])
+def test_intent_fixed_conflicting_source_now_reaches_rag(scenario_id):
+    """31 Temmuz 2026 GÜNCELLEMESİ: Bu iki senaryo eskiden ('yaptığım...geçer mi'
+    kalıbı) intent sınıflandırıcı tarafından `rezervasyon_islem_talebi`'ne yanlış
+    yönlendiriliyordu — RAG hiç çalışma şansı bulamıyordu (bkz. docs/adr/0004-...md,
+    ilk ölçüm). Veri seti genişletilip (165→254, koşullu cümle + İngilizce örnekler)
+    model yeniden eğitildikten SONRA intent artık doğru (`politika_bilgi_sorgusu`) —
+    bu eskiden known-gap olan intent hatası DÜZELDİ, aşağıda sabitleniyor.
+
+    Ama genel senaryo hâlâ BAŞARISIZ sayılıyor (`expected_outcome=grounded_answer`) —
+    çünkü bu iki senaryo GERÇEKTEN çelişen kaynağa sahip (miles_redemption_policy.md vs
+    paid_business_upgrade_policy.md, bkz. e2e_scenarios.json notes) ve
+    policy_verification_agent bunu doğru tespit edip bir NETLEŞTİRİCİ SORU döndürüyor
+    (İlke 4'ün "çelişen kaynaklarda netleştirme" kuralı) — bu `grounded_answer` değil ama
+    halüsinasyon da değil, muhtemelen bu iki senaryo için asıl "doğru" davranış budur.
+    Darboğaz artık intent değil, eval setinin `expected_outcome`'ının bu ikisi için
+    `grounded_answer` yerine `clarification` olması gerekip gerekmediği sorusu."""
     final_state = _run(scenario_id)
-    assert final_state["intent"] != "politika_bilgi_sorgusu", f"{scenario_id} artık doğru yönlendiriliyor ({reason})"
+    assert final_state["intent"] == "politika_bilgi_sorgusu"
+    assert final_state.get("needs_clarification") is True
 
 
 @pytest.mark.parametrize("scenario_id", ["e041", "e042"])
@@ -155,10 +162,22 @@ def test_known_gap_numeric_question_sometimes_over_rejected():
 
 # --- Dil önyargısı (bias/fairness) — ADR-0004'te ölçülen, küçük örneklemli sinyal ---
 
-def test_known_gap_english_policy_question_misrouted():
-    """'Do infants need a separate ticket?' İngilizce girdide intent sınıflandırıcı
-    kapsam_disi'ye yönlendiriyor (olması gereken: politika_bilgi_sorgusu) — ADR-0004'te
-    ölçülen dil önyargısı sinyalinin somut bir örneği. Bu test artık geçerse (doğru
-    intent'e yönlendirirse), dil önyargısı bulgusu güncellenmelidir."""
+def test_intent_fixed_english_policy_question_now_reaches_rag():
+    """31 Temmuz 2026 GÜNCELLEMESİ: 'Do infants need a separate ticket?' eskiden
+    İngilizce girdide intent sınıflandırıcı tarafından `kapsam_disi`'ye yanlış
+    yönlendiriliyordu (ADR-0004'ün ölçtüğü dil önyargısı sinyalinin somut örneği).
+    Veri setine dengeli İngilizce örnekler eklenip model yeniden eğitildikten SONRA
+    intent artık doğru (`politika_bilgi_sorgusu`) — dil önyargısı hatası bu örnekte
+    DÜZELDİ.
+
+    Ama bu senaryo (kategori: `policy`, GERÇEKTEN çelişen bir kaynağı YOK — e038/e039'un
+    aksine) hâlâ `grounded_answer` vermiyor; RAG'e ulaştıktan sonra
+    policy_verification_agent'ın "en iyi iki kaynağın skoru birbirine yakın VE farklı
+    bölümden" sezgiseli bu tek-kaynaklı soruda YANLIŞLIKLA tetikleniyor ve gereksiz bir
+    netleştirici soru döndürüyor. Bu, eskisinden DAHA DAR/daha spesifik yeni bir bilinen
+    hata: artık "İngilizce soru hiç RAG'e ulaşmıyor" değil, "RAG'e ulaşıyor ama
+    çelişen-kaynak sezgiselinin yanlış pozitifi cevabı engelliyor" (bkz. ADR-0004
+    güncellemesi)."""
     final_state = _run("e011")
-    assert final_state["intent"] != "politika_bilgi_sorgusu"
+    assert final_state["intent"] == "politika_bilgi_sorgusu"
+    assert final_state.get("needs_clarification") is True

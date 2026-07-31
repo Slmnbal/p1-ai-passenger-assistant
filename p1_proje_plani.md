@@ -589,6 +589,16 @@ kalitesi, hata sınıflandırması); bunlar tek tek değerlendirilip ADR-0004'ü
 öncelik sıralı bir **"Yapılacaklar"** bölümü olarak eklendi:
 
 1. Intent sınıflandırıcıyı iyileştir (asıl darboğaz — koşullu cümle + İngilizce veri)
+   **✅ Tamamlandı (31 Temmuz 2026), sonuç dürüstçe karışık:** Veri seti 165→254 örneğe
+   genişletildi (koşullu cümle + dengeli İngilizce), model yeniden eğitildi. İzole test
+   setinde Macro F1 0.722→0.764. 48 senaryolu uçtan uca değerlendirme YENİDEN
+   ÇALIŞTIRILDI (varsayılmadı, ölçüldü): **intent kaynaklı hata 10'dan 1'e düştü** —
+   hedef tutuldu. Ama genel başarı %72.9'da SABİT kaldı çünkü intent düzelince RAG
+   katmanının kendi bilinen sınırlamaları (çelişen-kaynak sezgiselinin yanlış
+   pozitifleri, claim-decomposition non-determinizmi) artık gizlenmeden ortaya çıktı —
+   darboğaz kapandı, bir sonraki darboğaz göründü (bkz. ADR-0004 güncellemesi). Bu
+   **madde 3'ü (retrieval iyileştirmeleri) ikincil değil, ölçülmüş veriyle desteklenen
+   bir sonraki öncelik yapıyor.**
 2. Çok turlu konuşma hafızası ekle (`/chat` şu an tamamen stateless)
 3. Retrieval iyileştirmeleri (chunk boyutu 600→400-800 token, hybrid search, reranker)
    — ikincil öncelik, bugünkü semptomu çözmez ama RAG çalıştığında kaliteyi artırır

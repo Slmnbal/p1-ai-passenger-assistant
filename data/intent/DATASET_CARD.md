@@ -2,9 +2,11 @@
 
 ## Özet
 
-165 örnek mesaj, 6 intent sınıfına etiketlenmiş. Türk Hava Yolları yolcu asistanı
-sisteminde, gelen kullanıcı mesajının hangi alt sisteme (RAG, tool-call, human-in-the-loop,
-netleştirme, red) yönlendirileceğini belirlemek için kullanılır.
+254 örnek mesaj, 6 intent sınıfına etiketlenmiş (Adım 11'in bulduğu intent-sınıflandırıcı
+darboğazı üzerine, Adım 12 sonrası 165'ten genişletildi — bkz. "Adım 11 sonrası genişletme"
+bölümü). Türk Hava Yolları yolcu asistanı sisteminde, gelen kullanıcı mesajının hangi alt
+sisteme (RAG, tool-call, human-in-the-loop, netleştirme, red) yönlendirileceğini belirlemek
+için kullanılır.
 
 ## Önemli: Bu veri gerçek kullanıcı trafiği DEĞİLDİR
 
@@ -20,14 +22,14 @@ hazırlık belgesinde de aynı şekilde belirtilecektir. Gerçek kullanıcı ver
 
 | Intent | Sayı | Yönlendiği yer | Açıklama |
 |---|---|---|---|
-| `politika_bilgi_sorgusu` | 30 | RAG retrieval | Politika/kural bilgisi isteyen soru |
-| `ucus_sorgulama` | 30 | Tool call (salt okunur) | Uçuş durumu/detayı sorgusu |
-| `rezervasyon_islem_talebi` | 30 | Tool call + human-in-loop | İptal/değişiklik/iade gibi kritik işlem talebi |
-| `checkin_talebi` | 25 | Tool call | Check-in işlemi talebi |
-| `belirsiz_acikliga_kavusturma` | 25 | Netleştirici soru | Birden fazla yoruma açık, eksik bağlamlı soru |
-| `kapsam_disi` | 25 | Nazik red/yönlendirme | Sistemin kapsamı dışındaki istek |
+| `politika_bilgi_sorgusu` | 57 | RAG retrieval | Politika/kural bilgisi isteyen soru |
+| `ucus_sorgulama` | 43 | Tool call (salt okunur) | Uçuş durumu/detayı sorgusu |
+| `rezervasyon_islem_talebi` | 43 | Tool call + human-in-loop | İptal/değişiklik/iade gibi kritik işlem talebi |
+| `checkin_talebi` | 33 | Tool call | Check-in işlemi talebi |
+| `belirsiz_acikliga_kavusturma` | 40 | Netleştirici soru | Birden fazla yoruma açık, eksik bağlamlı soru |
+| `kapsam_disi` | 38 | Nazik red/yönlendirme | Sistemin kapsamı dışındaki istek |
 
-**Toplam: 165**
+**Toplam: 254**
 
 ## Toplama yöntemi
 
@@ -37,6 +39,25 @@ projenin mimari şemasındaki (README) routing kararlarına dayanarak yazılmı�
 İngilizce ve karışık (aynı cümlede iki dilin unsurlarını taşıyan, örn. "check-in" gibi
 yerleşmiş İngilizce terimler içeren Türkçe cümleler) örnekler kasıtlı olarak dahil
 edilmiştir — gerçek kullanıcıların da böyle yazması beklenir.
+
+## Adım 11 sonrası genişletme (165 → 254 örnek)
+
+Adım 11'in uçtan uca değerlendirmesi ve ADR-0004, hataların %77'sinin intent
+sınıflandırıcıdan kaynaklandığını, ve iki somut kalıbı gösterdi: (1) koşullu cümle
+yapıları ("X yaparsa/ise ne olur?") modeli özellikle `politika_bilgi_sorgusu` ve
+`belirsiz_acikliga_kavusturma` arasında kararsız bırakıyordu (örn. "Uçağım rötar yaparsa
+tazminat alabilir miyim?" yanlışlıkla `belirsiz_acikliga_kavusturma`'ya gitmişti), (2)
+İngilizce girdide doğruluk belirgin şekilde düşüktü (%75 TR vs %50 EN, n=4 küçük
+örneklem). Bu iki bulguyu doğrudan hedefleyerek:
+
+- Her 6 sınıfa da koşullu cümle yapılı örnekler eklendi (yalnızca `politika_bilgi_sorgusu`'na
+  değil — amaç "koşullu cümle = politika" gibi yeni bir yanlış kısayol öğretmemekti).
+- İngilizce örnek sayısı 17'den 71'e çıkarıldı (%10.3 → %28.0), her sınıfa dengeli dağıtıldı.
+
+**Çıktı (bkz. MODEL_CARD.md):** Macro F1 0.722→0.764, en zayıf iki sınıfın recall'ı
+belirgin arttı (`politika_bilgi_sorgusu` %44→%70.6, `belirsiz_acikliga_kavusturma`
+%38→%66.7). Kritik sınıf (`rezervasyon_islem_talebi`) doğruluğu %100'den %92.3'e (13'te 1
+hata) hafifçe düştü — bu dürüstçe raporlanıyor, gizlenmiyor.
 
 ## Bilinen sınırlamalar
 
@@ -50,21 +71,23 @@ edilmiştir — gerçek kullanıcıların da böyle yazması beklenir.
 - **`belirsiz_acikliga_kavusturma` sınıfı en kırılgan olanı** — tanım gereği diğer
   sınıflarla örtüşmeye en yatkın kategori (bkz. EDA).
 
-## EDA bulguları (bkz. `eda.py`, `eda_results.json`)
+## EDA bulguları (bkz. `eda.py`, `eda_results.json`, Adım 11 sonrası genişletmeyle güncellendi)
 
-- **Dil karışımı:** Genel %72.7 Türkçe, %17.0 karışık, %10.3 İngilizce — ama `checkin_talebi`
-  sınıfı belirgin şekilde farklı: %76'sı karışık (İngilizce "check-in" teriminin Türkçe
-  cümlelere yerleşmesi nedeniyle).
-- **Mesaj uzunluğu:** `belirsiz_acikliga_kavusturma` en kısa (ort. 3.8 kelime), diğerleri
-  4.8-5.6 kelime arası — belirsiz mesajların kısalığı EDA'da önceden tespit edildi.
-- **Kelime örtüşmesi (Jaccard):** `belirsiz_acikliga_kavusturma`, diğer sınıfların çoğuyla
-  en yüksek örtüşmeye sahip sınıf — bu EDA bulgusu, hem kural tabanlı router'da hem
-  fine-tune edilmiş modelde bu sınıfın en düşük recall'a sahip çıkmasıyla doğrulandı
-  (bkz. MODEL_CARD.md).
+- **Dil karışımı:** Genel %61.0 Türkçe, %11.0 karışık, %28.0 İngilizce (genişletme
+  öncesi %72.7/%17.0/%10.3 idi) — ama `checkin_talebi` sınıfı hâlâ belirgin şekilde
+  farklı: çoğunluğu karışık (İngilizce "check-in" teriminin Türkçe cümlelere yerleşmesi
+  nedeniyle).
+- **Mesaj uzunluğu:** `belirsiz_acikliga_kavusturma` en kısa (ort. 4.0 kelime), diğerleri
+  5.3-6.4 kelime arası — belirsiz mesajların kısalığı EDA'da önceden tespit edildi, koşullu
+  cümle örnekleri eklendikten sonra da bu sıralama korundu.
+- **Kelime örtüşmesi (Jaccard):** `belirsiz_acikliga_kavusturma` ve `politika_bilgi_sorgusu`
+  birbirleriyle en yüksek örtüşmeye sahip çift (Jaccard≈0.13) — bu, tam da Adım 11'in
+  bulduğu karışıklık yönüyle tutarlı ve genişletmeden sonra da tamamen ortadan kalkmadı
+  (beklenen: koşullu cümleler doğaları gereği bu iki sınıfın kesişiminde kalıyor).
 
 ## Train/test bölünmesi
 
-114 train / 51 test, sınıf oranları korunarak (stratified), sabit seed=42
+178 train / 76 test, sınıf oranları korunarak (stratified), sabit seed=42
 (`split_dataset.py`). Test oranı ~%30 — küçük veri setinde daha stabil metrik için
 standart %20'den yüksek tutuldu.
 
