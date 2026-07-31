@@ -18,6 +18,7 @@ langchain-community==0.3.1
 # --- RAG: embeddings + vector db ---
 sentence-transformers==3.1.1
 qdrant-client==1.11.2
+rank_bm25==0.2.2  # yalnızca ADR-0005'in hibrit arama deneyi için (evaluation/hybrid_search_experiment.py) — REDDEDİLDİ, üretimde kullanılmıyor
 
 # --- Intent / fine-tuning ---
 transformers==4.45.1

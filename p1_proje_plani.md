@@ -601,7 +601,18 @@ kalitesi, hata sınıflandırması); bunlar tek tek değerlendirilip ADR-0004'ü
    bir sonraki öncelik yapıyor.**
 2. Çok turlu konuşma hafızası ekle (`/chat` şu an tamamen stateless)
 3. Retrieval iyileştirmeleri (chunk boyutu 600→400-800 token, hybrid search, reranker)
-   — ikincil öncelik, bugünkü semptomu çözmez ama RAG çalıştığında kaliteyi artırır
+   **✅ İki alt madde ölçüldü, ikisi de dürüstçe REDDEDİLDİ; üçüncü bir bulgu (çelişen-
+   kaynak sezgiseli) KABUL EDİLDİ (1 Ağustos 2026, bkz. ADR-0005):**
+   - Chunk boyutu 600→2500 karakter: neredeyse etkisiz (Recall@1 %71.9→%73.4) — bu
+     korpusta chunking başlık-güdümlü, boyut limiti nadiren devreye giriyor. REDDEDİLDİ.
+   - Hibrit arama (BM25+embedding, RRF): beklenenin AKSİNE Recall@1'i düşürdü
+     (%71.9→%65.6), eş-anlamlı kategoriyi sıfırladı (Türkçe'nin eklemeli yapısı BM25'i
+     zayıflatıyor). REDDEDİLDİ.
+   - Çelişen-kaynak sezgiselinin kök nedeni bulundu ve düzeltildi: "farklı bölüm"
+     yerine "farklı kaynak dosya" arıyor artık. e011/e038'deki yanlış-pozitif
+     netleştirmeler düzeldi (insan devri oranı %35.4→%31.2), ikili pass/fail metriği
+     değişmedi ama gerçek bir UX kazanımı ölçüldü. Reranker henüz denenmedi (kapsam
+     dışı bırakıldı, gelecek çalışma).
 
 Sabit benzerlik-skoru eşiği bilinçli olarak listede YOK — ADR-0002/0003'te ölçülüp
 (dağılımlar tamamen iç içe) reddedildi.

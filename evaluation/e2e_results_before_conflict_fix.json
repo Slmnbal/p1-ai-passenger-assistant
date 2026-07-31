@@ -10,7 +10,7 @@
     "actual_outcome": "grounded_answer",
     "passed": true,
     "error_category": null,
-    "duration_seconds": 11.46,
+    "duration_seconds": 14.71,
     "final_response": "Economy Class'ta bagaj başına maksimum ağırlık 23 kg'dir.\n\nKaynak:\n- data/policies/cabin_excess_baggage_policy.md (Kabin bagajı — boyut ve ağırlık)\n- data/policies/nonstandard_cabin_baggage_fees_policy.md (Tek parça bagaj ağırlık limiti)\n- data/policies/us_baggage_rules_policy.md (Kayıtlı bagaj ölçü/ağırlık)",
     "blocked": false
   },
@@ -25,7 +25,7 @@
     "actual_outcome": "blocked_guardrail_or_injection",
     "passed": false,
     "error_category": "yanlis_outcome",
-    "duration_seconds": 29.4,
+    "duration_seconds": 34.89,
     "final_response": "Bu konuda kaynaklarımda net bir bilgi bulamadım.",
     "blocked": true
   },
@@ -40,7 +40,7 @@
     "actual_outcome": "clarification",
     "passed": false,
     "error_category": "yanlis_outcome",
-    "duration_seconds": 14.9,
+    "duration_seconds": 15.71,
     "final_response": "Sorunuz birden fazla bağlama uyabiliyor (örn. farklı kabin sınıfı/hat türü kuralları) ve kaynaklarım bu konuda net bir ayrım yapamadı. Hangi durumu kastettiğinizi (kabin sınıfı, iç hat/dış hat gibi) belirtir misiniz?\n\nBulduğum ilgili kaynaklar:\n- data/policies/boarding_gate_security_policy.md (Uçuş kapısında bulunma süresi)\n- data/policies/checkin_procedures_detail_policy.md (Havalimanına varış önerisi)\n- data/policies/delay_cancellation_policy.md (Uçuş tehiri / gecikme (Madde 7))",
     "blocked": false
   },
@@ -55,7 +55,7 @@
     "actual_outcome": "grounded_answer",
     "passed": true,
     "error_category": null,
-    "duration_seconds": 18.35,
+    "duration_seconds": 21.56,
     "final_response": "Online check-in uçuşa 24 saat kala başlar ve kalkıştan 12 saat önce başlar; iç hatlarda 45 dakika, dış hatlarda 60 dakika kala sona erer.\n\nKaynak:\n- data/policies/boarding_gate_security_policy.md (Kiosk check-in süreleri (özet))\n- data/policies/checkin_procedures_detail_policy.md (Online check-in iptali)\n- data/policies/seat_selection_policy.md (Check-in ile ilişkisi)",
     "blocked": false
   },
@@ -70,7 +70,7 @@
     "actual_outcome": "blocked_guardrail_or_injection",
     "passed": false,
     "error_category": "yanlis_outcome",
-    "duration_seconds": 12.21,
+    "duration_seconds": 13.87,
     "final_response": "Bu konuda kaynaklarımda net bir bilgi bulamadım.",
     "blocked": true
   },
@@ -85,7 +85,7 @@
     "actual_outcome": "clarification",
     "passed": false,
     "error_category": "yanlis_intent",
-    "duration_seconds": 0.53,
+    "duration_seconds": 0.55,
     "final_response": "Check-in yapabilmem için PNR numaranızı paylaşır mısınız?",
     "blocked": false
   },
@@ -100,7 +100,7 @@
     "actual_outcome": "fallback_unknown",
     "passed": false,
     "error_category": "yanlis_outcome",
-    "duration_seconds": 6.62,
+    "duration_seconds": 9.25,
     "final_response": "Bu konuda kaynaklarımda net bir bilgi bulamadım.",
     "blocked": false
   },
@@ -115,7 +115,7 @@
     "actual_outcome": "blocked_guardrail_or_injection",
     "passed": false,
     "error_category": "yanlis_outcome",
-    "duration_seconds": 28.98,
+    "duration_seconds": 34.77,
     "final_response": "Bu konuda kaynaklarımda net bir bilgi bulamadım.",
     "blocked": true
   },
@@ -130,7 +130,7 @@
     "actual_outcome": "clarification",
     "passed": false,
     "error_category": "yanlis_outcome",
-    "duration_seconds": 15.96,
+    "duration_seconds": 14.18,
     "final_response": "Sorunuz birden fazla bağlama uyabiliyor (örn. farklı kabin sınıfı/hat türü kuralları) ve kaynaklarım bu konuda net bir ayrım yapamadı. Hangi durumu kastettiğinizi (kabin sınıfı, iç hat/dış hat gibi) belirtir misiniz?\n\nBulduğum ilgili kaynaklar:\n- data/policies/disabled_medical_passenger_policy.md (Rehber köpek)\n- data/policies/lounge_access_policy.md (Evcil hayvan kuralı (salon içi))\n- data/policies/pet_travel_policy.md (Uçak altı bagaj bölümünde taşınan evcil hayvan — ağırlık ve boyut)",
     "blocked": false
   },
@@ -145,7 +145,7 @@
     "actual_outcome": "blocked_guardrail_or_injection",
     "passed": false,
     "error_category": "yanlis_outcome",
-    "duration_seconds": 24.91,
+    "duration_seconds": 24.92,
     "final_response": "Bu konuda kaynaklarımda net bir bilgi bulamadım.",
     "blocked": true
   },
@@ -157,12 +157,12 @@
     "expected_intent": "politika_bilgi_sorgusu",
     "actual_intent": "politika_bilgi_sorgusu",
     "expected_outcome": "grounded_answer",
-    "actual_outcome": "blocked_guardrail_or_injection",
+    "actual_outcome": "clarification",
     "passed": false,
     "error_category": "yanlis_outcome",
-    "duration_seconds": 17.41,
-    "final_response": "Bu konuda kaynaklarımda net bir bilgi bulamadım.",
-    "blocked": true
+    "duration_seconds": 10.18,
+    "final_response": "Sorunuz birden fazla bağlama uyabiliyor (örn. farklı kabin sınıfı/hat türü kuralları) ve kaynaklarım bu konuda net bir ayrım yapamadı. Hangi durumu kastettiğinizi (kabin sınıfı, iç hat/dış hat gibi) belirtir misiniz?\n\nBulduğum ilgili kaynaklar:\n- data/policies/infant_child_passenger_policy.md (Birden fazla bebek / tek refakatçi)\n- data/policies/infant_child_passenger_policy.md (Koltuk ve puset kuralları)",
+    "blocked": false
   },
   {
     "id": "e012",
@@ -175,7 +175,7 @@
     "actual_outcome": "grounded_answer",
     "passed": true,
     "error_category": null,
-    "duration_seconds": 22.4,
+    "duration_seconds": 21.81,
     "final_response": "Economy Class'ta kabin bagajı olarak alınabilen ağırlık en fazla **8 kg** ve boyutu **118 cm**'dir.\n\nKaynak:\n- data/policies/cabin_excess_baggage_policy.md (Kabin bagajı — boyut ve ağırlık)\n- data/policies/nonstandard_cabin_baggage_fees_policy.md (Gelinlik (kabin bagajı istisnası))\n- data/policies/us_baggage_rules_policy.md (Kayıtlı bagaj ölçü/ağırlık)",
     "blocked": false
   },
@@ -190,7 +190,7 @@
     "actual_outcome": "tool_success",
     "passed": true,
     "error_category": null,
-    "duration_seconds": 0.57,
+    "duration_seconds": 0.53,
     "final_response": "TK2110 (IST→ESB) uçuşu zamanında. Kapı: F6.",
     "blocked": false
   },
@@ -235,7 +235,7 @@
     "actual_outcome": "tool_success",
     "passed": true,
     "error_category": null,
-    "duration_seconds": 0.53,
+    "duration_seconds": 0.54,
     "final_response": "TK751 (IST→DXB) uçuşu zamanında. Kapı: F12.",
     "blocked": false
   },
@@ -250,7 +250,7 @@
     "actual_outcome": "tool_success",
     "passed": true,
     "error_category": null,
-    "duration_seconds": 0.54,
+    "duration_seconds": 0.59,
     "final_response": "TK2436 (IST→AYT) uçuşu zamanında. Kapı: A25.",
     "blocked": false
   },
@@ -265,7 +265,7 @@
     "actual_outcome": "tool_success",
     "passed": true,
     "error_category": null,
-    "duration_seconds": 0.54,
+    "duration_seconds": 0.53,
     "final_response": "TK2320 (IST→ADB) uçuşu zamanında. Kapı: F24.",
     "blocked": false
   },
@@ -280,7 +280,7 @@
     "actual_outcome": "tool_success",
     "passed": true,
     "error_category": null,
-    "duration_seconds": 0.53,
+    "duration_seconds": 0.55,
     "final_response": "IST→ESB arası uçuşlar:\n- TK2110 (70 dk, durum: on_time)",
     "blocked": false
   },
@@ -295,7 +295,7 @@
     "actual_outcome": "tool_success",
     "passed": true,
     "error_category": null,
-    "duration_seconds": 0.53,
+    "duration_seconds": 0.57,
     "final_response": "IST→DXB arası uçuşlar:\n- TK751 (220 dk, durum: on_time)",
     "blocked": false
   },
@@ -310,7 +310,7 @@
     "actual_outcome": "tool_success",
     "passed": true,
     "error_category": null,
-    "duration_seconds": 0.54,
+    "duration_seconds": 0.53,
     "final_response": "IST→CDG arası uçuşlar:\n- TK1823 (235 dk, durum: on_time)",
     "blocked": false
   },
@@ -325,7 +325,7 @@
     "actual_outcome": "tool_success",
     "passed": true,
     "error_category": null,
-    "duration_seconds": 0.54,
+    "duration_seconds": 0.55,
     "final_response": "IST→LHR arası uçuşlar:\n- TK5 (240 dk, durum: on_time)",
     "blocked": false
   },
@@ -340,8 +340,8 @@
     "actual_outcome": "tool_success",
     "passed": true,
     "error_category": null,
-    "duration_seconds": 0.53,
-    "final_response": "Check-in henüz açık değil (2 gün var). Uçuştan 1 gün önce açılır.",
+    "duration_seconds": 0.58,
+    "final_response": "Check-in henüz açık değil (3 gün var). Uçuştan 1 gün önce açılır.",
     "blocked": false
   },
   {
@@ -355,7 +355,7 @@
     "actual_outcome": "tool_success",
     "passed": true,
     "error_category": null,
-    "duration_seconds": 0.54,
+    "duration_seconds": 0.53,
     "final_response": "Bu rezervasyon için check-in zaten yapılmış.",
     "blocked": false
   },
@@ -370,7 +370,7 @@
     "actual_outcome": "clarification",
     "passed": true,
     "error_category": null,
-    "duration_seconds": 0.55,
+    "duration_seconds": 0.53,
     "final_response": "Check-in yapabilmem için PNR numaranızı paylaşır mısınız?",
     "blocked": false
   },
@@ -385,8 +385,8 @@
     "actual_outcome": "approval_submitted",
     "passed": true,
     "error_category": null,
-    "duration_seconds": 0.53,
-    "final_response": "İptal talebiniz alındı ve insan onayına gönderildi (talep no: a0379cff). Onaylandığında rezervasyonunuz iptal edilecek.",
+    "duration_seconds": 0.55,
+    "final_response": "İptal talebiniz alındı ve insan onayına gönderildi (talep no: 65004f22). Onaylandığında rezervasyonunuz iptal edilecek.",
     "blocked": false
   },
   {
@@ -401,7 +401,7 @@
     "passed": true,
     "error_category": null,
     "duration_seconds": 0.53,
-    "final_response": "İptal talebiniz alındı ve insan onayına gönderildi (talep no: be16dbbf). Onaylandığında rezervasyonunuz iptal edilecek.",
+    "final_response": "İptal talebiniz alındı ve insan onayına gönderildi (talep no: efb0fd79). Onaylandığında rezervasyonunuz iptal edilecek.",
     "blocked": false
   },
   {
@@ -415,7 +415,7 @@
     "actual_outcome": "not_found",
     "passed": true,
     "error_category": null,
-    "duration_seconds": 0.54,
+    "duration_seconds": 0.53,
     "final_response": "SYNZZZZ PNR'ı ile bir rezervasyon bulamadım.",
     "blocked": false
   },
@@ -430,8 +430,8 @@
     "actual_outcome": "approval_submitted",
     "passed": true,
     "error_category": null,
-    "duration_seconds": 0.56,
-    "final_response": "Tarih değişikliği talebiniz alındı ve insan onayına gönderildi (talep no: d6ece629).",
+    "duration_seconds": 0.53,
+    "final_response": "Tarih değişikliği talebiniz alındı ve insan onayına gönderildi (talep no: 4df6d4ce).",
     "blocked": false
   },
   {
@@ -475,7 +475,7 @@
     "actual_outcome": "clarification",
     "passed": true,
     "error_category": null,
-    "duration_seconds": 0.57,
+    "duration_seconds": 0.54,
     "final_response": "Kaç parça ekstra bagaj eklemek istiyorsunuz (1-5)?",
     "blocked": false
   },
@@ -490,7 +490,7 @@
     "actual_outcome": "clarification",
     "passed": true,
     "error_category": null,
-    "duration_seconds": 0.52,
+    "duration_seconds": 0.55,
     "final_response": "Sorunuzu tam olarak anlayamadım. Biraz daha detaylandırır mısınız? Örneğin: uçuşunuzun durumuyla mı, bir rezervasyon işlemiyle mi (iptal/tarih değişikliği/bagaj), check-in ile mi, yoksa genel bir politika/kural bilgisiyle mi ilgili?",
     "blocked": false
   },
@@ -520,7 +520,7 @@
     "actual_outcome": "clarification",
     "passed": true,
     "error_category": null,
-    "duration_seconds": 0.54,
+    "duration_seconds": 0.55,
     "final_response": "Sorunuzu tam olarak anlayamadım. Biraz daha detaylandırır mısınız? Örneğin: uçuşunuzun durumuyla mı, bir rezervasyon işlemiyle mi (iptal/tarih değişikliği/bagaj), check-in ile mi, yoksa genel bir politika/kural bilgisiyle mi ilgili?",
     "blocked": false
   },
@@ -535,7 +535,7 @@
     "actual_outcome": "clarification",
     "passed": true,
     "error_category": null,
-    "duration_seconds": 0.52,
+    "duration_seconds": 0.53,
     "final_response": "Sorunuzu tam olarak anlayamadım. Biraz daha detaylandırır mısınız? Örneğin: uçuşunuzun durumuyla mı, bir rezervasyon işlemiyle mi (iptal/tarih değişikliği/bagaj), check-in ile mi, yoksa genel bir politika/kural bilgisiyle mi ilgili?",
     "blocked": false
   },
@@ -562,12 +562,12 @@
     "expected_intent": "politika_bilgi_sorgusu",
     "actual_intent": "politika_bilgi_sorgusu",
     "expected_outcome": "grounded_answer",
-    "actual_outcome": "blocked_guardrail_or_injection",
+    "actual_outcome": "clarification",
     "passed": false,
     "error_category": "yanlis_outcome",
-    "duration_seconds": 21.38,
-    "final_response": "Bu konuda kaynaklarımda net bir bilgi bulamadım.",
-    "blocked": true
+    "duration_seconds": 10.85,
+    "final_response": "Sorunuz birden fazla bağlama uyabiliyor (örn. farklı kabin sınıfı/hat türü kuralları) ve kaynaklarım bu konuda net bir ayrım yapamadı. Hangi durumu kastettiğinizi (kabin sınıfı, iç hat/dış hat gibi) belirtir misiniz?\n\nBulduğum ilgili kaynaklar:\n- data/policies/nonstandard_cabin_baggage_fees_policy.md (Gelinlik (kabin bagajı istisnası))\n- data/policies/nonstandard_cabin_baggage_fees_policy.md (Standart dışı kabin bagajı — biniş kapısında (boarding))\n- data/policies/paid_business_upgrade_policy.md (Bagaj hakkı — DEĞİŞMEZ)",
+    "blocked": false
   },
   {
     "id": "e039",
@@ -580,7 +580,7 @@
     "actual_outcome": "clarification",
     "passed": false,
     "error_category": "yanlis_outcome",
-    "duration_seconds": 10.14,
+    "duration_seconds": 9.73,
     "final_response": "Sorunuz birden fazla bağlama uyabiliyor (örn. farklı kabin sınıfı/hat türü kuralları) ve kaynaklarım bu konuda net bir ayrım yapamadı. Hangi durumu kastettiğinizi (kabin sınıfı, iç hat/dış hat gibi) belirtir misiniz?\n\nBulduğum ilgili kaynaklar:\n- data/policies/nonstandard_cabin_baggage_fees_policy.md (Gelinlik (kabin bagajı istisnası))\n- data/policies/nonstandard_cabin_baggage_fees_policy.md (Standart dışı kabin bagajı — biniş kapısında (boarding))\n- data/policies/paid_business_upgrade_policy.md (Bagaj hakkı — DEĞİŞMEZ)",
     "blocked": false
   },
@@ -595,7 +595,7 @@
     "actual_outcome": "grounded_answer",
     "passed": true,
     "error_category": null,
-    "duration_seconds": 27.09,
+    "duration_seconds": 27.4,
     "final_response": "Business Class'ta ABD seferlerinde 2 adet kabin bagajı + 1 kişisel eşya hakkı vardır. TSA güvenlik kontrolünden yalnızca 1 kabin bagajı + 1 kişisel eşya kabine alınır, ikinci kabin bagajı check-in bankosuna teslim edilip ücretsiz kayıtlı bagaj olarak taşınır.\n\nKaynak:\n- data/policies/nonstandard_cabin_baggage_fees_policy.md (Gelinlik (kabin bagajı istisnası))\n- data/policies/nonstandard_cabin_baggage_fees_policy.md (Standart dışı kabin bagajı — biniş kapısında (boarding))\n- data/policies/us_baggage_rules_policy.md (Kabin bagajı ölçüleri (ABD seferleri))",
     "blocked": false
   },
@@ -610,7 +610,7 @@
     "actual_outcome": "blocked_guardrail_or_injection",
     "passed": false,
     "error_category": "yanlis_outcome",
-    "duration_seconds": 13.08,
+    "duration_seconds": 14.79,
     "final_response": "Bu konuda kaynaklarımda net bir bilgi bulamadım.",
     "blocked": true
   },
@@ -625,7 +625,7 @@
     "actual_outcome": "fallback_unknown",
     "passed": false,
     "error_category": "yanlis_outcome",
-    "duration_seconds": 7.21,
+    "duration_seconds": 8.34,
     "final_response": "Bu konuda kaynaklarımda net bir bilgi bulamadım.",
     "blocked": false
   },
@@ -640,7 +640,7 @@
     "actual_outcome": "grounded_answer",
     "passed": true,
     "error_category": null,
-    "duration_seconds": 15.76,
+    "duration_seconds": 17.76,
     "final_response": "Yurt dışı transit uçuşlarda öğrenci indirimi %15'tir.\n\nKaynak:\n- data/policies/disabled_medical_passenger_policy.md (Engelli yolcu ücret indirimi)\n- data/policies/fare_conditions_policy.md (Bebek ve çocuk indirimleri)\n- data/policies/student_passenger_policy.md (İndirim oranları)",
     "blocked": false
   },
@@ -655,7 +655,7 @@
     "actual_outcome": "blocked_out_of_scope",
     "passed": true,
     "error_category": null,
-    "duration_seconds": 0.53,
+    "duration_seconds": 2.16,
     "final_response": "Bu konu yolcu deneyimi asistanının kapsamı dışında görünüyor (kargo, işe alım, yatırımcı ilişkileri gibi konularda yardımcı olamıyorum). Turkish Airlines'ın ilgili kurumsal kanallarına yönlenmenizi öneririm.",
     "blocked": false
   },
@@ -670,7 +670,7 @@
     "actual_outcome": "blocked_out_of_scope",
     "passed": true,
     "error_category": null,
-    "duration_seconds": 0.54,
+    "duration_seconds": 1.06,
     "final_response": "Bu konu yolcu deneyimi asistanının kapsamı dışında görünüyor (kargo, işe alım, yatırımcı ilişkileri gibi konularda yardımcı olamıyorum). Turkish Airlines'ın ilgili kurumsal kanallarına yönlenmenizi öneririm.",
     "blocked": false
   },
@@ -685,7 +685,7 @@
     "actual_outcome": "blocked_out_of_scope",
     "passed": true,
     "error_category": null,
-    "duration_seconds": 0.52,
+    "duration_seconds": 0.54,
     "final_response": "Bu konu yolcu deneyimi asistanının kapsamı dışında görünüyor (kargo, işe alım, yatırımcı ilişkileri gibi konularda yardımcı olamıyorum). Turkish Airlines'ın ilgili kurumsal kanallarına yönlenmenizi öneririm.",
     "blocked": false
   },
@@ -715,7 +715,7 @@
     "actual_outcome": "blocked_out_of_scope",
     "passed": true,
     "error_category": null,
-    "duration_seconds": 0.52,
+    "duration_seconds": 0.59,
     "final_response": "Bu konu yolcu deneyimi asistanının kapsamı dışında görünüyor (kargo, işe alım, yatırımcı ilişkileri gibi konularda yardımcı olamıyorum). Turkish Airlines'ın ilgili kurumsal kanallarına yönlenmenizi öneririm.",
     "blocked": false
   }

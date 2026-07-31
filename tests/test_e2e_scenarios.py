@@ -84,26 +84,38 @@ def test_conflicting_source_reliably_answered(scenario_id):
     assert _FALLBACK_TEXT not in final_state["final_response"].lower()
 
 
-@pytest.mark.parametrize("scenario_id", ["e038", "e039"])
-def test_intent_fixed_conflicting_source_now_reaches_rag(scenario_id):
-    """31 Temmuz 2026 GÜNCELLEMESİ: Bu iki senaryo eskiden ('yaptığım...geçer mi'
-    kalıbı) intent sınıflandırıcı tarafından `rezervasyon_islem_talebi`'ne yanlış
-    yönlendiriliyordu — RAG hiç çalışma şansı bulamıyordu (bkz. docs/adr/0004-...md,
-    ilk ölçüm). Veri seti genişletilip (165→254, koşullu cümle + İngilizce örnekler)
-    model yeniden eğitildikten SONRA intent artık doğru (`politika_bilgi_sorgusu`) —
-    bu eskiden known-gap olan intent hatası DÜZELDİ, aşağıda sabitleniyor.
+def test_intent_fixed_e039_conflict_heuristic_correctly_clarifies():
+    """31 Temmuz 2026: intent artık doğru (`politika_bilgi_sorgusu`) — eskiden
+    `rezervasyon_islem_talebi`'ne yanlış yönlendiriliyordu (bkz. docs/adr/0004-...md).
 
-    Ama genel senaryo hâlâ BAŞARISIZ sayılıyor (`expected_outcome=grounded_answer`) —
-    çünkü bu iki senaryo GERÇEKTEN çelişen kaynağa sahip (miles_redemption_policy.md vs
-    paid_business_upgrade_policy.md, bkz. e2e_scenarios.json notes) ve
-    policy_verification_agent bunu doğru tespit edip bir NETLEŞTİRİCİ SORU döndürüyor
-    (İlke 4'ün "çelişen kaynaklarda netleştirme" kuralı) — bu `grounded_answer` değil ama
-    halüsinasyon da değil, muhtemelen bu iki senaryo için asıl "doğru" davranış budur.
-    Darboğaz artık intent değil, eval setinin `expected_outcome`'ının bu ikisi için
-    `grounded_answer` yerine `clarification` olması gerekip gerekmediği sorusu."""
-    final_state = _run(scenario_id)
+    1 Ağustos 2026 (bkz. docs/adr/0005-...md): `_sources_conflict` "farklı bölüm"
+    yerine "farklı KAYNAK DOSYA" arayacak şekilde düzeltildi (e011'in yanlış-pozitif
+    kalıbını gidermek için). Bu senaryoda (e039, ücretli yükseltme) top-1
+    (`paid_business_upgrade_policy.md`, GERÇEKTEN alakalı) ile top-2 (alakasız bir
+    "Gelinlik" istisnası bölümü) farklı dosyadan geldiği ve skorları yakın olduğu için
+    düzeltmeden SONRA da netleştirme tetikleniyor — bu durumda TESADÜFEN doğru dosyadan
+    gelen bir sonuçla alakasız bir gürültü chunk'ının aynı ada düşmesi. Kesin çözüm
+    değil (bkz. ADR-0005'in "kalan sınırlama" notu) ama halüsinasyon da yok."""
+    final_state = _run("e039")
     assert final_state["intent"] == "politika_bilgi_sorgusu"
     assert final_state.get("needs_clarification") is True
+
+
+def test_intent_fixed_e038_no_longer_false_conflict_but_retrieval_recall_gap_remains():
+    """31 Temmuz 2026: intent artık doğru (bkz. e039 testinin docstring'i, aynı aile).
+
+    1 Ağustos 2026 (bkz. docs/adr/0005-...md): Bu senaryoda (e038, mil ile yükseltme)
+    top-1 ve top-2 AYNI dosyadan geliyordu (`nonstandard_cabin_baggage_fees_policy.md`,
+    ikisi de alakasız) — düzeltmeden ÖNCE bu "farklı bölüm" yüzünden yanlışlıkla
+    "çakışma" sayılıyordu. Düzeltmeden SONRA artık çakışma sayılmıyor (doğru: bunlar
+    gerçek bir politika çakışması değil, iki alakasız chunk). Ama gerçek beklenen kaynak
+    (`miles_redemption_policy.md`) ilk 5 sonuçta HİÇ görünmüyor — bu ayrı, çözülmemiş bir
+    RETRIEVAL RECALL sorunu (bkz. ADR-0005). Sistem bunu doğru şekilde halüsinasyon
+    yapmadan "bulamadım" ile karşılıyor."""
+    final_state = _run("e038")
+    assert final_state["intent"] == "politika_bilgi_sorgusu"
+    assert final_state.get("needs_clarification") is False
+    assert _FALLBACK_TEXT in final_state["final_response"].lower()
 
 
 @pytest.mark.parametrize("scenario_id", ["e041", "e042"])
@@ -163,21 +175,22 @@ def test_known_gap_numeric_question_sometimes_over_rejected():
 # --- Dil önyargısı (bias/fairness) — ADR-0004'te ölçülen, küçük örneklemli sinyal ---
 
 def test_intent_fixed_english_policy_question_now_reaches_rag():
-    """31 Temmuz 2026 GÜNCELLEMESİ: 'Do infants need a separate ticket?' eskiden
-    İngilizce girdide intent sınıflandırıcı tarafından `kapsam_disi`'ye yanlış
-    yönlendiriliyordu (ADR-0004'ün ölçtüğü dil önyargısı sinyalinin somut örneği).
-    Veri setine dengeli İngilizce örnekler eklenip model yeniden eğitildikten SONRA
-    intent artık doğru (`politika_bilgi_sorgusu`) — dil önyargısı hatası bu örnekte
-    DÜZELDİ.
+    """31 Temmuz 2026: 'Do infants need a separate ticket?' eskiden İngilizce girdide
+    intent sınıflandırıcı tarafından `kapsam_disi`'ye yanlış yönlendiriliyordu
+    (ADR-0004'ün ölçtüğü dil önyargısı sinyalinin somut örneği). Veri setine dengeli
+    İngilizce örnekler eklenip model yeniden eğitildikten SONRA intent artık doğru
+    (`politika_bilgi_sorgusu`) — dil önyargısı hatası bu örnekte DÜZELDİ.
 
-    Ama bu senaryo (kategori: `policy`, GERÇEKTEN çelişen bir kaynağı YOK — e038/e039'un
-    aksine) hâlâ `grounded_answer` vermiyor; RAG'e ulaştıktan sonra
-    policy_verification_agent'ın "en iyi iki kaynağın skoru birbirine yakın VE farklı
-    bölümden" sezgiseli bu tek-kaynaklı soruda YANLIŞLIKLA tetikleniyor ve gereksiz bir
-    netleştirici soru döndürüyor. Bu, eskisinden DAHA DAR/daha spesifik yeni bir bilinen
-    hata: artık "İngilizce soru hiç RAG'e ulaşmıyor" değil, "RAG'e ulaşıyor ama
-    çelişen-kaynak sezgiselinin yanlış pozitifi cevabı engelliyor" (bkz. ADR-0004
-    güncellemesi)."""
+    1 Ağustos 2026 (bkz. docs/adr/0005-...md): Bu senaryoda RAG'e ulaştıktan sonra
+    policy_verification_agent'ın eski "en iyi iki kaynağın skoru yakın VE farklı
+    bölümden" sezgiseli YANLIŞLIKLA tetikleniyordu (top-1/top-2 AYNI dosyanın iki
+    alakasız alt-bölümüydü, gerçek bir çakışma değildi) ve gereksiz bir netleştirici
+    soru döndürüyordu. Sezgisel "farklı bölüm" yerine "farklı KAYNAK DOSYA" arayacak
+    şekilde düzeltildikten SONRA bu yanlış pozitif kayboldu. Ama gerçek beklenen
+    bilgiyi (bebeğin ayrı bilet gerektirip gerektirmediği) içeren doğru alt-bölüm ilk
+    3 sonuca girmiyor (retrieval recall sorunu, ADR-0005) — sistem doğru şekilde
+    halüsinasyon yapmadan "bulamadım" diyor."""
     final_state = _run("e011")
     assert final_state["intent"] == "politika_bilgi_sorgusu"
-    assert final_state.get("needs_clarification") is True
+    assert final_state.get("needs_clarification") is False
+    assert _FALLBACK_TEXT in final_state["final_response"].lower()

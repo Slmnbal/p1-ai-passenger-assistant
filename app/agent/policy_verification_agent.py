@@ -12,9 +12,19 @@ faithfulness, ikinci LLM çağrısıyla groundedness) Adım 7'nin işi. Bunu Ad�
    retrieval_agent) — bu kontrol yalnızca ikinci bir sezgisel emniyet katmanı.
 
 2. **Çakışan kaynak / netleştirme:** En iyi iki sonucun skoru birbirine çok yakınsa VE
-   farklı bölümlerden geliyorsa (örn. economy vs business bagaj bölümü), hangi bağlamın
-   geçerli olduğu belirsiz demektir — cevap yerine netleştirici soru döndürülür (bkz.
-   proje planı İlke 4). Bu da kesin bir çözüm değil, bilinen bir sezgisel eşik.
+   FARKLI KAYNAK DOSYADAN geliyorsa (örn. iki ayrı politika belgesi ters kural içeriyorsa),
+   hangi bağlamın geçerli olduğu belirsiz demektir — cevap yerine netleştirici soru
+   döndürülür (bkz. proje planı İlke 4). Bu da kesin bir çözüm değil, bilinen bir sezgisel
+   eşik.
+
+   **31 Temmuz 2026 düzeltmesi (bkz. docs/adr/0005-...md):** Eskiden bu kontrol yalnızca
+   "farklı bölüm başlığı" bakıyordu — AYNI belgenin iki farklı (ama alakasız/gürültü)
+   alt-bölümünü de "çakışma" sanıyordu (ADR-0004'ün e011 senaryosunda somut olarak
+   ölçülen bir yanlış pozitif: İngilizce bir soruda aynı dosyanın iki ilgisiz alt-bölümü
+   skor olarak yakın çıktı, sistem gereksiz yere netleştirici soru sordu). Artık "farklı
+   BÖLÜM" yerine "farklı KAYNAK DOSYA" şartı aranıyor — gerçek bir politika çakışması,
+   tanım gereği iki AYRI belge arasında olur, aynı belgenin iki alt-başlığı arasında
+   değil.
 
 `route_after_verification`, graph.py'nin retry/reflection kararını vermesi için "end"
 veya "retry" döndürür — en fazla 1 retry (bkz. state.py'deki `retry_count`), sonsuz
@@ -54,8 +64,8 @@ def _sources_conflict(sources: list[dict]) -> bool:
         return False
     top1, top2 = sources[0], sources[1]
     close_scores = abs(top1["score"] - top2["score"]) < _SCORE_GAP_FOR_CONFUSION
-    different_section = top1["section_title"] != top2["section_title"]
-    return close_scores and different_section
+    different_file = top1["source_file"] != top2["source_file"]
+    return close_scores and different_file
 
 
 def _format_sources(sources: list[dict]) -> str:
