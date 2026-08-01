@@ -17,6 +17,14 @@ temel groundedness kontrolüdür (bkz. o dosyanın docstring'i).
 **Adım 9 eklentisi:** `request_id` verilirse, bu LLM çağrısı Langfuse'a bir "generation"
 olarak (model adı, prompt, tamamlanan metin, token kullanımı ile) kaydedilir — projenin
 LLM/agent trace kanıtının somut bir parçası.
+
+**Adım 12 eklentisi:** `state["history"]`'de önceki turlar varsa (bkz.
+`app/agent/session_memory.py`), bunlar promptun başına "Önceki konuşma" olarak eklenir —
+model "peki business'ta?" gibi bir takip sorusunu önceki turun konusuna (örn. bagaj
+hakkı) bağlayabilir. Bilinçli sınır: bu yalnızca CEVAP ÜRETİMİNİ etkiler, retrieval
+ARAMA sorgusunun kendisini (aşağıdaki `retriever.search(question, ...)`) yeniden
+yazmaz — takip sorusu kendi başına yeterli anahtar kelime içermiyorsa retrieval yine de
+alakasız chunk getirebilir (bkz. `session_memory.py` docstring'i).
 """
 
 from __future__ import annotations
@@ -41,7 +49,10 @@ _SYSTEM_PROMPT = (
     "\"Bu konuda kaynaklarımda net bir bilgi bulamadım.\"\n"
     "3. Kısa ve net cevap ver, sayısal değerleri (kg, saat, gün, ücret) bağlamdaki "
     "haliyle birebir aktar.\n"
-    "4. Kullanıcının sorduğu dilde (Türkçe veya İngilizce) cevap ver."
+    "4. Kullanıcının sorduğu dilde (Türkçe veya İngilizce) cevap ver.\n"
+    "5. Önceki konuşma verilmişse, kullanıcının 'peki', 'bunun', 'ya' gibi önceki "
+    "turu referans alan ifadelerini o bağlama göre yorumla — ama yine SADECE verilen "
+    "bağlamdaki bilgiyi kullan, önceki turdaki bilgiyi uydurma."
 )
 
 _client: OpenAI | None = None
@@ -64,6 +75,16 @@ def _build_context(sources: list[dict]) -> str:
     return "\n\n".join(blocks)
 
 
+def _build_conversation_context(history: list[dict[str, str]]) -> str:
+    if not history:
+        return ""
+    lines = [
+        f"{'Kullanıcı' if turn['role'] == 'user' else 'Asistan'}: {turn['content']}"
+        for turn in history
+    ]
+    return "Önceki konuşma:\n" + "\n".join(lines) + "\n\n"
+
+
 def retrieve_and_answer(state: ConversationState, top_k: int = 3) -> dict:
     question = state["user_message"]
     retriever = get_retriever()
@@ -79,8 +100,13 @@ def retrieve_and_answer(state: ConversationState, top_k: int = 3) -> dict:
         for chunk, score in results
     ]
 
+    # planning_agent mevcut kullanıcı mesajını zaten history'nin sonuna eklemişti —
+    # burada yalnızca ONDAN ÖNCEKİ turları ("gerçek geçmiş") kullanıyoruz.
+    prior_turns = state.get("history", [])[:-1]
+    conversation_context = _build_conversation_context(prior_turns)
+
     context = _build_context(retrieved_sources)
-    user_prompt = f"Bağlam:\n{context}\n\nSoru: {question}"
+    user_prompt = f"{conversation_context}Bağlam:\n{context}\n\nSoru: {question}"
     client = _get_client()
 
     start_time = tracing.now()

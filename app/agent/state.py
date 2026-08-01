@@ -32,6 +32,10 @@ class ConversationState(TypedDict, total=False):
     session_preferences: dict[str, str]
     history: Annotated[list[dict[str, str]], operator.add]
 
+    # Adim 12: cok turlu konusma hafizasi (bkz. app/agent/session_memory.py) —
+    # graph.run() tarafindan doldurulur, node'lar tarafindan degil
+    session_id: str
+
     # Adim 9: gozlemlenebilirlik icin correlation id — JSON loglar, audit log ve
     # Langfuse trace'i AYNI id ile birbirine baglar (bkz. app/observability/)
     request_id: str

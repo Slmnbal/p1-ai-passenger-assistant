@@ -3,9 +3,19 @@
 Adım 4'te secilen "full fine-tune 10 epoch" modelini (`models/intent_full_10ep`,
 bkz. `data/intent/MODEL_CARD.md`) kullanarak mesaji 6 intent'ten birine atar, sonra
 akisi buna gore yonlendirir:
-- `kapsam_disi` / `belirsiz_acikliga_kavusturma` -> bu node dogrudan `final_response`
-  uretir, graph burada biter (retrieval/tool node'una hic ugramaz).
-- `politika_bilgi_sorgusu` -> retrieval_agent
+- `kapsam_disi` -> bu node dogrudan `final_response` uretir, graph burada biter.
+- `politika_bilgi_sorgusu` / `belirsiz_acikliga_kavusturma` -> retrieval_agent
+
+**1 Ağustos 2026 güncellemesi (bkz. docs/adr/0006-...md):** `belirsiz_acikliga_
+kavusturma` artık DOĞRUDAN bitmiyor, RAG'e de bir şans veriyor — canlı testte
+"Kayıp bagajım için ne yapmalıyım?" gibi AÇIK politika soruları bile bu sınıfa
+düşebiliyordu (intent modelinin ölçülen ~%24 hata oranının bir parçası, bkz.
+MODEL_CARD.md) ve RAG'e hiç ulaşamıyordu. Adım 6'nın zaten kanıtladığı prensip
+("RAG'in kendi groundedness kontrolü, intent'in kaçırdığı bir soruyu yakalayabilir")
+burada tersine de uygulandı: RAG grounded bir cevap bulursa onu döndürür,
+bulamazsa (bkz. `policy_verification_agent.py::verify_node`) mevcut netleştirme
+mesajına düşer — kullanıcı hiçbir durumda daha kötü bir deneyim yaşamaz, sadece
+ekstra bir RAG denemesi (gecikme maliyeti) eklenir.
 - `ucus_sorgulama` / `rezervasyon_islem_talebi` / `checkin_talebi` -> tool_agent
 
 Guven skoru NEDEN akis kararinda KULLANILMIYOR: MODEL_CARD.md'deki kalibrasyon
@@ -84,8 +94,8 @@ def plan_node(state: ConversationState) -> dict:
 
 def route_after_planning(state: ConversationState) -> str:
     intent = state["intent"]
-    if intent in ("kapsam_disi", "belirsiz_acikliga_kavusturma"):
+    if intent == "kapsam_disi":
         return "end"
-    if intent == "politika_bilgi_sorgusu":
+    if intent in ("politika_bilgi_sorgusu", "belirsiz_acikliga_kavusturma"):
         return "retrieval"
     return "tools"

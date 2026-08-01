@@ -29,6 +29,12 @@ faithfulness, ikinci LLM çağrısıyla groundedness) Adım 7'nin işi. Bunu Ad�
 `route_after_verification`, graph.py'nin retry/reflection kararını vermesi için "end"
 veya "retry" döndürür — en fazla 1 retry (bkz. state.py'deki `retry_count`), sonsuz
 döngüyü önlemek için.
+
+**1 Ağustos 2026 (bkz. docs/adr/0006-...md):** `belirsiz_acikliga_kavusturma` artık
+`planning_agent`'ta doğrudan bitmiyor, buraya da uğruyor (bkz. `route_after_planning`).
+Bu yüzden `verify_node`'un fallback/grounded-değil dallarında, orijinal intent
+`belirsiz_acikliga_kavusturma` ise generik "bulamadım" yerine `plan_node`'un zaten
+ürettiği netleştirme sorusuna (`state["clarification_question"]`) dönülüyor.
 """
 
 from __future__ import annotations
@@ -79,6 +85,9 @@ def verify_node(state: ConversationState) -> dict:
     retry_count = state.get("retry_count", 0)
 
     if _FALLBACK_PHRASE in answer.lower():
+        if state.get("intent") == "belirsiz_acikliga_kavusturma":
+            question = state.get("clarification_question") or answer
+            return {"grounded": False, "needs_clarification": True, "final_response": question}
         return {"grounded": False, "needs_clarification": False, "final_response": answer}
 
     if _sources_conflict(sources):
@@ -109,6 +118,15 @@ def verify_node(state: ConversationState) -> dict:
 
     if retry_count < _MAX_RETRIES:
         return {"grounded": False, "retry_count": retry_count + 1}
+
+    # 1 Agustos 2026 (bkz. docs/adr/0006-...md): belirsiz_acikliga_kavusturma artik
+    # RAG'e de ugruyor (bkz. planning_agent::route_after_planning). RAG grounded bir
+    # cevap BULAMAZSA, generik "bulamadim" yerine plan_node'un zaten urettigi
+    # netlestirme sorusuna donuyoruz — cunku gercekten belirsiz bir mesaj icin
+    # "bulamadim" degil "ne demek istediginizi acar misiniz" daha dogru bir yanit.
+    if state.get("intent") == "belirsiz_acikliga_kavusturma":
+        question = state.get("clarification_question") or "Sorunuzu biraz daha detaylandırır mısınız?"
+        return {"grounded": False, "needs_clarification": True, "final_response": question}
 
     fallback = "Bu konuda kaynaklarımda net bir bilgi bulamadım."
     return {"grounded": False, "final_response": fallback}

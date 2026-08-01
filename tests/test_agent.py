@@ -67,7 +67,7 @@ def test_plan_node_belirsiz_sets_clarification():
     "intent,expected_route",
     [
         ("kapsam_disi", "end"),
-        ("belirsiz_acikliga_kavusturma", "end"),
+        ("belirsiz_acikliga_kavusturma", "retrieval"),
         ("politika_bilgi_sorgusu", "retrieval"),
         ("ucus_sorgulama", "tools"),
         ("rezervasyon_islem_talebi", "tools"),
@@ -257,3 +257,28 @@ class TestLiveRagPipeline:
         final = run("TK2110 rötarlı mı?")
         assert final["intent"] == "ucus_sorgulama"
         assert final["final_response"] is not None
+
+    def test_session_id_persists_across_turns_and_carries_history(self):
+        """Adım 12 — çok turlu hafıza: aynı session_id'yle ikinci turda ilk turun
+        sorusu (bkz. session_memory) retrieval_agent'ın promptuna eklenmeli."""
+        from app.agent import session_memory
+        from app.agent.graph import run
+
+        first = run("Business class bagaj hakkım nedir?")
+        session_id = first["session_id"]
+        assert session_id is not None
+
+        second = run("Peki economy'de kaç kg?", session_id=session_id)
+        assert second["session_id"] == session_id
+
+        history = session_memory.get_history(session_id)
+        assert history[0] == {"role": "user", "content": "Business class bagaj hakkım nedir?"}
+        assert history[1]["role"] == "assistant"
+        assert history[2] == {"role": "user", "content": "Peki economy'de kaç kg?"}
+
+    def test_no_session_id_starts_fresh_session_each_time(self):
+        from app.agent.graph import run
+
+        first = run("Business class bagaj hakkım nedir?")
+        second = run("TK2110 rötarlı mı?")
+        assert first["session_id"] != second["session_id"]

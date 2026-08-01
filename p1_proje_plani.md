@@ -600,6 +600,18 @@ kalitesi, hata sınıflandırması); bunlar tek tek değerlendirilip ADR-0004'ü
    **madde 3'ü (retrieval iyileştirmeleri) ikincil değil, ölçülmüş veriyle desteklenen
    bir sonraki öncelik yapıyor.**
 2. Çok turlu konuşma hafızası ekle (`/chat` şu an tamamen stateless)
+   **✅ Tamamlandı (1 Ağustos 2026):** `app/agent/session_memory.py` — `app/tools/
+   store.py`/`approval_queue.py` ile aynı in-memory desen, `session_id -> son 6 tur`.
+   `graph.run()` artık opsiyonel `session_id` alıyor, önceki turları `retrieval_agent`'ın
+   cevap üretme promptuna ekliyor. `/chat` endpoint'i `session_id`'yi kabul edip
+   dönüyor, web arayüzü bunu otomatik taşıyor. **Bilinçli kapsam sınırı:** yalnızca RAG
+   cevap üretimi geçmişi görüyor — intent sınıflandırma (`planning_agent`) ve tool
+   entity çıkarımı (`tool_agent`, PNR/uçuş no regex'i) hâlâ sadece mevcut mesaja
+   bakıyor; retrieval ARAMA sorgusu da yeniden yazılmıyor (query rewriting yok) — takip
+   sorusu kendi başına yeterli anahtar kelime içermiyorsa retrieval yine alakasız
+   chunk getirebilir. 43 canlı test geçiyor (2 yeni: `test_session_id_persists_
+   across_turns_and_carries_history`, `test_no_session_id_starts_fresh_session_
+   each_time`) + 4 yeni birim testi (`tests/test_session_memory.py`).
 3. Retrieval iyileştirmeleri (chunk boyutu 600→400-800 token, hybrid search, reranker)
    **✅ İki alt madde ölçüldü, ikisi de dürüstçe REDDEDİLDİ; üçüncü bir bulgu (çelişen-
    kaynak sezgiseli) KABUL EDİLDİ (1 Ağustos 2026, bkz. ADR-0005):**
@@ -613,6 +625,22 @@ kalitesi, hata sınıflandırması); bunlar tek tek değerlendirilip ADR-0004'ü
      netleştirmeler düzeldi (insan devri oranı %35.4→%31.2), ikili pass/fail metriği
      değişmedi ama gerçek bir UX kazanımı ölçüldü. Reranker henüz denenmedi (kapsam
      dışı bırakıldı, gelecek çalışma).
+4. **Intent-gate'e RAG güvenlik ağı eklendi (1 Ağustos 2026, bkz. ADR-0006).** Selman'ın
+   paylaştığı profesyonel RAG hata-analizi çerçevesiyle canlı sunucuda test edilen 4
+   gerçek soru, "Kayıp bagajım için ne yapmalıyım?" ve "Öğrenci indirimi var mı?" gibi
+   BARİZ politika sorularının bile `belirsiz_acikliga_kavusturma`'ya yanlış
+   sınıflandırılıp RAG'e HİÇ ulaşamadığını gösterdi (biri kelimesi kelimesine kendi
+   test setinde `politika_bilgi_sorgusu` etiketli — MODEL_CARD.md'nin zaten
+   raporladığı ~%24 hata oranının somut kanıtı). `route_after_planning` artık bu
+   sınıfı da `retrieval`'a yönlendiriyor; RAG grounded cevap bulamazsa mevcut
+   netleştirme mesajına düşülüyor (davranış değişmiyor, risksiz). 43 canlı test geçti
+   (özellikle e033-e037 GERÇEKTEN belirsiz mesajların hâlâ doğru davrandığı
+   doğrulandı). 48 senaryolu eval seti bu düzeltmenin etkisini GÖSTEREMEDİ (kapsam
+   boşluğu: bu hata kalıbını hiç örneklemiyor, dürüstçe not edildi) ama canlı
+   doğrulamada retrieval'ın artık gerçekten çalıştığı log'la kanıtlandı. Bu arada
+   ayrı, yeni bir bulgu ortaya çıktı: "Kayıp bagajım" sorgusu `lost_damaged_baggage_
+   policy.md`'yi ilk 3 sonuca hiç getirmiyor — gerçek bir retrieval recall sorunu,
+   sonraki oturuma devrediliyor.
 
 Sabit benzerlik-skoru eşiği bilinçli olarak listede YOK — ADR-0002/0003'te ölçülüp
 (dağılımlar tamamen iç içe) reddedildi.

@@ -88,6 +88,7 @@ def test_chat_endpoint_end_to_end_policy_question():
     assert body["blocked"] is False
     assert len(body["sources"]) > 0
     assert "request_id" in body
+    assert "session_id" in body
 
 
 @pytest.mark.live

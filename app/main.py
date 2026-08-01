@@ -59,6 +59,10 @@ app.mount("/ui", StaticFiles(directory="app/static", html=True), name="ui")
 
 class ChatRequest(BaseModel):
     message: str = Field(..., min_length=1, description="Kullanıcının yazdığı mesaj")
+    session_id: str | None = Field(
+        None, description="Önceki turu hatırlamak için — ilk mesajda boş bırakılır, "
+        "sunucunun döndürdüğü session_id sonraki isteklerde geri gönderilir"
+    )
 
 
 class ChatSourceRef(BaseModel):
@@ -69,6 +73,7 @@ class ChatSourceRef(BaseModel):
 
 class ChatResponse(BaseModel):
     request_id: str
+    session_id: str
     message: str
     intent: str | None = None
     blocked: bool = False
@@ -141,7 +146,7 @@ def query_policy(request: PolicyQueryRequest) -> PolicyQueryResponse:
 
 @app.post("/chat", response_model=ChatResponse)
 def chat(request: ChatRequest) -> ChatResponse:
-    final_state = run_agent_graph(request.message)
+    final_state = run_agent_graph(request.message, session_id=request.session_id)
 
     sources = []
     if final_state.get("grounded"):
@@ -154,6 +159,7 @@ def chat(request: ChatRequest) -> ChatResponse:
 
     return ChatResponse(
         request_id=final_state["request_id"],
+        session_id=final_state["session_id"],
         message=final_state.get("final_response") or "",
         intent=final_state.get("intent"),
         blocked=final_state.get("blocked", False),

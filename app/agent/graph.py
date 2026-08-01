@@ -5,17 +5,24 @@ genişletildi.
 Akış:
 
     input_guard ─ injection tespit edildi ────────────────────────────────→ BİTTİ
-               └─ planning ─┬─ kapsam_disi / belirsiz ─────────────────────→ BİTTİ
-                             ├─ politika_bilgi_sorgusu → retrieval → verification ─┬─ retry (max 1) ┘
-                             │                                                     └─ output_guard → BİTTİ
+               └─ planning ─┬─ kapsam_disi ───────────────────────────────→ BİTTİ
+                             ├─ politika_bilgi_sorgusu / belirsiz_acikliga_kavusturma
+                             │     → retrieval → verification ─┬─ retry (max 1) ┘
+                             │                                 └─ output_guard → BİTTİ
                              └─ ucus/rezervasyon/checkin → tools → output_guard ──→ BİTTİ
 
 `retrieval` node'u, `retry_count`'a göre top_k'yı artırarak çağrılır (3 → 5) — reflection
 loop'un anlamlı olması için (bkz. policy_verification_agent docstring'i).
 
 `output_guard`, yalnızca GERÇEKTEN bir tool işlemi ya da kaynağa dayalı bir politika
-cevabı üretildiğinde çalışır (`kapsam_disi`/`belirsiz_acikliga_kavusturma`'nın sabit,
-LLM'siz cevapları zaten risksiz olduğu için bu node'a hiç uğramaz — bkz. `route_after_planning`).
+cevabı üretildiğinde çalışır (`kapsam_disi`'nin sabit, LLM'siz cevabı zaten risksiz
+olduğu için bu node'a hiç uğramaz — bkz. `route_after_planning`).
+
+**1 Ağustos 2026 (bkz. docs/adr/0006-...md):** `belirsiz_acikliga_kavusturma` da artık
+`retrieval`'a uğruyor — intent sınıflandırıcının bariz politika sorularını bile bu
+sınıfa düşürebildiği canlı testte gözlemlendi (bkz. MODEL_CARD.md'deki ~%24 hata
+oranı). RAG grounded bir cevap bulursa onu döndürür, bulamazsa `verify_node` mevcut
+netleştirme mesajına düşer — bu bir güvenlik ağı, RAG'in kendisi değiştirilmedi.
 
 **Adım 9:** `run()`, her çağrıda bir `request_id` (uuid) üretir ve bunu bir Langfuse
 trace'ine bağlar. `_instrument()`, her node'u şeffaf bir şekilde sarar: node çalışma
@@ -30,6 +37,7 @@ import uuid
 
 from langgraph.graph import END, StateGraph
 
+from app.agent import session_memory
 from app.agent.planning_agent import plan_node, route_after_planning
 from app.agent.policy_verification_agent import route_after_verification, verify_node
 from app.agent.retrieval_agent import retrieve_and_answer
@@ -207,14 +215,32 @@ def build_graph():
     return graph.compile()
 
 
-def run(user_message: str) -> ConversationState:
-    """Tek bir kullanıcı mesajını uçtan uca işler, son state'i döndürür."""
+def run(user_message: str, session_id: str | None = None) -> ConversationState:
+    """Tek bir kullanıcı mesajını uçtan uca işler, son state'i döndürür.
+
+    `session_id` verilirse önceki turlar (bkz. `session_memory`) `history`'ye tohum
+    olarak eklenir ve `retrieval_agent` bunu cevap üretirken görebilir — takip
+    sorularının bağlamı çözmesi için (bkz. `session_memory` docstring'indeki kapsam
+    sınırı). `session_id` verilmezse yeni bir oturum başlatılır.
+    """
     request_id = str(uuid.uuid4())
+    if session_id is None:
+        session_id = session_memory.new_session_id()
+    prior_history = session_memory.get_history(session_id)
+
     tracing.start_trace(request_id, user_message)
     log_event(_logger, logging.INFO, "istek alındı", request_id=request_id, user_message=user_message)
 
     app = build_graph()
-    final_state = app.invoke({"user_message": user_message, "retry_count": 0, "request_id": request_id})
+    final_state = app.invoke({
+        "user_message": user_message,
+        "retry_count": 0,
+        "request_id": request_id,
+        "history": prior_history,
+    })
+
+    session_memory.append_turn(session_id, user_message, final_state.get("final_response") or "")
+    final_state["session_id"] = session_id
 
     tracing.flush()
     return final_state

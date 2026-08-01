@@ -169,6 +169,7 @@ const chatInput = document.getElementById('chat-input');
 const sendBtn = document.getElementById('send-btn');
 const approvalsList = document.getElementById('approvals-list');
 const toastEl = document.getElementById('toast');
+let sessionId = null; // ilk mesajda bos, sunucunun donduruguyle sonraki mesajlarda tasinir
 
 function showToast(text) {
   toastEl.textContent = text;
@@ -236,13 +237,14 @@ async function sendMessage(text) {
     const res = await fetch('/chat', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ message: text }),
+      body: JSON.stringify({ message: text, session_id: sessionId }),
     });
     const data = await res.json();
     thinking.remove();
     if (!res.ok) {
       addMessage('assistant', 'Hata: ' + (data.detail || res.status), { blocked: true });
     } else {
+      sessionId = data.session_id;
       addMessage('assistant', data.message, data);
       if (data.intent === 'rezervasyon_islem_talebi') loadApprovals();
     }
